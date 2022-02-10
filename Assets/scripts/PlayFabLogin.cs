@@ -2,14 +2,24 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
 
 public class PlayFabLogin : MonoBehaviour
 {
-    public GameObject emailText, password, prompt;
+    [Header("Text fields")]
+    public InputField emailText;
+    public GameObject password;
+    public GameObject prompt;
 
+    [Header("UI Elements")]
     public Button enterLogin;
-    public GameObject logincanves, gamecanves;
+    public Button skipButton;
+    public GameObject logincanves;
+    public GameObject gamecanves;
+
+    public GetAccountInfoResult accountInfo;
+    NetworkManager manager;
 
     public void Start()
     {
@@ -21,14 +31,16 @@ public class PlayFabLogin : MonoBehaviour
             */
             PlayFabSettings.staticSettings.TitleId = "59E24";
         }
+        manager = GetComponent<NetworkManager>();
         logincanves.SetActive(true);
         gamecanves.SetActive(false);
-        enterLogin.onClick.AddListener(onClickOfButton);
+        enterLogin.onClick.AddListener(onLoginButtonClick);
+        skipButton.onClick.AddListener(onSkipButtonClick);
     }
 
-    void onClickOfButton()
+    void onLoginButtonClick()
     {
-        var request = new LoginWithEmailAddressRequest { Email = emailText.GetComponent<InputField>().text, Password = password.GetComponent<InputField>().text };
+        var request = new LoginWithEmailAddressRequest { Email = emailText.text, Password = password.GetComponent<InputField>().text };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, (PlayFabError error) => { Debug.LogError(error.GenerateErrorReport()); prompt.GetComponent<Text>().text = "Invalid Email or password."; });
     }
 
@@ -42,12 +54,14 @@ public class PlayFabLogin : MonoBehaviour
 
     private void OnAccountRequestSuccess(GetAccountInfoResult result)
     {
+        accountInfo = result;
         Debug.Log("Account info" + result.AccountInfo);
     }
 
-    //private void OnLoginFailure(PlayFabError error)
-    //{
-    //    Debug.LogError("Here's some debug information:");
-    //    Debug.LogError(error.GenerateErrorReport());
-    //}
+    void onSkipButtonClick()
+    {
+        logincanves.SetActive(false);
+        gamecanves.SetActive(true);
+    }
+
 }
