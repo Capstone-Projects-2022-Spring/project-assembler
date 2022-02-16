@@ -16,7 +16,7 @@ public class PlayFabLogin : MonoBehaviour
     public Button enterLogin;
     public Button skipButton;
     public GameObject logincanves;
-    public GameObject gamecanves;
+    public GameObject mainMenu;
 
     public GetAccountInfoResult accountInfo;
     NetworkManager manager;
@@ -33,12 +33,10 @@ public class PlayFabLogin : MonoBehaviour
         }
         manager = GetComponent<NetworkManager>();
         logincanves.SetActive(true);
-        gamecanves.SetActive(false);
-        enterLogin.onClick.AddListener(onLoginButtonClick);
-        skipButton.onClick.AddListener(onSkipButtonClick);
+        mainMenu.SetActive(false);
     }
 
-    void onLoginButtonClick()
+    public void onLoginButtonClick()
     {
         var request = new LoginWithEmailAddressRequest { Email = emailText.text, Password = password.GetComponent<InputField>().text };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, (PlayFabError error) => { Debug.LogError(error.GenerateErrorReport()); prompt.GetComponent<Text>().text = "Invalid Email or password."; });
@@ -49,7 +47,7 @@ public class PlayFabLogin : MonoBehaviour
         var request = new GetAccountInfoRequest { PlayFabId = result.PlayFabId };
         PlayFabClientAPI.GetAccountInfo(request, OnAccountRequestSuccess, (PlayFabError error) => { Debug.LogError(error.GenerateErrorReport()); });
         logincanves.SetActive(false);
-        gamecanves.SetActive(true);
+        mainMenu.SetActive(true);
     }
 
     private void OnAccountRequestSuccess(GetAccountInfoResult result)
@@ -58,10 +56,10 @@ public class PlayFabLogin : MonoBehaviour
         Debug.Log("Account info" + result.AccountInfo);
     }
 
-    void onSkipButtonClick()
+    public void onSkipButtonClick()
     {
         logincanves.SetActive(false);
-        gamecanves.SetActive(true);
+        mainMenu.SetActive(true);
     }
 
 }

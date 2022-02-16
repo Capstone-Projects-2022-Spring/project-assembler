@@ -7,6 +7,7 @@ public class PlayerControl : NetworkBehaviour
     public float speed = 30;
     public Rigidbody2D rigidbody2d;
 
+
     void FixedUpdate()
     {
         // only let the local player control the racket.

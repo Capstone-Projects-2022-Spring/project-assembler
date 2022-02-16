@@ -26,6 +26,7 @@ public class HostJoinUI : NetworkBehaviour
     {
 
         manager = NetworkManager.singleton;
+        Debug.Log("from HostJoin" + manager);
         hostbutton.onClick.AddListener(onhostbuttonClick);
         clientJoinButton.onClick.AddListener(onclientJoinButtonClick);
         cancelConnecting.onClick.AddListener(() => {
