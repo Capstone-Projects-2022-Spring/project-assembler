@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections.Generic;
+using System.Linq;
 using Photon.Chat;
 using ExitGames.Client.Photon;
 using PlayFab;
@@ -14,8 +16,16 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public InputField userToSendTo;
     public InputField enterMessageField;
     public Canvas chatUI;
-    string userID;
+    public Dropdown friendDropMenu;
+    public RawImage avaterImage;
+    public Text playerName;
 
+
+    PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
+    List<string> dropOptions = new List<string>();
+    Dictionary <string, string> chathistories = new Dictionary<string, string>();
+    Dictionary <string, string> IDtoDisplaynamedict = new Dictionary<string, string>();
+    string currentFriendSelectedID;
 
     public void Awake()
     {
@@ -42,12 +52,14 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             #if !UNITY_WEBGL
             chatClient.UseBackgroundWorkerForSending = true;
             #endif
+            
+            userAccountInfo = result;
+
             chatClient.AuthValues = new AuthenticationValues
             {
                 //chatClient.AuthValues.AddAuthParameter("username", result.AccountInfo.Username);
-                UserId = result.AccountInfo.PrivateInfo.Email
+                UserId = userAccountInfo.AccountInfo.PlayFabId
             };
-            userID = chatClient.AuthValues.UserId;
             Debug.Log($"connecting. Is client null? {chatClient == null}");
             chatClient.ConnectUsingSettings(this.chatAppSettings);
         }
@@ -79,13 +91,23 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     }
 
 
+    public void onFriendListChange(Dropdown dropmenu)
+    {
+        string switchToID = IDtoDisplaynamedict.FirstOrDefault(x => x.Value == dropmenu.captionText.text).Key;
+        currentFriendSelectedID = switchToID;
+        ChatHistory.text = chathistories[switchToID];
+        Debug.Log("From the changlist" + chathistories[switchToID] + " " + switchToID);
+    } 
+
     public void onEnterMessage(string whatever)
     {
         string message = enterMessageField.text;
         enterMessageField.text = "";
         if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
         {
-            chatClient.SendPrivateMessage(userToSendTo.text, message);
+            chathistories[currentFriendSelectedID] += $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}: {(string)message}\n";
+            onFriendListChange(friendDropMenu);
+            chatClient.SendPrivateMessage(currentFriendSelectedID, message);
         }
     }
 
@@ -98,16 +120,46 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     void IChatClientListener.OnChatStateChange(ChatState state)
     {
+
     }
 
     public void OnConnected()
     {
         Debug.Log($"Connected to photon chat server as {chatClient.UserId}");
+
+        StartCoroutine(DownloadAvater());
+
+        PlayFabClientAPI.GetFriendsList(new PlayFab.ClientModels.GetFriendsListRequest(), 
+        (PlayFab.ClientModels.GetFriendsListResult result) =>
+        {
+            foreach (var FriendName in result.Friends){
+                dropOptions.Add(FriendName.TitleDisplayName);
+                IDtoDisplaynamedict.Add(FriendName.FriendPlayFabId, FriendName.TitleDisplayName);
+                chathistories.Add(FriendName.FriendPlayFabId, "");
+            }
+            friendDropMenu.ClearOptions();
+            friendDropMenu.AddOptions(dropOptions);
+            onFriendListChange(friendDropMenu);
+        }, onPlayFabError);
+
+        playerName.text = userAccountInfo.AccountInfo.TitleInfo.DisplayName;
+
         chatUI.gameObject.SetActive(true);
+    }
+
+    System.Collections.IEnumerator DownloadAvater()
+    {
+        UnityEngine.Networking.UnityWebRequest request = UnityEngine.Networking.UnityWebRequestTexture.GetTexture(userAccountInfo.AccountInfo.TitleInfo.AvatarUrl);
+        yield return request.SendWebRequest();
+        if (request.isNetworkError || request.isHttpError)
+            Debug.Log(request.error);
+        else
+            avaterImage.texture = ((UnityEngine.Networking.DownloadHandlerTexture) request.downloadHandler).texture;
     }
 
     void IChatClientListener.OnDisconnected()
     {
+
     }
 
     void IChatClientListener.OnGetMessages(string channelName, string[] senders, object[] messages)
@@ -117,9 +169,20 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     void IChatClientListener.OnPrivateMessage(string sender, object message, string channelName)
     {
+        if (chathistories.ContainsKey(sender))
+        {
+            chathistories[sender] += $"{IDtoDisplaynamedict[sender]}: {(string)message}\n";
+        } 
+        else
+        {
+            string dispalyname = playFabIdtoDisplayName(sender);
+            IDtoDisplaynamedict.Add(sender, dispalyname);
 
-        ChatHistory.text += sender + ":" + (string)message + "\n";
+            chathistories.Add(sender, $"{IDtoDisplaynamedict[sender]}: {(string)message}\n");
+        }
+        Debug.Log("From the onmessage" + sender);
 
+        onFriendListChange(friendDropMenu);
     }
 
     void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
@@ -143,6 +206,20 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     }
     #endregion
 
+    string playFabIdtoDisplayName(string playfabid)
+    {
+        string returnvalue = "";
+        PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
+        {
+            PlayFabId = playfabid
+        }, (PlayFab.ClientModels.GetAccountInfoResult result) =>
+        {
+            returnvalue = result.AccountInfo.TitleInfo.DisplayName;
+        }
+        , onPlayFabError);
+
+        return returnvalue;
+    }
     ChatAppSettings getSettings(Photon.Realtime.AppSettings appSettings)
     {
         return new ChatAppSettings
