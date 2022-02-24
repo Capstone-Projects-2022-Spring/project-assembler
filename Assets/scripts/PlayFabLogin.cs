@@ -2,8 +2,9 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
-
+using Photon.Pun;
+using Photon.Chat;
+using ExitGames.Client.Photon;
 
 public class PlayFabLogin : MonoBehaviour
 {
@@ -13,13 +14,11 @@ public class PlayFabLogin : MonoBehaviour
     public GameObject prompt;
 
     [Header("UI Elements")]
-    public Button enterLogin;
-    public Button skipButton;
     public GameObject logincanves;
     public GameObject mainMenu;
+    public GameObject chatui;
 
     public GetAccountInfoResult accountInfo;
-    NetworkManager manager;
 
     public void Start()
     {
@@ -31,7 +30,6 @@ public class PlayFabLogin : MonoBehaviour
             */
             PlayFabSettings.staticSettings.TitleId = "59E24";
         }
-        manager = GetComponent<NetworkManager>();
         logincanves.SetActive(true);
         mainMenu.SetActive(false);
     }
@@ -39,23 +37,23 @@ public class PlayFabLogin : MonoBehaviour
     public void onLoginButtonClick()
     {
         var request = new LoginWithEmailAddressRequest { Email = emailText.text, Password = password.GetComponent<InputField>().text };
-        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, (PlayFabError error) => { Debug.LogError(error.GenerateErrorReport()); prompt.GetComponent<Text>().text = "Invalid Email or password."; });
+        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, onPlayerFabError);
     }
 
     private void OnLoginSuccess(LoginResult result)
     {
-        var request = new GetAccountInfoRequest { PlayFabId = result.PlayFabId };
-        PlayFabClientAPI.GetAccountInfo(request, OnAccountRequestSuccess, (PlayFabError error) => { Debug.LogError(error.GenerateErrorReport()); });
         logincanves.SetActive(false);
         mainMenu.SetActive(true);
+
+        this.gameObject.GetComponent<ChatManager>().Awake();
+        this.gameObject.GetComponent<ChatManager>().Connect(result.PlayFabId);
     }
 
-    private void OnAccountRequestSuccess(GetAccountInfoResult result)
+
+    private void onPlayerFabError(PlayFabError obj)
     {
-        accountInfo = result;
-        Debug.Log("Account info" + result.AccountInfo);
+        prompt.GetComponent<Text>().text = obj.GenerateErrorReport();
     }
-
     public void onSkipButtonClick()
     {
         logincanves.SetActive(false);
