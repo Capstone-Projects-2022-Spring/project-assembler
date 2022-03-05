@@ -8,7 +8,23 @@ public class PlayerControl : NetworkBehaviour
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
 
-    GameObject currentObjectEquipped; // The item that is currently selected by the player
+
+    public SyncDictionary<GameItem, int> inventory = new SyncDictionary<GameItem, int>();
+    GameObject ingamecanves;
+    bool isPaused;
+    GameItem currentObjectEquipped; // The item that is currently selected by the player
+
+    void Start()
+    {
+        ingamecanves = GameObject.FindWithTag("GameCanves");
+        isPaused = false;
+
+        inventory.Callback += onInventoryChange;
+
+
+    }
+
+   
 
     void Update()
     {
@@ -18,18 +34,61 @@ public class PlayerControl : NetworkBehaviour
         {
             rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
 
-            if (Input.GetMouseButtonDown(0))
+            //if the game is paused
+            if (!isPaused)
             {
-                Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                interectWithObjectAtPos(mousepos);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    interectWithObjectAtPos(mousepos);
 
+                }
             }
+            
 
+
+
+
+            // Pause menu trigger
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (isPaused)
+                {
+                    isPaused = true;
+                    ingamecanves.SetActive(true);
+                } else
+                {
+                    isPaused = false;
+                    ingamecanves.SetActive(false);
+                }
+            }
 
         }
     }
 
 
+    //Called on the change of the inventory dict 
+    public void onInventoryChange(SyncDictionary<GameItem, int>.Operation op, GameItem key, int value)
+    {
+        if (!isLocalPlayer)
+        {
+            switch (op)
+            {
+                case SyncIDictionary<GameItem, int>.Operation.OP_ADD:
+                    inventory.Add(key, value);
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_SET:
+                    inventory[key] = value;
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_REMOVE:
+                    // entry removed
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_CLEAR:
+                    // Dictionary was cleared
+                    break;
+            }
+        }
+    }
 
 
     /* This is called when the left mouse button is clicked. 
@@ -47,7 +106,9 @@ public class PlayerControl : NetworkBehaviour
                 GameItem gameItem = selectedObj.GetComponent<GameItem>();
                 if (gameItem != null)
                 {
-                   gameItem.interact();
+                    gameItem.interact(this);
+
+
                 }
             }
 

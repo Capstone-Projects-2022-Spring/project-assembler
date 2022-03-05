@@ -30,8 +30,6 @@ public class PlayFabLogin : MonoBehaviour
             */
             PlayFabSettings.staticSettings.TitleId = "59E24";
         }
-        logincanves.SetActive(true);
-        mainMenu.SetActive(false);
     }
 
     public void onLoginButtonClick()
