@@ -154,7 +154,8 @@ MonoBehaviour:
   syncInterval: 0.1
   speed: 1500
   rigidbody2d: {fileID: -6356492195478957761}
-  collidbox: {fileID: 0}
+  collidbox: {fileID: 4078925203147252689}
+  ingamecanves: {fileID: 0}
 --- !u!50 &-6356492195478957761
 Rigidbody2D:
   serializedVersion: 4

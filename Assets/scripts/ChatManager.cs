@@ -19,7 +19,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public Dropdown friendDropMenu;
     public RawImage avaterImage;
     public Text playerName;
-
+    public InputField addchatinput;
 
     PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
     List<string> dropOptions = new List<string>();
@@ -31,7 +31,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         DontDestroyOnLoad(this.gameObject);
         this.chatAppSettings = getSettings(PhotonNetwork.PhotonServerSettings.AppSettings);
-        Debug.Log("From Awake of chat manager " + chatAppSettings.AppIdChat);
         bool appIdPresent = !string.IsNullOrEmpty(this.chatAppSettings.AppIdChat);
         InvokeRepeating("UpdateChat", 0.0f, 0.1f);
         if (!appIdPresent)
@@ -96,8 +95,46 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         string switchToID = IDtoDisplaynamedict.FirstOrDefault(x => x.Value == dropmenu.captionText.text).Key;
         currentFriendSelectedID = switchToID;
         ChatHistory.text = chathistories[switchToID];
-        Debug.Log("From the changlist" + chathistories[switchToID] + " " + switchToID);
-    } 
+        //Debug.Log("From the changelist" + chathistories[switchToID] + " " + switchToID);
+    }
+    
+    public void onClickAddChatbutton(InputField addchatinput)
+    {
+        if(addchatinput.gameObject.activeSelf == false)
+        {
+            addchatinput.gameObject.SetActive(true);
+        } else
+        {
+            addchatinput.gameObject.SetActive(false);
+        }
+    }
+
+    public void onAddChatInputEnter()
+    {
+        PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
+        {
+            TitleDisplayName = addchatinput.text
+        }, (PlayFab.ClientModels.GetAccountInfoResult result) => 
+        {
+            if(dropOptions.Contains(result.AccountInfo.TitleInfo.DisplayName) == false && result.AccountInfo.PlayFabId != userAccountInfo.AccountInfo.PlayFabId)
+            {
+                dropOptions.Add(result.AccountInfo.TitleInfo.DisplayName);
+                IDtoDisplaynamedict.Add(result.AccountInfo.PlayFabId, result.AccountInfo.TitleInfo.DisplayName);
+                chathistories.Add(result.AccountInfo.PlayFabId, "");
+            }
+
+            //Re-add the entire dropoptions menu
+            friendDropMenu.ClearOptions();
+            friendDropMenu.AddOptions(dropOptions);
+            onFriendListChange(friendDropMenu);
+
+            addchatinput.gameObject.SetActive(false);
+        }, (PlayFabError error) =>
+        {
+            addchatinput.text = "";
+        });
+        
+    }
 
     public void onEnterMessage(string whatever)
     {
@@ -180,7 +217,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
             chathistories.Add(sender, $"{IDtoDisplaynamedict[sender]}: {(string)message}\n");
         }
-        Debug.Log("From the onmessage" + sender);
 
         onFriendListChange(friendDropMenu);
     }
