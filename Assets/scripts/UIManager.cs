@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Mirror;
 
 public class UIManager : NetworkBehaviour
@@ -18,7 +19,9 @@ public class UIManager : NetworkBehaviour
     void Awake()
     {
         manager = NetworkManager.singleton;
-        Debug.Log("from UI manager" + manager);
+#if UNITY_SERVER
+        Debug.Log("In server mode");
+#endif
     }
 
 
@@ -100,6 +103,11 @@ public class UIManager : NetworkBehaviour
         JoinHostCanves.gameObject.SetActive(false);
     }
 
+    public override void OnStartServer()
+    {
+        //GameObject.Find("GameCanvas").transform.GetChild(1).gameObject.SetActive(false);
+    }
+
     public void onJoinHostBackClick()
     {
         StartGameManu.gameObject.SetActive(true);
@@ -107,6 +115,23 @@ public class UIManager : NetworkBehaviour
     }
 
     //-----------
+
+    /*
+     * Game canves functions
+     */
+
+    public void onCancelBackClick()
+    {
+        if (isServer)
+        {
+            manager.StopHost();
+        } else
+        {
+            manager.StopClient();
+        }
+        JoinHostCanves.gameObject.SetActive(true);
+        gameCanves.gameObject.SetActive(false);
+    }
 
 
 
