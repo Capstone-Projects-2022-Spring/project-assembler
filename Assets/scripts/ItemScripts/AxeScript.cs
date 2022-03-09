@@ -7,7 +7,6 @@ public class AxeScript : GameItem
 {
     public override void interact(PlayerControl player)
     {
-        Debug.Log("isground value " + isOnGround);
         if(isOnGround == true)
         {
             //Add to the player inventory
