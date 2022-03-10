@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerControl : NetworkBehaviour
 {
@@ -9,37 +8,23 @@ public class PlayerControl : NetworkBehaviour
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
 
-    public string playFabID;
-    public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
-    public string displayName;
 
-    Canvas ingamecanves;
-    InputField messageInput;
-    Text sessionChatText;
-    GameObject mainCamera;
-    GameObject chatCanvas;
+    public SyncDictionary<GameItem, int> inventory = new SyncDictionary<GameItem, int>();
+    GameObject ingamecanves;
     bool isPaused;
-    public readonly SyncList<string> sessionChat = new SyncList<string>();
     GameItem currentObjectEquipped; // The item that is currently selected by the player
 
     void Start()
     {
+        ingamecanves = GameObject.FindWithTag("GameCanves");
         isPaused = false;
-        //inventory.Callback += onInventoryChange;
-        ingamecanves = GameObject.Find("UIscripts").GetComponent<UIManager>().inGameCanvas;
-        ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
 
-        chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
-        chatCanvas.SetActive(true);
-        sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
+        inventory.Callback += onInventoryChange;
 
-        messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
-        messageInput.onEndEdit.AddListener(delegate { onMessageEntered(messageInput.text); messageInput.text = ""; });
 
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-
-        sessionChat.Callback += onChatHistoryChange;
     }
+
+   
 
     void Update()
     {
@@ -47,12 +32,11 @@ public class PlayerControl : NetworkBehaviour
         // don't control other player's rackets
         if (isLocalPlayer)
         {
-            mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+            rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
 
             //if the game is paused
             if (!isPaused)
             {
-                rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
                 if (Input.GetMouseButtonDown(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -60,33 +44,52 @@ public class PlayerControl : NetworkBehaviour
 
                 }
             }
+            
 
 
-            // Open chat if enter is clicked
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                chatCanvas.SetActive(chatCanvas.gameObject.activeSelf ? false : true);
-            }
+
 
             // Pause menu trigger
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
                 {
-                    isPaused = false;
-                    ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
-                }
-                else
-                {
                     isPaused = true;
-                    ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(true);
+                    ingamecanves.SetActive(true);
+                } else
+                {
+                    isPaused = false;
+                    ingamecanves.SetActive(false);
                 }
             }
 
-
-
         }
     }
+
+
+    //Called on the change of the inventory dict 
+    public void onInventoryChange(SyncDictionary<GameItem, int>.Operation op, GameItem key, int value)
+    {
+        if (!isLocalPlayer)
+        {
+            switch (op)
+            {
+                case SyncIDictionary<GameItem, int>.Operation.OP_ADD:
+                    inventory.Add(key, value);
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_SET:
+                    inventory[key] = value;
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_REMOVE:
+                    // entry removed
+                    break;
+                case SyncIDictionary<GameItem, int>.Operation.OP_CLEAR:
+                    // Dictionary was cleared
+                    break;
+            }
+        }
+    }
+
 
     /* This is called when the left mouse button is clicked. 
      * It detects the gameobject at the mouse position and calls 
@@ -112,56 +115,4 @@ public class PlayerControl : NetworkBehaviour
         }
 
     }
-
-    //Chat functions
-    #region
-    void onChatHistoryChange(SyncList<string>.Operation op, int index, string oldItem, string newItem)
-    {
-        switch (op)
-        {
-            case SyncList<string>.Operation.OP_ADD:
-                //sessionChat.Add(newItem);
-                break;
-            case SyncList<string>.Operation.OP_INSERT:
-                //sessionChat.Insert(index, newItem);
-                break;
-            case SyncList<string>.Operation.OP_REMOVEAT:
-                // index is where it was removed from the list
-                // oldItem is the item that was removed
-                break;
-            case SyncList<string>.Operation.OP_SET:
-                //sessionChat[index] = newItem;
-                break;
-            case SyncList<string>.Operation.OP_CLEAR:
-                // list got cleared
-                break;
-        }
-        updateChat();
-    }
-
-    [Command]
-    void onMessageEntered(string input)
-    {
-        sessionChat.Add(input);
-    }
-
-    void updateChat()
-    {
-        sessionChatText.text = "";
-        foreach (string line in sessionChat)
-        {
-            if(displayName == "")
-            {
-                sessionChatText.text += $">{line}\n";
-            }
-            else
-            {
-                sessionChatText.text += $"{displayName}: {line}\n";
-            }
-        }
-       //RectTransform rt = sessionChatText.gameObject.GetComponent<RectTransform>();
-       //rt.sizeDelta = new Vector2(rt.sizeDelta.x, sessionChat.Count * 30);
-    }
-    #endregion
-
 }

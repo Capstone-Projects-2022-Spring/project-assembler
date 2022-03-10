@@ -21,7 +21,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public Text playerName;
     public InputField addchatinput;
 
-    public PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
+    PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
     List<string> dropOptions = new List<string>();
     Dictionary <string, string> chathistories = new Dictionary<string, string>();
     Dictionary <string, string> IDtoDisplaynamedict = new Dictionary<string, string>();
@@ -59,6 +59,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 //chatClient.AuthValues.AddAuthParameter("username", result.AccountInfo.Username);
                 UserId = userAccountInfo.AccountInfo.PlayFabId
             };
+            Debug.Log($"connecting. Is client null? {chatClient == null}");
             chatClient.ConnectUsingSettings(this.chatAppSettings);
         }
         , onPlayFabError);
