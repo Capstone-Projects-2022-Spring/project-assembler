@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class FriendsListUI : MonoBehaviour
 {
-    /*
+    
     public Canvas mainMenuCanves;
     public Canvas FriendUI;
 
     
+
     public void openFriendList(){
         FriendUI.gameObject.SetActive(true);
         mainMenuCanves.gameObject.SetActive(false);
+    }
+    public void closeFriendList(){
+        FriendUI.gameObject.SetActive(false);
+        mainMenuCanves.gameObject.SetActive(true);
     }
     /*
     void DisplayFriends(List<FriendInfo> friendsCache) { friendsCache.ForEach(f => Debug.Log(f.FriendPlayFabId)); }

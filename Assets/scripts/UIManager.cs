@@ -15,8 +15,6 @@ public class UIManager : NetworkBehaviour
     public Canvas JoinHostCanves;
     public Canvas gameCanves;
     public Canvas chatWindow;
-    public Canvas FriendUI;
-
 
     void Awake()
     {
@@ -53,12 +51,6 @@ public class UIManager : NetworkBehaviour
     }
 
     //-----------
-    public void onFriendList()
-    {
-        FriendUI.gameObject.SetActive(true);
-        mainMenuCanves.gameObject.SetActive(false);
-    }
-
 
     /* 
      * Start game menu
