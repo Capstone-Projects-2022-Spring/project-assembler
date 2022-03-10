@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using Mirror;
 
@@ -82,39 +83,36 @@ public class UIManager : NetworkBehaviour
     /* 
      * Join and host UI functions
      */
-    public void onIPAddressFieldChange(string address)
+    public void onIPAddressFieldChange(InputField address)
     {
-        checkManager();
-        Debug.Log("from UI manager" + address);
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+        {
+            checkManager();
+            manager.networkAddress = address.text.Trim();
+            Debug.Log("from UI manager" + address.text);
+        }
     }
 
     public void onclientJoinButtonClick()
     {
         checkManager();
         manager.StartClient();
-        inGameCanvas.gameObject.SetActive(true);
-        JoinHostCanves.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
     }
 
     public void onHostButtonClick()
     {
         checkManager();
-        inGameCanvas.gameObject.SetActive(true);
-        JoinHostCanves.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
         manager.StartHost();
     }
 
     public override void OnStartClient()
     {
-        //NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().ingamecanves = inGameCanvas;
-        //string accountID = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.PlayFabId;
-        //if (accountID != null)
-        //{
-        //    NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().playFabID = accountID;
-        //}
+        inGameCanvas.gameObject.SetActive(true);
+        JoinHostCanves.gameObject.SetActive(false);
+        chatWindow.gameObject.SetActive(false);
     }
+
+    
 
     public override void OnStartServer()
     {

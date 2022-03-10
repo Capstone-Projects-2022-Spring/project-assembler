@@ -16,6 +16,7 @@ public class PlayerControl : NetworkBehaviour
     Canvas ingamecanves;
     InputField messageInput;
     Text sessionChatText;
+    GameObject mainCamera;
     GameObject chatCanvas;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
@@ -35,6 +36,7 @@ public class PlayerControl : NetworkBehaviour
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(messageInput.text); messageInput.text = ""; });
 
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         sessionChat.Callback += onChatHistoryChange;
     }
@@ -45,6 +47,7 @@ public class PlayerControl : NetworkBehaviour
         // don't control other player's rackets
         if (isLocalPlayer)
         {
+            mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
             //if the game is paused
             if (!isPaused)
@@ -59,13 +62,11 @@ public class PlayerControl : NetworkBehaviour
             }
 
 
-
             // Open chat if enter is clicked
             if (Input.GetKeyDown(KeyCode.T))
             {
                 chatCanvas.SetActive(chatCanvas.gameObject.activeSelf ? false : true);
             }
-
 
             // Pause menu trigger
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -81,6 +82,8 @@ public class PlayerControl : NetworkBehaviour
                     ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(true);
                 }
             }
+
+
 
         }
     }
@@ -147,7 +150,7 @@ public class PlayerControl : NetworkBehaviour
         sessionChatText.text = "";
         foreach (string line in sessionChat)
         {
-            if(displayName == null)
+            if(displayName == "")
             {
                 sessionChatText.text += $">{line}\n";
             }

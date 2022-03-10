@@ -13,6 +13,7 @@ public class SessionInfo : NetworkBehaviour
         public string displayName;
     }
     public readonly SyncList<playerInfo> playersList = new SyncList<playerInfo>();
+    public GameItem attachedToMouseItem;
 
     public override void OnStartClient()
     {
