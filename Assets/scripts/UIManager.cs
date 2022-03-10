@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Mirror;
@@ -15,6 +16,9 @@ public class UIManager : NetworkBehaviour
     public Canvas JoinHostCanves;
     public Canvas gameCanves;
     public Canvas chatWindow;
+
+    public InputField AddressInputField;
+    private string DestinationServer;
 
     void Awake()
     {
@@ -83,7 +87,10 @@ public class UIManager : NetworkBehaviour
      */
     public void onIPAddressFieldChange(string address)
     {
+        DestinationServer = AddressInputField.text;
+        Debug.Log("Destination Server: " + DestinationServer);
         checkManager();
+        manager.networkAddress = DestinationServer;
         Debug.Log("from UI manager" + address);
     }
 

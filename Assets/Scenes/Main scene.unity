@@ -4883,6 +4883,7 @@ MonoBehaviour:
   JoinHostCanves: {fileID: 389376887}
   gameCanves: {fileID: 947986988}
   chatWindow: {fileID: 809958109}
+  AddressInputField: {fileID: 1492206749}
 --- !u!4 &1482258207
 Transform:
   m_ObjectHideFlags: 0
