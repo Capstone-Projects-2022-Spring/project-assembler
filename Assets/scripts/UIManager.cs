@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.IO;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Mirror;
 
 public class UIManager : NetworkBehaviour
@@ -13,8 +13,8 @@ public class UIManager : NetworkBehaviour
     public Canvas StartGameManu;
     public Canvas mainMenuCanves;
     public Canvas JoinHostCanves;
+    public Canvas gameCanves;
     public Canvas chatWindow;
-    public Canvas inGameCanvas;
 
     void Awake()
     {
@@ -37,7 +37,7 @@ public class UIManager : NetworkBehaviour
 
     public void onLoadGameClick()
     {
-        
+
     }
 
     public void onSettingsClick()
@@ -51,7 +51,6 @@ public class UIManager : NetworkBehaviour
     }
 
     //-----------
-
 
     /* 
      * Start game menu
@@ -67,14 +66,12 @@ public class UIManager : NetworkBehaviour
     {
         JoinHostCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
     }
 
     public void onStartGameBackClick()
     {
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
     }
 
     //-----------
@@ -83,46 +80,31 @@ public class UIManager : NetworkBehaviour
     /* 
      * Join and host UI functions
      */
-    public void onIPAddressFieldChange(InputField address)
+    public void onIPAddressFieldChange(string address)
     {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
-        {
-            checkManager();
-            manager.networkAddress = address.text.Trim();
-            Debug.Log("from UI manager" + address.text);
-        }
+        checkManager();
+        Debug.Log("from UI manager" + address);
     }
 
     public void onclientJoinButtonClick()
     {
         checkManager();
         manager.StartClient();
+        gameCanves.gameObject.SetActive(true);
+        JoinHostCanves.gameObject.SetActive(false);
     }
 
     public void onHostButtonClick()
     {
         checkManager();
         manager.StartHost();
-    }
-
-    public override void OnStartClient()
-    {
-        inGameCanvas.gameObject.SetActive(true);
+        gameCanves.gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
     }
-
-    
 
     public override void OnStartServer()
     {
-        //NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().ingamecanves = inGameCanvas;
-        //string accountID = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.PlayFabId;
-        //if(accountID != null)
-        //{
-        //    //NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().playFabID = accountID;
-        //    Debug.Log($"The accountID {accountID}");
-        //}
+        //GameObject.Find("GameCanvas").transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void onJoinHostBackClick()
@@ -137,34 +119,18 @@ public class UIManager : NetworkBehaviour
      * Game canves functions
      */
 
-    public void onSaveGame()
-    {
-        Dictionary<string, Transform> savefile = new Dictionary<string, Transform>();
-        string name = "testsave";
-        savefile.Add("player", NetworkClient.localPlayer.gameObject.transform);
-
-        if (!Directory.Exists("saves"))
-        {
-            Directory.CreateDirectory("saves");
-        }
-        File.WriteAllText($"saves/{name}", JsonUtility.ToJson(savefile));
-    }
-
-    public void onInGameExit()
+    public void onCancelBackClick()
     {
         if (isServer)
         {
             manager.StopHost();
-        }
-        else
+        } else
         {
             manager.StopClient();
         }
         JoinHostCanves.gameObject.SetActive(true);
-        inGameCanvas.gameObject.SetActive(false);
+        gameCanves.gameObject.SetActive(false);
     }
-
-    //-----------
 
 
 
