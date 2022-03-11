@@ -14,20 +14,24 @@ public class PlayerControl : NetworkBehaviour
     public string displayName;
 
     Canvas ingamecanves;
+    Canvas chatUI;
     InputField messageInput;
     Text sessionChatText;
     GameObject mainCamera;
     GameObject chatCanvas;
+    SessionInfo sessionInfoClass;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
     GameItem currentObjectEquipped; // The item that is currently selected by the player
 
-    void Start()
+    void Awake()
     {
         isPaused = false;
         //inventory.Callback += onInventoryChange;
         ingamecanves = GameObject.Find("UIscripts").GetComponent<UIManager>().inGameCanvas;
         ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
+
+        chatUI = GameObject.Find("UIscripts").GetComponent<UIManager>().chatWindow;
 
         chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
         chatCanvas.SetActive(true);
@@ -35,8 +39,11 @@ public class PlayerControl : NetworkBehaviour
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(messageInput.text); messageInput.text = ""; });
+        sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
         sessionChat.Callback += onChatHistoryChange;
     }
@@ -63,7 +70,7 @@ public class PlayerControl : NetworkBehaviour
 
 
             // Open chat if enter is clicked
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.F1))
             {
                 chatCanvas.SetActive(chatCanvas.gameObject.activeSelf ? false : true);
             }
@@ -75,11 +82,13 @@ public class PlayerControl : NetworkBehaviour
                 {
                     isPaused = false;
                     ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
+                    chatUI.gameObject.SetActive(false);
                 }
                 else
                 {
                     isPaused = true;
                     ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(true);
+                    chatUI.gameObject.SetActive(true);
                 }
             }
 
@@ -120,7 +129,7 @@ public class PlayerControl : NetworkBehaviour
         switch (op)
         {
             case SyncList<string>.Operation.OP_ADD:
-                //sessionChat.Add(newItem);
+                updateChat(newItem);
                 break;
             case SyncList<string>.Operation.OP_INSERT:
                 //sessionChat.Insert(index, newItem);
@@ -136,7 +145,6 @@ public class PlayerControl : NetworkBehaviour
                 // list got cleared
                 break;
         }
-        updateChat();
     }
 
     [Command]
@@ -145,20 +153,14 @@ public class PlayerControl : NetworkBehaviour
         sessionChat.Add(input);
     }
 
-    void updateChat()
+    void updateChat(string newLine)
     {
-        sessionChatText.text = "";
-        foreach (string line in sessionChat)
+        sessionChatText.text += $"{displayName}: {newLine}\n";
+        if(newLine.Split(' ')[0] == "/kick")
         {
-            if(displayName == "")
-            {
-                sessionChatText.text += $">{line}\n";
-            }
-            else
-            {
-                sessionChatText.text += $"{displayName}: {line}\n";
-            }
+            sessionInfoClass.kickCommand(newLine.Split()[1]);
         }
+
        //RectTransform rt = sessionChatText.gameObject.GetComponent<RectTransform>();
        //rt.sizeDelta = new Vector2(rt.sizeDelta.x, sessionChat.Count * 30);
     }

@@ -105,14 +105,21 @@ public class UIManager : NetworkBehaviour
         manager.StartHost();
     }
 
-    public override void OnStartClient()
+
+    public void onJoinOrHost()
     {
         inGameCanvas.gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
     }
 
-    
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        inGameCanvas.gameObject.SetActive(false);
+        JoinHostCanves.gameObject.SetActive(true);
+        chatWindow.gameObject.SetActive(true);
+    }
 
     public override void OnStartServer()
     {

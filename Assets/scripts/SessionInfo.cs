@@ -14,17 +14,26 @@ public class SessionInfo : NetworkBehaviour
     }
     public readonly SyncList<playerInfo> playersList = new SyncList<playerInfo>();
     public GameItem attachedToMouseItem;
+    public playerInfo localplayerinfo;
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         playersList.Callback += onPlayersListChange;
-        updatePlayersList("testlol");
 
         for (int index = 0; index < playersList.Count; index++)
             onPlayersListChange(SyncList<playerInfo>.Operation.OP_ADD, index, new playerInfo(), playersList[index]);
 
         PlayFab.ClientModels.GetAccountInfoResult accountID = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo;
+        localplayerinfo = new playerInfo
+        {
+            playFabID = accountID.AccountInfo.PlayFabId,
+            _keys = new List<GameItem>(),
+            _values = new List<int>(),
+            displayName = accountID.AccountInfo.TitleInfo.DisplayName
+        };
+
+        updatePlayersList(accountID.AccountInfo.TitleInfo.DisplayName, accountID.AccountInfo.PlayFabId);
         //for (int i = 0; i < playersList.Count; i++)
         //{
         //    Debug.Log($"{playersList[0].displayName}");
@@ -53,36 +62,59 @@ public class SessionInfo : NetworkBehaviour
         string toprint = "";
         for (int i = 0; i < playersList.Count; i++)
         {
-            toprint += playersList[0].playFabID + " " + playersList[0].displayName + ",";
+            toprint += playersList[i].playFabID + " " + playersList[i].displayName + ",";
         }
         Debug.Log(toprint);
     }
 
     [Command(requiresAuthority = false)]
-    public void updatePlayersList(string test)
+    public void updatePlayersList(string displayNameP, string playfabP)
     {
-        PlayFab.ClientModels.GetAccountInfoResult accountID = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo;
         playerInfo characterMessage = new playerInfo
         {
-            playFabID = accountID.AccountInfo.PlayFabId,
+            playFabID = playfabP,
             _keys = new List<GameItem>(),
             _values = new List<int>(),
-            displayName = accountID.AccountInfo.TitleInfo.DisplayName,
+            displayName = displayNameP,
         };
 
 
-        if (accountID != null)
+        if (playersList != null)
         {
             foreach (playerInfo info in playersList)
             {
-                if (info.playFabID == accountID.AccountInfo.PlayFabId)
+                if (info.playFabID == playfabP)
                 {
                     characterMessage = info;
+                    return;
                 }
             }
         }
 
         playersList.Add(characterMessage);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void kickCommand(string displayname)
+    {
+        foreach(playerInfo info in playersList)
+        {
+            if(info.displayName == displayname)
+            {
+                kick(displayname);
+                break;
+            }
+        }
+
+    }
+
+    [ClientRpc]
+    public void kick(string displayName)
+    {
+        if(localplayerinfo.displayName == displayName)
+        {
+            NetworkManager.singleton.StopClient();
+        }
     }
 
 }
