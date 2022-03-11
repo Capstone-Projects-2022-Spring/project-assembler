@@ -155,7 +155,6 @@ MonoBehaviour:
   speed: 1500
   rigidbody2d: {fileID: -6356492195478957761}
   collidbox: {fileID: 4078925203147252689}
-  ingamecanves: {fileID: 0}
 --- !u!50 &-6356492195478957761
 Rigidbody2D:
   serializedVersion: 4
@@ -164,7 +163,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421537855424734901}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
