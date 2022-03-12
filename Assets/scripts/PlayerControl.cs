@@ -36,10 +36,13 @@ public class PlayerControl : NetworkBehaviour
         chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
         chatCanvas.SetActive(true);
         sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
+        ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(messageInput.text); messageInput.text = ""; });
         sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
+
+        displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 

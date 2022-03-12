@@ -85,12 +85,8 @@ public class UIManager : NetworkBehaviour
      */
     public void onIPAddressFieldChange(InputField address)
     {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
-        {
             checkManager();
             manager.networkAddress = address.text.Trim();
-            Debug.Log("from UI manager" + address.text);
-        }
     }
 
     public void onclientJoinButtonClick()
