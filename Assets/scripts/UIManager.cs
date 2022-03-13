@@ -87,8 +87,8 @@ public class UIManager : NetworkBehaviour
      */
     public void onIPAddressFieldChange(string address)
     {
-        checkManager();
-        Debug.Log("from UI manager" + address);
+            checkManager();
+            manager.networkAddress = address.text.Trim();
     }
 
     public void onclientJoinButtonClick()
@@ -103,8 +103,21 @@ public class UIManager : NetworkBehaviour
     {
         checkManager();
         manager.StartHost();
-        gameCanves.gameObject.SetActive(true);
+    }
+
+
+    public void onJoinOrHost()
+    {
+        inGameCanvas.gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        inGameCanvas.gameObject.SetActive(false);
+        JoinHostCanves.gameObject.SetActive(true);
+        chatWindow.gameObject.SetActive(true);
     }
 
     public override void OnStartServer()

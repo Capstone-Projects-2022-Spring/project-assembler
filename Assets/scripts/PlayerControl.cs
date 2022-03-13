@@ -9,19 +9,39 @@ public class PlayerControl : NetworkBehaviour
     public Collider2D collidbox;
 
 
-    public SyncDictionary<GameItem, int> inventory = new SyncDictionary<GameItem, int>();
-    GameObject ingamecanves;
+    Canvas ingamecanves;
+    Canvas chatUI;
+    InputField messageInput;
+    Text sessionChatText;
+    GameObject mainCamera;
+    GameObject chatCanvas;
+    SessionInfo sessionInfoClass;
     bool isPaused;
     GameItem currentObjectEquipped; // The item that is currently selected by the player
 
-    void Start()
+    void Awake()
     {
         ingamecanves = GameObject.FindWithTag("GameCanves");
         isPaused = false;
 
-        inventory.Callback += onInventoryChange;
+        chatUI = GameObject.Find("UIscripts").GetComponent<UIManager>().chatWindow;
 
+        chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
+        chatCanvas.SetActive(true);
+        sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
+        ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
 
+        messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
+        messageInput.onEndEdit.AddListener(delegate { onMessageEntered(messageInput.text); messageInput.text = ""; });
+        sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
+
+        displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
+
+        sessionChat.Callback += onChatHistoryChange;
     }
 
    
@@ -48,18 +68,26 @@ public class PlayerControl : NetworkBehaviour
 
 
 
+            // Open chat if enter is clicked
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                chatCanvas.SetActive(chatCanvas.gameObject.activeSelf ? false : true);
+            }
 
             // Pause menu trigger
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
                 {
-                    isPaused = true;
-                    ingamecanves.SetActive(true);
-                } else
-                {
                     isPaused = false;
-                    ingamecanves.SetActive(false);
+                    ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
+                    chatUI.gameObject.SetActive(false);
+                }
+                else
+                {
+                    isPaused = true;
+                    ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(true);
+                    chatUI.gameObject.SetActive(true);
                 }
             }
 
@@ -115,4 +143,49 @@ public class PlayerControl : NetworkBehaviour
         }
 
     }
+
+    //Chat functions
+    #region
+    void onChatHistoryChange(SyncList<string>.Operation op, int index, string oldItem, string newItem)
+    {
+        switch (op)
+        {
+            case SyncList<string>.Operation.OP_ADD:
+                updateChat(newItem);
+                break;
+            case SyncList<string>.Operation.OP_INSERT:
+                //sessionChat.Insert(index, newItem);
+                break;
+            case SyncList<string>.Operation.OP_REMOVEAT:
+                // index is where it was removed from the list
+                // oldItem is the item that was removed
+                break;
+            case SyncList<string>.Operation.OP_SET:
+                //sessionChat[index] = newItem;
+                break;
+            case SyncList<string>.Operation.OP_CLEAR:
+                // list got cleared
+                break;
+        }
+    }
+
+    [Command]
+    void onMessageEntered(string input)
+    {
+        sessionChat.Add(input);
+    }
+
+    void updateChat(string newLine)
+    {
+        sessionChatText.text += $"{displayName}: {newLine}\n";
+        if(newLine.Split(' ')[0] == "/kick")
+        {
+            sessionInfoClass.kickCommand(newLine.Split()[1]);
+        }
+
+       //RectTransform rt = sessionChatText.gameObject.GetComponent<RectTransform>();
+       //rt.sizeDelta = new Vector2(rt.sizeDelta.x, sessionChat.Count * 30);
+    }
+    #endregion
+
 }

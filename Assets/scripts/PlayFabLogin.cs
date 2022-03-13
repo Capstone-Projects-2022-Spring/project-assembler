@@ -22,6 +22,7 @@ public class PlayFabLogin : MonoBehaviour
 
     public void Start()
     {
+        DontDestroyOnLoad(this);
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
         {
             /*
