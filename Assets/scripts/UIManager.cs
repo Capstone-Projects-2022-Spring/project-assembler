@@ -137,6 +137,7 @@ public class UIManager : NetworkBehaviour
     Transform friendScrollView;
     List<FriendInfo> myFriends;
     public GameObject FriendListing;
+
     void DisplayFriends(List<FriendInfo> friendsCache) { 
         foreach(FriendInfo friend in friendsCache){
             bool isFound = false;
@@ -173,7 +174,7 @@ public class UIManager : NetworkBehaviour
 
     string friendSearch;
     [SerializeField]
-    GameObject friendPanel;
+    //GameObject friendPanel;
 
     enum FriendIdType { PlayFabId, Username, Email, DisplayName };
 
