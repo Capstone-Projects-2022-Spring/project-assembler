@@ -10,8 +10,8 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject dirt_prefab;
     public GameObject water_prefab;
 
-    int map_width = 150;
-    int map_height = 150;
+    int map_width = 200;
+    int map_height = 200;
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -64,7 +64,7 @@ public class PerlinNoiseMap : MonoBehaviour
         {
             GameObject tile_group = new GameObject(prefab_pair.Value.name);
             tile_group.transform.parent = gameObject.transform;
-            tile_group.transform.localPosition = new Vector3(0, 0, 0);
+            tile_group.transform.localPosition = new Vector3(-(map_width / 2), -(map_height / 2), 0);
             tile_groups.Add(prefab_pair.Key, tile_group);
         }
     }
