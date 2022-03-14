@@ -21,7 +21,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public Text playerName;
     public InputField addchatinput;
 
-    PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
+    public PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
     List<string> dropOptions = new List<string>();
     Dictionary <string, string> chathistories = new Dictionary<string, string>();
     Dictionary <string, string> IDtoDisplaynamedict = new Dictionary<string, string>();

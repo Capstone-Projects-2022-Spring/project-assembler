@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: a83713020c8d1e146bef3c7d04636417, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bfd296e4f7d86846bcd0cc62ae765af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,7 +102,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: d8e6fd9efba20b94383adbf17350504e
+  m_AssetId: 805cd90d7fecc25469637f186715b4e6
   hasSpawned: 0
 --- !u!114 &4356103169647388734
 MonoBehaviour:
@@ -155,9 +155,7 @@ MonoBehaviour:
   itemName: Axe
   rigidbody: {fileID: 9009453118196753398}
   collisionBox: {fileID: 4533632347135810936}
-  isInInventory: 1
   isOnGround: 1
-  isAttachedToMouse: 0
 --- !u!61 &4533632347135810936
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -176,7 +174,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2, y: 2}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

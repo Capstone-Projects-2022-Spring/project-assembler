@@ -35,10 +35,10 @@ public class PerlinNoiseMap : MonoBehaviour
         System.Random xrandom = new System.Random(2000);
         randomOffsetX = xrandom.Next(0, 500);
         rabdomOffsetY = xrandom.Next(0, 500);
-        Debug.Log(randomOffsetX);
-        Debug.Log(rabdomOffsetY);
+        //Debug.Log(randomOffsetX);
+        //Debug.Log(rabdomOffsetY);
 
-        Debug.Log(xrandom);
+        //Debug.Log(xrandom);
         CreateTileset();
         CreateTileGroup();
         GenerateMap();

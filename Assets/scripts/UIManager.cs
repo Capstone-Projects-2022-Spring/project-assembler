@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Mirror;
+using System.IO;
 using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.Json;
@@ -19,6 +21,7 @@ public class UIManager : NetworkBehaviour
     public Canvas JoinHostCanves;
     public Canvas gameCanves;
     public Canvas chatWindow;
+    public Canvas inGameCanvas;
     public Canvas FriendUI;
 
     void Awake()
@@ -71,12 +74,14 @@ public class UIManager : NetworkBehaviour
     {
         JoinHostCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
+        chatWindow.gameObject.SetActive(false);
     }
 
     public void onStartGameBackClick()
     {
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
+        chatWindow.gameObject.SetActive(false);
     }
 
     //-----------
@@ -85,7 +90,7 @@ public class UIManager : NetworkBehaviour
     /* 
      * Join and host UI functions
      */
-    public void onIPAddressFieldChange(string address)
+    public void onIPAddressFieldChange(InputField address)
     {
             checkManager();
             manager.networkAddress = address.text.Trim();
@@ -95,8 +100,6 @@ public class UIManager : NetworkBehaviour
     {
         checkManager();
         manager.StartClient();
-        gameCanves.gameObject.SetActive(true);
-        JoinHostCanves.gameObject.SetActive(false);
     }
 
     public void onHostButtonClick()
@@ -110,6 +113,7 @@ public class UIManager : NetworkBehaviour
     {
         inGameCanvas.gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
+        chatWindow.gameObject.SetActive(false);
     }
 
     public override void OnStopClient()
@@ -131,7 +135,40 @@ public class UIManager : NetworkBehaviour
         JoinHostCanves.gameObject.SetActive(false);
     }
 
+    /*
+     * Game canves functions
+     */
+
+    public void onSaveGame()
+    {
+        Dictionary<string, Transform> savefile = new Dictionary<string, Transform>();
+        string name = "testsave";
+        savefile.Add("player", NetworkClient.localPlayer.gameObject.transform);
+
+        if (!Directory.Exists("saves"))
+        {
+            Directory.CreateDirectory("saves");
+        }
+        File.WriteAllText($"saves/{name}", JsonUtility.ToJson(savefile));
+    }
+
+    public void onInGameExit()
+    {
+        if (isServer)
+        {
+            manager.StopHost();
+        }
+        else
+        {
+            manager.StopClient();
+        }
+        JoinHostCanves.gameObject.SetActive(true);
+        inGameCanvas.gameObject.SetActive(false);
+    }
+
     //-----------
+
+
     /***
      * Start of friends UI
      */
@@ -219,8 +256,8 @@ public class UIManager : NetworkBehaviour
     public void SubmitFirendRequest(){
         AddFriend(FriendIdType.PlayFabId, friendSearch);
     }
-    //end friends UI 
-    
+    //----------- //end friends UI 
+
     /*
      * Game canves functions
      */
