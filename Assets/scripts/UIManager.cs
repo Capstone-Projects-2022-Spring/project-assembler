@@ -19,7 +19,7 @@ public class UIManager : NetworkBehaviour
     public Canvas StartGameManu;
     public Canvas mainMenuCanves;
     public Canvas JoinHostCanves;
-    public Canvas gameCanves;
+    public Canvas ingameCanvas;
     public Canvas chatWindow;
     public Canvas inGameCanvas;
     public Canvas FriendUI;
@@ -257,24 +257,6 @@ public class UIManager : NetworkBehaviour
         AddFriend(FriendIdType.PlayFabId, friendSearch);
     }
     //----------- //end friends UI 
-
-    /*
-     * Game canves functions
-     */
-
-    public void onCancelBackClick()
-    {
-        if (isServer)
-        {
-            manager.StopHost();
-        } else
-        {
-            manager.StopClient();
-        }
-        JoinHostCanves.gameObject.SetActive(true);
-        gameCanves.gameObject.SetActive(false);
-    }
-
 
 
     /*

@@ -59,7 +59,6 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 //chatClient.AuthValues.AddAuthParameter("username", result.AccountInfo.Username);
                 UserId = userAccountInfo.AccountInfo.PlayFabId
             };
-            Debug.Log($"connecting. Is client null? {chatClient == null}");
             chatClient.ConnectUsingSettings(this.chatAppSettings);
         }
         , onPlayFabError);

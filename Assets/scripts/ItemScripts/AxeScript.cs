@@ -7,7 +7,6 @@ public class AxeScript : GameItem
 {
     public override void interact(PlayerControl player)
     {
-        Debug.Log("isground value " + isOnGround);
         if(isOnGround == true)
         {
             //Add to the player inventory
@@ -19,7 +18,9 @@ public class AxeScript : GameItem
             {
                 player.inventory.Add(this, 1);
             }
-            transform.position = new Vector3(0, 0, 0);
+            transform.position = new Vector3(0, 0, 1);
+            gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+            gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
             isOnGround = false;
         }
 

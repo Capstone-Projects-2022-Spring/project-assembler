@@ -15,6 +15,8 @@ public class SessionInfo : NetworkBehaviour
     public readonly SyncList<playerInfo> playersList = new SyncList<playerInfo>();
     public GameItem attachedToMouseItem;
     public playerInfo localplayerinfo;
+    public GameObject playerListing;
+    
 
     public override void OnStartClient()
     {
@@ -91,6 +93,10 @@ public class SessionInfo : NetworkBehaviour
             }
         }
 
+
+        Transform sessionStatsTransform = GameObject.Find("UIscripts").GetComponent<UIManager>().ingameCanvas.gameObject.transform.Find("SessionStats/StatsScrollView/Viewport");
+        GameObject temp = Instantiate(playerListing, sessionStatsTransform);
+        temp.GetComponent<FriendList>().playerId.text = characterMessage.displayName;
         playersList.Add(characterMessage);
     }
 

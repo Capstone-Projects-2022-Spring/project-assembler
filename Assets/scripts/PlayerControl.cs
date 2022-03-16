@@ -15,6 +15,8 @@ public class PlayerControl : NetworkBehaviour
 
     Canvas ingamecanves;
     Canvas chatUI;
+    GameObject InventoryCanvas;
+    GameObject sessionStats;
     InputField messageInput;
     Text sessionChatText;
     GameObject mainCamera;
@@ -35,13 +37,15 @@ public class PlayerControl : NetworkBehaviour
         chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
         chatCanvas.SetActive(true);
         sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
-        ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
+        InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
+        InventoryCanvas.SetActive(false);
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });
         sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
 
         displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
+        sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
@@ -79,6 +83,15 @@ public class PlayerControl : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 chatCanvas.SetActive(chatCanvas.gameObject.activeSelf ? false : true);
+            }
+
+            // sessions stats canvans
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                sessionStats.SetActive(true);
+            } else if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                sessionStats.SetActive(false);
             }
 
             // Pause menu trigger
