@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InventorySlotScript : MonoBehaviour
 {
 
-    public GameItem itemInSlot;
+    public GameObject itemInSlot;
     public SessionInfo sessionInfo;
      
 
@@ -17,7 +17,7 @@ public class InventorySlotScript : MonoBehaviour
         if(itemInSlot != null)
         {
             this.gameObject.GetComponent<Image>().sprite = itemInSlot.gameObject.GetComponent<SpriteRenderer>().sprite;
-        } 
+        }
     }
 
 
@@ -25,23 +25,23 @@ public class InventorySlotScript : MonoBehaviour
     {
         if (itemInSlot == null && sessionInfo.attachedToMouseItem != null)
         {
-            sessionInfo.attachedToMouseItem.isAttachedToMouse = false;
+            sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = false;
             slot.GetComponent<InventorySlotScript>().itemInSlot = sessionInfo.attachedToMouseItem;
             updateImage();
             sessionInfo.attachedToMouseItem = null;
         } else if(itemInSlot != null && sessionInfo.attachedToMouseItem == null)
         {
             sessionInfo.attachedToMouseItem = itemInSlot;
-            sessionInfo.attachedToMouseItem.isAttachedToMouse = true;
+            sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = true;
             //StartCoroutine(itemInSlot.itemAttaching());
             itemInSlot = null;
             this.gameObject.GetComponent<Image>().sprite = null;
         } else if(itemInSlot != null && sessionInfo.attachedToMouseItem != null)
         {
             //StartCoroutine(itemInSlot.itemAttaching());
-            sessionInfo.attachedToMouseItem.isAttachedToMouse = false;
-            itemInSlot.isAttachedToMouse = true;
-            GameItem temp = sessionInfo.attachedToMouseItem;
+            sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = false;
+            itemInSlot.GetComponent<GameItem>().isAttachedToMouse = true;
+            GameObject temp = sessionInfo.attachedToMouseItem;
             sessionInfo.attachedToMouseItem = itemInSlot;
             itemInSlot = temp;
 
@@ -49,7 +49,7 @@ public class InventorySlotScript : MonoBehaviour
         }
     }
 
-    void updateImage()
+    public void updateImage()
     {
         this.gameObject.GetComponent<Image>().sprite = itemInSlot.gameObject.GetComponent<SpriteRenderer>().sprite;
     }

@@ -23,10 +23,13 @@ public class UIManager : NetworkBehaviour
     public Canvas chatWindow;
     public Canvas inGameCanvas;
     public Canvas FriendUI;
+    public SessionInfo sessionInfoClass;
+
+    public GameObject mapgen;
 
     void Awake()
     {
-        manager = NetworkManager.singleton;
+        manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
 #if UNITY_SERVER
         Debug.Log("In server mode");
 #endif
@@ -96,22 +99,28 @@ public class UIManager : NetworkBehaviour
             manager.networkAddress = address.text.Trim();
     }
 
-    public void onclientJoinButtonClick()
+    public void onclientJoinButtonClick(GameObject map)
     {
         checkManager();
         manager.StartClient();
     }
 
-    public void onHostButtonClick()
+    public void onHostButtonClick(GameObject map)
     {
         checkManager();
         manager.StartHost();
     }
 
+    public void onStartServerButtonClick()
+    {
+        checkManager();
+        manager.StartServer();
+    }
 
     public void onJoinOrHost()
     {
         inGameCanvas.gameObject.SetActive(true);
+        inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
     }
@@ -123,6 +132,14 @@ public class UIManager : NetworkBehaviour
         JoinHostCanves.gameObject.SetActive(true);
         chatWindow.gameObject.SetActive(true);
     }
+
+    //public override void OnStartClient()
+    //{
+    //    base.OnStartClient();
+    //    mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+    //    sessionInfoClass.transferMap(mapgen);
+    //    Debug.Log("Recived the map???");
+    //}
 
     public override void OnStartServer()
     {
@@ -267,8 +284,18 @@ public class UIManager : NetworkBehaviour
     {
         if (manager == null)
         {
-            manager = NetworkManager.singleton;
+            manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
         }
 
     }
+
+    [Command(requiresAuthority = false)]
+    public void transferMap(int seed)
+    {
+        //GameObject tempmap = new GameObject("transferMap");
+        this.mapgen.GetComponent<PerlinNoiseMap>().Start();
+        this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+        Debug.Log("Recived the map");
+    }
+
 }

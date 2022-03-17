@@ -30,7 +30,7 @@ public class PerlinNoiseMap : MonoBehaviour
     int rabdomOffsetY;
 
 
-    void Start()
+    public void Start()
     {
         System.Random xrandom = new System.Random(2000);
         randomOffsetX = xrandom.Next(0, 500);
@@ -41,7 +41,6 @@ public class PerlinNoiseMap : MonoBehaviour
         //Debug.Log(xrandom);
         CreateTileset();
         CreateTileGroup();
-        GenerateMap();
     }
 
     //This is where you change the code if you want to change the frequency of certain terrain
@@ -69,7 +68,7 @@ public class PerlinNoiseMap : MonoBehaviour
         }
     }
 
-    void GenerateMap()
+    public void GenerateMap()
     {
         for (int x = 0; x < map_width; x++)
         {

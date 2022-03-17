@@ -21,12 +21,4 @@ public class GameItem : NetworkBehaviour
         return;
     }
 
-
-    void Update()
-    {
-        if (isAttachedToMouse)
-        {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-    }
 }

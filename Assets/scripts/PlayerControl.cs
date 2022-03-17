@@ -49,7 +49,7 @@ public class PlayerControl : NetworkBehaviour
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
+        //GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
         sessionChat.Callback += onChatHistoryChange;
     }
@@ -168,7 +168,10 @@ public class PlayerControl : NetworkBehaviour
     [Command]
     void onMessageEntered(string displaynamefromsender, string input)
     {
-        sessionChat.Add($"{displaynamefromsender}: {input}");
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+        {
+            sessionChat.Add($"{displaynamefromsender}: {input}");
+        }
         //foreach (string message in sessionChat)
         //{
         //    Debug.Log($"{message}, ");
