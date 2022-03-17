@@ -7,7 +7,6 @@ public class AxeScript : GameItem
 {
     public override void interact(PlayerControl player)
     {
-        Debug.Log("isground value " + isOnGround);
         if(isOnGround == true)
         {
             //Add to the player inventory
@@ -19,8 +18,23 @@ public class AxeScript : GameItem
             {
                 player.inventory.Add(this, 1);
             }
-            transform.position = new Vector3(0, 0, 0);
+            transform.position = new Vector3(0, 0, 1);
+            gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+            gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
+
+
+            Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
+            for(int i = 0; i < paranetCanvas.childCount; i++)
+            {
+                if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+                {
+                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = this.gameObject;
+                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+                    break;
+                }
+            }
             isOnGround = false;
+            
         }
 
 

@@ -13,8 +13,19 @@ public class SessionInfo : NetworkBehaviour
         public string displayName;
     }
     public readonly SyncList<playerInfo> playersList = new SyncList<playerInfo>();
-    public GameItem attachedToMouseItem;
+    public GameObject attachedToMouseItem;
     public playerInfo localplayerinfo;
+    public GameObject playerListing;
+
+    void Update()
+    {
+        //Attach teh sprite of the attached item to the mouse location
+        //if (attachedToMouseItem != null)
+        //{
+        //    attachedToMouseItem
+        //}
+    }
+
 
     public override void OnStartClient()
     {
@@ -91,6 +102,10 @@ public class SessionInfo : NetworkBehaviour
             }
         }
 
+
+        Transform sessionStatsTransform = GameObject.Find("UIscripts").GetComponent<UIManager>().ingameCanvas.gameObject.transform.Find("SessionStats/StatsScrollView/Viewport");
+        GameObject temp = Instantiate(playerListing, sessionStatsTransform);
+        temp.GetComponent<FriendList>().playerId.text = characterMessage.displayName;
         playersList.Add(characterMessage);
     }
 
