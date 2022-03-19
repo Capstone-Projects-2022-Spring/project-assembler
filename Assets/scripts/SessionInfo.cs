@@ -15,7 +15,7 @@ public class SessionInfo : NetworkBehaviour
     public readonly SyncList<playerInfo> playersList = new SyncList<playerInfo>();
     public GameObject attachedToMouseItem;
     public playerInfo localplayerinfo;
-    public GameObject playerListing;
+    public GameObject playerTag;
 
     void Update()
     {
@@ -51,11 +51,22 @@ public class SessionInfo : NetworkBehaviour
         //}
     }
 
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        playersList.Remove(localplayerinfo);
+    }
+
     void onPlayersListChange(SyncList<playerInfo>.Operation op, int index, playerInfo oldItem, playerInfo newItem)
     {
+        if (!isLocalPlayer) return;
+
         switch (op)
         {
             case SyncList<playerInfo>.Operation.OP_ADD:
+                Transform sessionStatsTransform = GameObject.Find("UIscripts").GetComponent<UIManager>().ingameCanvas.gameObject.transform.Find("SessionStats/StatsScrollView/Viewport");
+                GameObject temp = Instantiate(playerTag, sessionStatsTransform);
+                temp.GetComponent<UnityEngine.UI.Text>().text = newItem.displayName; 
                 break;
             case SyncList<playerInfo>.Operation.OP_INSERT:
                 break;
@@ -104,8 +115,8 @@ public class SessionInfo : NetworkBehaviour
 
 
         Transform sessionStatsTransform = GameObject.Find("UIscripts").GetComponent<UIManager>().ingameCanvas.gameObject.transform.Find("SessionStats/StatsScrollView/Viewport");
-        GameObject temp = Instantiate(playerListing, sessionStatsTransform);
-        temp.GetComponent<FriendList>().playerId.text = characterMessage.displayName;
+        GameObject temp = Instantiate(playerTag, sessionStatsTransform);
+        temp.GetComponent<UnityEngine.UI.Text>().text = displayNameP;
         playersList.Add(characterMessage);
     }
 
