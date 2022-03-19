@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public class AxeScript : GameItem
 {
@@ -22,18 +23,29 @@ public class AxeScript : GameItem
             gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
             gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
 
+            Transform paranetCanvas;
 
-            Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
-            for(int i = 0; i < paranetCanvas.childCount; i++)
+            try
             {
-                if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+                paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
+                Debug.Log(paranetCanvas);
+
+                for (int i = 0; i < paranetCanvas.childCount; i++)
                 {
-                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = this.gameObject;
-                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
-                    break;
+                    if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+                    {
+                        paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = this.gameObject;
+                        paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+                        break;
+                    }
                 }
+                isOnGround = false;
             }
-            isOnGround = false;
+            catch (NullReferenceException ex)
+            {
+                Debug.Log("inGameCanvas/InventoryCanvas not found.");
+                Debug.Log(ex);
+            }
             
         }
 

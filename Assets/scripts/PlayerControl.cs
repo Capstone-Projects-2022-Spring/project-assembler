@@ -38,7 +38,7 @@ public class PlayerControl : NetworkBehaviour
         chatCanvas.SetActive(true);
         sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
         InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
-        InventoryCanvas.SetActive(false);
+        InventoryCanvas.SetActive(true);
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });

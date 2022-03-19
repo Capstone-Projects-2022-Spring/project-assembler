@@ -15,6 +15,8 @@ public class GameItem : NetworkBehaviour
     public bool isOnGround = true;
     public bool isAttachedToMouse = false;
 
+    public double power = 0.5;
+
     // Called by player when interacted with
     public virtual void interact(PlayerControl player)
     {
