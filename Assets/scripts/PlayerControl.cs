@@ -22,9 +22,10 @@ public class PlayerControl : NetworkBehaviour
     GameObject mainCamera;
     GameObject chatCanvas;
     SessionInfo sessionInfoClass;
+    Transform inventoryCanvas;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
-    GameItem currentObjectEquipped; // The item that is currently selected by the player
+    GameObject currentObjectEquipped; // The item that is currently selected by the player
 
     void Awake()
     {
@@ -38,7 +39,7 @@ public class PlayerControl : NetworkBehaviour
         chatCanvas.SetActive(true);
         sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
         InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
-        InventoryCanvas.SetActive(false);
+        InventoryCanvas.SetActive(true);
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });
@@ -48,6 +49,7 @@ public class PlayerControl : NetworkBehaviour
         sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        Transform inventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").transform;
 
         //GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
@@ -73,6 +75,43 @@ public class PlayerControl : NetworkBehaviour
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     interectWithObjectAtPos(mousepos);
 
+                }
+
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    currentObjectEquipped =  inventoryCanvas.GetChild(0).GetComponent<InventorySlotScript>().itemInSlot;
+                } 
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(1).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(2).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(3).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(4).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(5).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha7))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(6).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha8))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(7).GetComponent<InventorySlotScript>().itemInSlot;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha9))
+                {
+                    currentObjectEquipped = inventoryCanvas.GetChild(8).GetComponent<InventorySlotScript>().itemInSlot;
                 }
             }
             

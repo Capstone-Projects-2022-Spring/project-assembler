@@ -8,13 +8,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8905077773014356213}
+  - component: {fileID: 320098332106723962}
   - component: {fileID: 6116784760272576115}
   - component: {fileID: 98657345855373427}
   - component: {fileID: 2010114437395675943}
   - component: {fileID: -6673852918203683935}
   - component: {fileID: -6356492195478957761}
   - component: {fileID: 4078925203147252689}
+  - component: {fileID: 8269311180050374795}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -22,8 +23,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8905077773014356213
-Transform:
+--- !u!224 &320098332106723962
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -36,6 +37,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.02, y: -0.33}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &6116784760272576115
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -204,3 +210,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 1}
   m_EdgeRadius: 0
+--- !u!222 &8269311180050374795
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2421537855424734901}
+  m_CullTransparentMesh: 1

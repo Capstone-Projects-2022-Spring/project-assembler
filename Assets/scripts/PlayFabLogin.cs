@@ -11,10 +11,15 @@ public class PlayFabLogin : MonoBehaviour
     [Header("Text fields")]
     public InputField emailText;
     public GameObject password;
+    public InputField emailTextToCreate;
+    public InputField displayNameToSet;
+    public InputField passwordToCreate;
     public GameObject prompt;
 
     [Header("UI Elements")]
     public GameObject logincanves;
+    public GameObject loginstuff;
+    public GameObject createAccountCanvas;
     public GameObject mainMenu;
     public GameObject chatui;
 
@@ -39,6 +44,34 @@ public class PlayFabLogin : MonoBehaviour
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, onPlayerFabError);
     }
 
+    public void onCreateAccountButton()
+    {
+        var request = new LoginWithCustomIDRequest { CustomId = emailTextToCreate.text, CreateAccount = true};
+        PlayFabClientAPI.LoginWithCustomID(request, OnCreationSuccess, onPlayerFabError);
+    }
+
+    private void OnCreationSuccess(LoginResult result)
+    {
+        var request = new AddOrUpdateContactEmailRequest { EmailAddress = emailTextToCreate.text };
+        PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult result) =>
+        {
+
+        }, onPlayerFabError);
+
+        var passwordrequest = new AddUsernamePasswordRequest { Password = passwordToCreate.text };
+        PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult result) =>
+        {
+
+        }, onPlayerFabError);
+
+        var displayrequest = new UpdateUserTitleDisplayNameRequest { DisplayName = displayNameToSet.text };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (UpdateUserTitleDisplayNameResult result) =>
+        {
+
+        }, onPlayerFabError);
+        onBackToLoginButton();
+    }
+
     private void OnLoginSuccess(LoginResult result)
     {
         logincanves.SetActive(false);
@@ -59,4 +92,31 @@ public class PlayFabLogin : MonoBehaviour
         mainMenu.SetActive(true);
     }
 
+    public void onBackToLoginButton()
+    {
+        createAccountCanvas.SetActive(false);
+        loginstuff.SetActive(true);
+    }
+
+    public void onSignUpClick()
+    {
+        createAccountCanvas.SetActive(true);
+        loginstuff.SetActive(false);
+    }
+
+    public void checkDisplayNameDoesntExists(string displayName)
+    {
+        string returnvalue = "";
+        PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
+        {
+            TitleDisplayName = displayName
+        }, (PlayFab.ClientModels.GetAccountInfoResult result) =>
+        {
+            returnvalue = result.AccountInfo.TitleInfo.DisplayName;
+        }
+        , onPlayerFabError);
+
+        Debug.Log($"The return value {returnvalue}");
+
+    }
 }
