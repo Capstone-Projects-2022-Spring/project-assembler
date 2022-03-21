@@ -3,7 +3,10 @@ guid: 4a4935988bde145d288e712911056246
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - grass_prefab: {fileID: 7903747548798280740, guid: eb01b116e47bd47d9a51c5af07caded4, type: 3}
+  - dirt_prefab: {fileID: 3549790444084156542, guid: a976048f413fe431eb6a5dda8c0896b8, type: 3}
+  - water_prefab: {fileID: 3441911715668396127, guid: dfa78bb3e17b747ff9a207c50755150e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

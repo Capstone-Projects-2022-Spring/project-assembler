@@ -20,6 +20,8 @@ public class TheNetworkManager : NetworkManager
         uiManager.onJoinOrHost();
         uiManager.mapgen.GetComponent<PerlinNoiseMap>().Start();
         uiManager.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+        uiManager.mapgen.GetComponent<ResourceGen>().Start();
+        uiManager.mapgen.GetComponent<ResourceGen>().GenerateMap();
         //uiManager.transferMap(12312312);
         Debug.Log("Recived the map??? (in networkManager)");
     }

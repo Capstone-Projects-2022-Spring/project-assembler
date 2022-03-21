@@ -295,6 +295,8 @@ public class UIManager : NetworkBehaviour
         //GameObject tempmap = new GameObject("transferMap");
         this.mapgen.GetComponent<PerlinNoiseMap>().Start();
         this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+        this.mapgen.GetComponent<ResourceGen>().Start();
+        this.mapgen.GetComponent<ResourceGen>().GenerateMap();
         Debug.Log("Recived the map");
     }
 
