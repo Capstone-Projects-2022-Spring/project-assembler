@@ -163,6 +163,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     {
         Debug.Log($"Connected to photon chat server as {chatClient.UserId}");
 
+        this.gameObject.SetActive(true);
         StartCoroutine(DownloadAvater());
 
         PlayFabClientAPI.GetFriendsList(new PlayFab.ClientModels.GetFriendsListRequest(), 
