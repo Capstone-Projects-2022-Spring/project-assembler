@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7614713393542160236
+--- !u!1 &6011598230636231168
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7901581132083964360}
-  - component: {fileID: 1663742264271531007}
-  - component: {fileID: -3534110203721591407}
-  - component: {fileID: -3905651697927698724}
-  - component: {fileID: -8967104281024184591}
-  - component: {fileID: 2142804024}
+  - component: {fileID: 79160972355205349}
+  - component: {fileID: 8630937501704688566}
+  - component: {fileID: 6600743147125483372}
+  - component: {fileID: 4520672234095188351}
+  - component: {fileID: -2442913824001212956}
+  - component: {fileID: 5178149090682299823}
+  - component: {fileID: 6785768135150348504}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Copper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7901581132083964360
+--- !u!4 &79160972355205349
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.8114033, y: 3, z: 0}
+  m_LocalPosition: {x: -10, y: 50, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1663742264271531007
+--- !u!212 &8630937501704688566
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,24 +76,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d94ccc0bfd0821442b9565072289ebb2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a3291296c2b9e148bd9d9825bbdf4c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.15, y: 0.61}
+  m_Size: {x: 0.55, y: 0.59}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3534110203721591407
+--- !u!114 &6600743147125483372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4961bb6a8f597d341a4fa694660cbb4d, type: 3}
@@ -100,20 +101,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  itemName: Rock
-  rigidbody: {fileID: -3905651697927698724}
-  collisionBox: {fileID: -8967104281024184591}
-  isInInventory: 1
+  itemName: Copper
+  rigidbody: {fileID: 4520672234095188351}
+  collisionBox: {fileID: -2442913824001212956}
+  isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
---- !u!50 &-3905651697927698724
+--- !u!50 &4520672234095188351
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -127,39 +128,56 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &-8967104281024184591
+--- !u!61 &-2442913824001212956
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.057480216, y: 0}
+  m_Offset: {x: 0, y: 0.042111047}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.15, y: 0.61}
-    newSize: {x: 2.15, y: 0.61}
+    oldSize: {x: 0.55, y: 0.59}
+    newSize: {x: 0.55, y: 0.59}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2303185, y: 0.61}
+  m_Size: {x: 0.55, y: 0.3373335}
   m_EdgeRadius: 0
---- !u!114 &2142804024
+--- !u!114 &5178149090682299823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614713393542160236}
+  m_GameObject: {fileID: 6011598230636231168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 35953755f0b538748811bddaa7a56979
+  hasSpawned: 0
+--- !u!114 &6785768135150348504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6011598230636231168}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}

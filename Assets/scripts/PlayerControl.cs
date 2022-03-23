@@ -70,7 +70,7 @@ public class PlayerControl : NetworkBehaviour
             if (!isPaused)
             {
                 rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     interectWithObjectAtPos(mousepos);
@@ -171,12 +171,26 @@ public class PlayerControl : NetworkBehaviour
                 {
                     gameItem.interact(this);
 
-
                 }
             }
 
         }
 
+    }
+
+    public bool addToInvenotry(GameObject item)
+    {
+        Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
+        for (int i = 0; i < paranetCanvas.childCount; i++)
+        {
+            if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+            {
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = item;
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+                return true;
+            }
+        }
+        return false;
     }
 
     //Chat functions

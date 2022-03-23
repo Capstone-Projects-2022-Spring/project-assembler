@@ -155,7 +155,7 @@ MonoBehaviour:
   itemName: Pickaxe
   rigidbody: {fileID: 3357507556551784127}
   collisionBox: {fileID: 7888881771026204721}
-  isInInventory: 1
+  isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
 --- !u!61 &7888881771026204721

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InventorySlotScript : MonoBehaviour
 {
-
     public GameObject itemInSlot;
     public SessionInfo sessionInfo;
      
@@ -13,6 +12,7 @@ public class InventorySlotScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sessionInfo = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
         this.gameObject.GetComponent<Button>().onClick.AddListener(delegate { onMouseClick(this.gameObject); });
         if(itemInSlot != null)
         {

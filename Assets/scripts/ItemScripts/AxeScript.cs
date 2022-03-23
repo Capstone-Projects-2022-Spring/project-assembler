@@ -7,34 +7,27 @@ public class AxeScript : GameItem
 {
     public override void interact(PlayerControl player)
     {
-        if(isOnGround == true)
+        if (isOnGround == true)
         {
-            //Add to the player inventory
-            if (player.inventory.ContainsKey(this))
+            if (player.addToInvenotry(this.gameObject))
             {
-                player.inventory[this] += 1;
-            }
-            else
-            {
-                player.inventory.Add(this, 1);
-            }
-            transform.position = new Vector3(0, 0, 1);
-            gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
-            gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
 
 
-            Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
-            for(int i = 0; i < paranetCanvas.childCount; i++)
-            {
-                if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+                //Add to the player inventory
+                if (player.inventory.ContainsKey(this))
                 {
-                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = this.gameObject;
-                    paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
-                    break;
+                    player.inventory[this] += 1;
                 }
+                else
+                {
+                    player.inventory.Add(this, 1);
+                }
+                transform.position = new Vector3(0, 0, 1);
+                gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+                gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
+                isOnGround = false;
+
             }
-            isOnGround = false;
-            
         }
 
 
