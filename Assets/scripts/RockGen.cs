@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopperGen : MonoBehaviour
+public class RockGen : MonoBehaviour
 {
     Dictionary<int, GameObject> tileset;
     Dictionary<int, GameObject> tile_groups;
-    public GameObject copper;
+    public GameObject rock;
     public GameObject transparentTile;
 
     int map_width = 200;
@@ -34,6 +34,8 @@ public class CopperGen : MonoBehaviour
         System.Random random = new System.Random(2000);
         randomOffsetX = random.Next(0, 500);
         randomOffsetX = random.Next(0, 500);
+        //Debug.Log(randomOffsetX);
+        //Debug.Log(rabdomOffsetY);
 
         //Debug.Log(xrandom);
         CreateTileset();
@@ -45,7 +47,7 @@ public class CopperGen : MonoBehaviour
     void CreateTileset()
     {
         tileset = new Dictionary<int, GameObject>();
-        tileset.Add(0, copper);
+        tileset.Add(0, rock);
         tileset.Add(1, transparentTile);
         tileset.Add(2, transparentTile);
         tileset.Add(3, transparentTile);

@@ -9426,6 +9426,7 @@ MonoBehaviour:
   FriendUI: {fileID: 528860261}
   sessionInfoClass: {fileID: 1017575549}
   mapgen: {fileID: 1665436337}
+  coppergen: {fileID: 0}
   friendScrollView: {fileID: 1448419174}
   FriendListing: {fileID: 4299633363631135292, guid: 723fb2586057cc44195164e37042f155, type: 3}
 --- !u!4 &1482258207
@@ -10951,6 +10952,8 @@ GameObject:
   - component: {fileID: 1665436338}
   - component: {fileID: 1665436340}
   - component: {fileID: 1665436341}
+  - component: {fileID: 1665436343}
+  - component: {fileID: 1665436342}
   m_Layer: 0
   m_Name: MapGeneration
   m_TagString: Untagged
@@ -11017,6 +11020,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+--- !u!114 &1665436342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665436337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe54594d313dc4bbf8e9b0803acff86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rock: {fileID: 7614713393542160236, guid: 564345542ded17d4da4fd53b4eb073f2, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+--- !u!114 &1665436343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665436337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf2d4e81571e4363bc901c59a38d8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: {fileID: 6550124260682584401, guid: 55af174ea77ac4ede97529c0b4c7c3d2, type: 3}
   transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
 --- !u!1 &1675168921
 GameObject:
