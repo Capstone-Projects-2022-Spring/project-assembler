@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceGen : MonoBehaviour
+public class CopperGen : MonoBehaviour
 {
     Dictionary<int, GameObject> tileset;
     Dictionary<int, GameObject> tile_groups;
-    public GameObject grass_prefab;
-    public GameObject dirt_prefab;
-    public GameObject water_prefab;
+    public GameObject copper;
+    public GameObject transparentTile;
 
     int map_width = 200;
     int map_height = 200;
@@ -48,12 +47,14 @@ public class ResourceGen : MonoBehaviour
     void CreateTileset()
     {
         tileset = new Dictionary<int, GameObject>();
-        tileset.Add(0, grass_prefab);
-        tileset.Add(1, grass_prefab);
-        tileset.Add(2, dirt_prefab);
-        tileset.Add(3, dirt_prefab);
-        tileset.Add(4, dirt_prefab);
-        tileset.Add(5, water_prefab);
+        tileset.Add(0, copper);
+        tileset.Add(1, transparentTile);
+        tileset.Add(2, transparentTile);
+        tileset.Add(3, transparentTile);
+        tileset.Add(4, transparentTile);
+        tileset.Add(5, transparentTile);
+        tileset.Add(6, transparentTile);
+
     }
 
     void CreateTileGroup()
@@ -94,9 +95,9 @@ public class ResourceGen : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 6)
+        if (scale_perlin == 7)
         {
-            scale_perlin = 5;
+            scale_perlin = 6;
         }
 
         return Mathf.FloorToInt(scale_perlin);

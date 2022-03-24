@@ -26,6 +26,7 @@ public class UIManager : NetworkBehaviour
     public SessionInfo sessionInfoClass;
 
     public GameObject mapgen;
+    public GameObject coppergen;
 
     void Awake()
     {
@@ -295,8 +296,8 @@ public class UIManager : NetworkBehaviour
         //GameObject tempmap = new GameObject("transferMap");
         this.mapgen.GetComponent<PerlinNoiseMap>().Start();
         this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-        this.mapgen.GetComponent<ResourceGen>().Start();
-        this.mapgen.GetComponent<ResourceGen>().GenerateMap();
+        this.coppergen.GetComponent<CopperGen>().Start();
+        this.coppergen.GetComponent<CopperGen>().GenerateMap();
         Debug.Log("Recived the map");
     }
 
