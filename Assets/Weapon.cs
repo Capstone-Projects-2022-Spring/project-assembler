@@ -52,7 +52,8 @@ public class Weapon : GameItem
 
     //shooting class
     void Shoot(){
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject generatedBullet = Instantiate(bulletPrefab, firePoint.position, this.transform.rotation);
+        generatedBullet.GetComponent<Rigidbody2D>().velocity = 5 * new Vector2(Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
     }
 
 
