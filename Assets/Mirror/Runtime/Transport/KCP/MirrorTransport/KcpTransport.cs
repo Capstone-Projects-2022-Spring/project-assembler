@@ -1,6 +1,7 @@
 //#if MIRROR <- commented out because MIRROR isn't defined on first import yet
 using System;
 using System.Linq;
+using System.IO;
 using System.Net;
 using UnityEngine;
 using Mirror;
@@ -309,7 +310,7 @@ namespace kcp2k
         }
 #endif
 
-        void OnLogStatistics()
+        void OnLogStatistics() // && server.connections.Count > 0
         {
             if (ServerActive())
             {
