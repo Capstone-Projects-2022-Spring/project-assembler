@@ -6,4 +6,8 @@ using UnityEngine.UI;
 public class FriendList : MonoBehaviour
 {
     public Text playerId;
+
+    public void onInvite(){
+        
+    }
 }
