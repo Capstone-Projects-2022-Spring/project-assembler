@@ -20,6 +20,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public RawImage avaterImage;
     public Text playerName;
     public InputField addchatinput;
+    //new for invites
+    public InputField usernameToInvite;
+    public Button invitePlayerButton;
 
     public PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
     List<string> dropOptions = new List<string>();
@@ -273,5 +276,15 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     void onPlayFabError(PlayFabError error)
     {
         Debug.Log(error);
+    }
+    
+    //function for invites
+    public void onInviteMessage() //,ipAddress currentSessionIP)
+    {
+        string user = usernameToInvite.text;
+        Debug.Log(user);
+        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + " click here to join "; 
+        chatClient.SendPrivateMessage(user, message);
+    
     }
 }
