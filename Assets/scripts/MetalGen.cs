@@ -34,8 +34,9 @@ public class MetalGen : MonoBehaviour
         System.Random random = new System.Random(2000);
         randomOffsetX = random.Next(0, 500);
         randomOffsetX = random.Next(0, 500);
+        Debug.Log("off set X is " + randomOffsetX);
+        Debug.Log("off set Y is " + rabdomOffsetY);
 
-        //Debug.Log(xrandom);
         CreateTileset();
         CreateTileGroup();
     }
@@ -52,6 +53,7 @@ public class MetalGen : MonoBehaviour
         tileset.Add(4, transparentTile);
         tileset.Add(5, transparentTile);
         tileset.Add(6, transparentTile);
+        tileset.Add(7, transparentTile);
 
     }
 
@@ -93,9 +95,9 @@ public class MetalGen : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 7)
+        if (scale_perlin == 8)
         {
-            scale_perlin = 6;
+            scale_perlin = 7;
         }
 
         return Mathf.FloorToInt(scale_perlin);
