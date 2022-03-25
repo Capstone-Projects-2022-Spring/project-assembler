@@ -31,9 +31,8 @@ public class CopperGen : MonoBehaviour
 
     public void Start()
     {
-        System.Random random = new System.Random(2000);
-        randomOffsetX = random.Next(0, 500);
-        rabdomOffsetY = random.Next(0, 500);
+        randomOffsetX = Random.Range(0, 500);
+        rabdomOffsetY = Random.Range(0, 500);
         Debug.Log("off set X is " + randomOffsetX);
         Debug.Log("off set Y is " + rabdomOffsetY);
         CreateTileset();
