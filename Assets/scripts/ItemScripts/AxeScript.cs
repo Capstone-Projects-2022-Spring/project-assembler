@@ -9,7 +9,7 @@ public class AxeScript : GameItem
     {
         if (isOnGround == true)
         {
-            if (player.addToInvenotry(this.gameObject))
+            if (player.addToInvenotry(this.gameObject, true))
             {
 
 
@@ -22,10 +22,6 @@ public class AxeScript : GameItem
                 {
                     player.inventory.Add(this, 1);
                 }
-                transform.position = new Vector3(0, 0, 1);
-                gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
-                gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
-                isOnGround = false;
 
             }
         }

@@ -70,7 +70,6 @@ public class OreMinerScript : GameItem
     void changeToggle()
     {
        active = activeToggle.isOn;
-        Debug.Log("changing the toggle");
     }
 
 }

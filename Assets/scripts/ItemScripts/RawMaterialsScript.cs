@@ -18,12 +18,11 @@ public class RawMaterialsScript : GameItem
 
     public override void interact(PlayerControl player)
     {
-        //Debug.Log($"lastTimeClickedon = {lastTimeClickedon}, Actual time = ");
-        if (mine())
+        if (mine() && player.currentObjectEquipped != null && player.currentObjectEquipped.GetComponent<AxeScript>() != null)
         {
-            player.addToInvenotry(this.gameObject);
+            player.addToInvenotry(this.gameObject, false);
         }
-        
+
     }
 
     public bool mine()
@@ -32,14 +31,23 @@ public class RawMaterialsScript : GameItem
         {
             lastTimeClickedon = Time.timeAsDouble;
             countLeftToGather -= 1;
+            updateNums(countLeftToGather, materialCount);
             if (countLeftToGather == 0)
             {
                 countLeftToGather = 5;
                 materialCount -= 1;
+                updateNums(countLeftToGather, materialCount);
                 return true;
             }
         }
         return false;
+    }
+
+    [Command(requiresAuthority = false)]
+    void updateNums(int newcountlefttogather, int newMatreilCount)
+    {
+        countLeftToGather = newcountlefttogather;
+        materialCount = newMatreilCount;
     }
 
 }

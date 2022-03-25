@@ -169,6 +169,18 @@ public class UIManager : NetworkBehaviour
         File.WriteAllText($"saves/{name}", JsonUtility.ToJson(savefile));
     }
 
+    public void OnOpenTechTreeClick()
+    {
+        //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(true);
+        ingameCanvas.transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    public void OnCloseTechTreeClick()
+    {
+        //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(false);
+        ingameCanvas.transform.GetChild(3).gameObject.SetActive(false);
+    }
+
     public void onInGameExit()
     {
         if (isServer)
@@ -295,7 +307,7 @@ public class UIManager : NetworkBehaviour
         //GameObject tempmap = new GameObject("transferMap");
         this.mapgen.GetComponent<PerlinNoiseMap>().Start();
         this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-        Debug.Log("Recived the map");
     }
+
 
 }
