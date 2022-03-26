@@ -16,7 +16,7 @@ public class RockGen : MonoBehaviour
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
 
     // Magnificantion changes the frequency of all terrain recommend 4 - 20
-    float magnification = 14.0f;
+    float magnification = 20.0f;
 
     //offset changes the starting point of the map
     //These are fixed value offsets
@@ -53,7 +53,8 @@ public class RockGen : MonoBehaviour
         tileset.Add(5, transparentTile);
         tileset.Add(6, transparentTile);
         tileset.Add(7, transparentTile);
-
+        tileset.Add(8, transparentTile);
+        tileset.Add(9, transparentTile);
     }
 
     void CreateTileGroup()
@@ -94,9 +95,9 @@ public class RockGen : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 8)
+        if (scale_perlin == 10)
         {
-            scale_perlin = 7;
+            scale_perlin = 9;
         }
 
         return Mathf.FloorToInt(scale_perlin);
