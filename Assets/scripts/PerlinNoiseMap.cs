@@ -50,10 +50,11 @@ public class PerlinNoiseMap : MonoBehaviour
         tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, grass_prefab);
         tileset.Add(1, grass_prefab);
-        tileset.Add(2, dirt_prefab);
+        tileset.Add(2, grass_prefab);
         tileset.Add(3, dirt_prefab);
         tileset.Add(4, dirt_prefab);
         tileset.Add(5, water_prefab);
+        
     }
 
     void CreateTileGroup()
