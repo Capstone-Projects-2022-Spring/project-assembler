@@ -295,6 +295,12 @@ public class UIManager : NetworkBehaviour
         //GameObject tempmap = new GameObject("transferMap");
         this.mapgen.GetComponent<PerlinNoiseMap>().Start();
         this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+        this.mapgen.GetComponent<CopperGen>().Start();
+        this.mapgen.GetComponent<CopperGen>().GenerateMap();
+        this.mapgen.GetComponent<MetalGen>().Start();
+        this.mapgen.GetComponent<MetalGen>().GenerateMap();
+        this.mapgen.GetComponent<RockGen>().Start();
+        this.mapgen.GetComponent<RockGen>().GenerateMap();
         Debug.Log("Recived the map");
     }
 
