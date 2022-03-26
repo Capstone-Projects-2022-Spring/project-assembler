@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class Weapon : GameItem
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
+    double lastShot;
+
+    private void Start()
+    {
+        lastShot = Time.timeAsDouble;
+    }
 
     public override void interact(PlayerControl player)
     {
@@ -24,32 +31,37 @@ public class Weapon : GameItem
                 {
                     player.inventory.Add(this, 1);
                 }
-                transform.position = new Vector3(0, 0, 1);
-                gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
-                gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
-                isOnGround = false;
-
             }
         }
 
 
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if(Input.GetButtonDown("Fire1")){
-    //        Shoot();
-    //    }
-    //}
-
-    //shooting class
-    void Shoot(){
-        GameObject generatedBullet = Instantiate(bulletPrefab, firePoint.position, this.transform.rotation);
-        Mirror.NetworkServer.Spawn(generatedBullet);
-        generatedBullet.GetComponent<Rigidbody2D>().velocity = 5 * new Vector2(Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
+    public override void actionFromInventroy(PlayerControl player)
+    {
+        if (lastShot != null && Time.timeAsDouble - lastShot < 0.1)
+        {
+            lastShot = Time.timeAsDouble;
+        }else
+        {
+            Shoot(player.transform, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            lastShot = Time.timeAsDouble;
+        }
     }
 
 
+    [Command(requiresAuthority = false)]
+    void Shoot(Transform shootPosition, Vector2 mousepos)
+    {
+        Quaternion angle = new Quaternion();
+        Vector2 directionVector = new Vector2(mousepos.x - shootPosition.position.x, mousepos.y - shootPosition.position.y);
+        angle.eulerAngles = new Vector3(0, 0, Vector2.Angle(new Vector3(1, 0, 0), directionVector));
+
+        float offset = 4;
+        Vector3 postionToSpawnOn = new Vector3(shootPosition.position.x + offset * directionVector.normalized.x, shootPosition.position.y + offset * directionVector.normalized.y, 0);
+        GameObject generatedBullet = Instantiate(bulletPrefab, postionToSpawnOn, angle);
+        generatedBullet.GetComponent<Rigidbody2D>().velocity = 100f * directionVector.normalized;
+        NetworkServer.Spawn(generatedBullet);
+    }
     
 }

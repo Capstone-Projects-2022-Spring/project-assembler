@@ -76,7 +76,7 @@ public class PlayerControl : NetworkBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    if (interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
+                    if (!interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
                     {
                         currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
                     }

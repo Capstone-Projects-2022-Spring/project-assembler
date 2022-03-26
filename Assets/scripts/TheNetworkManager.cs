@@ -7,14 +7,12 @@ public class TheNetworkManager : NetworkManager
 {
     public UIManager uiManager;
     GameObject generatedMap;
-    public GameObject offsetMap;
 
     public override void OnStartServer()
     {
         base.OnStartServer();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
-        uiManager.mapgen.transform.position = offsetMap.transform.position;
         generatedMap = Instantiate(uiManager.mapgen);
         generatedMap.GetComponent<PerlinNoiseMap>().Start();
         generatedMap.GetComponent<PerlinNoiseMap>().GenerateMap();

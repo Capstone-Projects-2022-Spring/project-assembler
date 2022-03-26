@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 2010114437395675943}
   - component: {fileID: -6673852918203683935}
   - component: {fileID: -6356492195478957761}
-  - component: {fileID: 4078925203147252689}
-  - component: {fileID: 8269311180050374795}
+  - component: {fileID: -4831663297448198066}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -160,7 +159,7 @@ MonoBehaviour:
   syncInterval: 0.1
   speed: 1500
   rigidbody2d: {fileID: -6356492195478957761}
-  collidbox: {fileID: 4078925203147252689}
+  collidbox: {fileID: 0}
   playFabID: 
   displayName: 
   currentObjectEquipped: {fileID: 0}
@@ -185,7 +184,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &4078925203147252689
+--- !u!61 &-4831663297448198066
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +197,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000000029802322, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -209,13 +208,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.99999994, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!222 &8269311180050374795
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2421537855424734901}
-  m_CullTransparentMesh: 1
