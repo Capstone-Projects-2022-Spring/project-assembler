@@ -7,7 +7,7 @@ public class AxeScript : GameItem
 {
     public override void interact(PlayerControl player)
     {
-        if (isOnGround == true)
+        if (isOnGround == true && Input.GetMouseButtonDown(0))
         {
             if (player.addToInvenotry(this.gameObject, true))
             {

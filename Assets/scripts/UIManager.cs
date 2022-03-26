@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Mirror;
 using System.IO;
 using PlayFab;
 using PlayFab.ClientModels;
-using PlayFab.Json;
 using PlayFab.DataModels;
 
 public class UIManager : NetworkBehaviour
@@ -99,13 +96,13 @@ public class UIManager : NetworkBehaviour
             manager.networkAddress = address.text.Trim();
     }
 
-    public void onclientJoinButtonClick(GameObject map)
+    public void onclientJoinButtonClick()
     {
         checkManager();
         manager.StartClient();
     }
 
-    public void onHostButtonClick(GameObject map)
+    public void onHostButtonClick()
     {
         checkManager();
         manager.StartHost();
@@ -125,14 +122,6 @@ public class UIManager : NetworkBehaviour
         chatWindow.gameObject.SetActive(false);
     }
 
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-        inGameCanvas.gameObject.SetActive(false);
-        JoinHostCanves.gameObject.SetActive(true);
-        chatWindow.gameObject.SetActive(true);
-    }
-
     //public override void OnStartClient()
     //{
     //    base.OnStartClient();
@@ -141,10 +130,6 @@ public class UIManager : NetworkBehaviour
     //    Debug.Log("Recived the map???");
     //}
 
-    public override void OnStartServer()
-    {
-        //GameObject.Find("GameCanvas").transform.GetChild(1).gameObject.SetActive(false);
-    }
 
     public void onJoinHostBackClick()
     {
@@ -301,13 +286,13 @@ public class UIManager : NetworkBehaviour
 
     }
 
-    [Command(requiresAuthority = false)]
-    public void transferMap(int seed)
-    {
-        //GameObject tempmap = new GameObject("transferMap");
-        this.mapgen.GetComponent<PerlinNoiseMap>().Start();
-        this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-    }
+    //[Command(requiresAuthority = false)]
+    //public void transferMap(int seed)
+    //{
+    //    //GameObject tempmap = new GameObject("transferMap");
+    //    this.mapgen.GetComponent<PerlinNoiseMap>().Start();
+    //    this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
+    //}
 
 
 }

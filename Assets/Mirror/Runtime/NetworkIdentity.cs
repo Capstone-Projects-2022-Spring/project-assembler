@@ -706,7 +706,7 @@ namespace Mirror
                 isLocalPlayer = true;
             }
 
-            // Debug.Log($"OnStartClient {gameObject} netId:{netId}");
+            //Debug.Log($"OnStartClient {gameObject} netId:{netId}");
             foreach (NetworkBehaviour comp in NetworkBehaviours)
             {
                 // an exception in OnStartClient should be caught, so that one

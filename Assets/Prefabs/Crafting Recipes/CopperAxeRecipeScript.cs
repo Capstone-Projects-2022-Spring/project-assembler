@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 
-public class CopperAxeRecipeScript : MonoBehaviour
+public class CopperAxeRecipeScript : NetworkBehaviour
 {
 
     Transform paranetCanvas;
@@ -57,9 +57,7 @@ public class CopperAxeRecipeScript : MonoBehaviour
                 }
                 if (copperOreLeft == 0)
                 {
-                    GameObject result = Instantiate(copperAxe);
-                    NetworkServer.Spawn(result);
-                    NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(result, true);
+                    spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }
             }
@@ -71,6 +69,23 @@ public class CopperAxeRecipeScript : MonoBehaviour
             obj.updateImage();
         }
 
+    }
+
+
+    [Command]
+    void spawnItem(uint conn)
+    {
+        GameObject result = Instantiate(copperAxe);
+        NetworkServer.Spawn(result);
+        getResultItem(conn,result);
+    }
+
+
+    [ClientRpc]
+    void getResultItem(uint conn,GameObject item)
+    {
+        if(NetworkClient.localPlayer.netId == conn)
+            NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, true);
     }
 
 

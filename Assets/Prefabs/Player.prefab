@@ -163,6 +163,7 @@ MonoBehaviour:
   collidbox: {fileID: 4078925203147252689}
   playFabID: 
   displayName: 
+  currentObjectEquipped: {fileID: 0}
 --- !u!50 &-6356492195478957761
 Rigidbody2D:
   serializedVersion: 4
