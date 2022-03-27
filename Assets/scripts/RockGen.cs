@@ -61,8 +61,8 @@ public class RockGen : MonoBehaviour
         foreach (KeyValuePair<int, GameObject> prefab_pair in tileset)
         {
             GameObject tile_group = new GameObject(prefab_pair.Value.name);
-            tile_group.transform.parent = this.gameObject.transform;
-            tile_group.transform.localPosition = new Vector3(0, 0, 0);
+            tile_group.transform.parent = gameObject.transform;
+            tile_group.transform.localPosition = new Vector3(-(map_width / 2), -(map_height / 2), 0);
             tile_groups.Add(prefab_pair.Key, tile_group);
         }
     }

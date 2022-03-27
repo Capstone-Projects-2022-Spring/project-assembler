@@ -33,7 +33,6 @@ public class CopperGen : MonoBehaviour
     {
         randomOffsetX = Random.Range(0, 500);
         rabdomOffsetY = Random.Range(0, 500);
-
         CreateTileset();
         CreateTileGroup();
     }
