@@ -1,15 +1,13 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerlinNoiseMap : MonoBehaviour
+public class RockGen : MonoBehaviour
 {
     Dictionary<int, GameObject> tileset;
     Dictionary<int, GameObject> tile_groups;
-    public GameObject grass_prefab;
-    public GameObject dirt_prefab;
-    public GameObject water_prefab;
+    public GameObject rock;
+    public GameObject transparentTile;
 
     int map_width = 200;
     int map_height = 200;
@@ -18,7 +16,7 @@ public class PerlinNoiseMap : MonoBehaviour
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
 
     // Magnificantion changes the frequency of all terrain recommend 4 - 20
-    float magnification = 14.0f;
+    float magnification = 20.0f;
 
     //offset changes the starting point of the map
     //These are fixed value offsets
@@ -33,13 +31,9 @@ public class PerlinNoiseMap : MonoBehaviour
 
     public void Start()
     {
-        System.Random xrandom = new System.Random(DateTime.Now.Second);
-        randomOffsetX = xrandom.Next(0, 500);
-        rabdomOffsetY = xrandom.Next(0, 500);
-        //Debug.Log(randomOffsetX);
-        //Debug.Log(rabdomOffsetY);
+        randomOffsetX = Random.Range(0, 500);
+        rabdomOffsetY = Random.Range(0, 500);
 
-        //Debug.Log(xrandom);
         CreateTileset();
         CreateTileGroup();
     }
@@ -49,12 +43,16 @@ public class PerlinNoiseMap : MonoBehaviour
     void CreateTileset()
     {
         tileset = new Dictionary<int, GameObject>();
-        tileset.Add(0, grass_prefab);
-        tileset.Add(1, grass_prefab);
-        tileset.Add(2, dirt_prefab);
-        tileset.Add(3, dirt_prefab);
-        tileset.Add(4, dirt_prefab);
-        tileset.Add(5, water_prefab);
+        tileset.Add(0, rock);
+        tileset.Add(1, transparentTile);
+        tileset.Add(2, transparentTile);
+        tileset.Add(3, transparentTile);
+        tileset.Add(4, transparentTile);
+        tileset.Add(5, transparentTile);
+        tileset.Add(6, transparentTile);
+        tileset.Add(7, transparentTile);
+        tileset.Add(8, transparentTile);
+        tileset.Add(9, transparentTile);
     }
 
     void CreateTileGroup()
@@ -63,7 +61,7 @@ public class PerlinNoiseMap : MonoBehaviour
         foreach (KeyValuePair<int, GameObject> prefab_pair in tileset)
         {
             GameObject tile_group = new GameObject(prefab_pair.Value.name);
-            tile_group.transform.parent = gameObject.transform;
+            tile_group.transform.parent = this.gameObject.transform;
             tile_group.transform.localPosition = new Vector3(0, 0, 0);
             tile_groups.Add(prefab_pair.Key, tile_group);
         }
@@ -95,9 +93,9 @@ public class PerlinNoiseMap : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 6)
+        if (scale_perlin == 10)
         {
-            scale_perlin = 5;
+            scale_perlin = 9;
         }
 
         return Mathf.FloorToInt(scale_perlin);
@@ -107,11 +105,10 @@ public class PerlinNoiseMap : MonoBehaviour
     {
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
-        GameObject tile = Instantiate(tile_prefab,tile_group.transform);
-
+        GameObject tile = Instantiate(tile_prefab, tile_group.transform);
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
-        tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width/2), -(map_height/2), 0);
+        tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width / 2), -(map_height / 2), 0);
 
         tile_grid[x].Add(tile);
     }

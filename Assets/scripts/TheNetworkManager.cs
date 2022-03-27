@@ -16,15 +16,20 @@ public class TheNetworkManager : NetworkManager
         generatedMap = Instantiate(uiManager.mapgen);
         generatedMap.GetComponent<PerlinNoiseMap>().Start();
         generatedMap.GetComponent<PerlinNoiseMap>().GenerateMap();
-        NetworkServer.Spawn(generatedMap);
-        //for (int i = 0; i < generatedMap.transform.childCount; i++)
-        //{
-        //    GameObject temp = generatedMap.transform.GetChild(i).gameObject;
-        //    for (int q = 0; q < temp.transform.childCount; q++)
-        //    {
-        //        NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
-        //    }
-        //}
+        generatedMap.GetComponent<CopperGen>().Start();
+        generatedMap.GetComponent<CopperGen>().GenerateMap();
+        generatedMap.GetComponent<MetalGen>().Start();
+        generatedMap.GetComponent<MetalGen>().GenerateMap();
+        generatedMap.GetComponent<RockGen>().Start();
+        generatedMap.GetComponent<RockGen>().GenerateMap();
+        for (int i = 0; i < generatedMap.transform.childCount; i++)
+        {
+            GameObject temp = generatedMap.transform.GetChild(i).gameObject;
+            for (int q = 0; q < temp.transform.childCount; q++)
+            {
+                NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
+            }
+        }
         //uiManager.sessionInfoClass.theMap = uiManager.mapgen;
     }
 
@@ -44,5 +49,16 @@ public class TheNetworkManager : NetworkManager
         //uiManager.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
         //uiManager.transferMap(12312312);
     }
+
+
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        uiManager.inGameCanvas.gameObject.SetActive(false);
+        uiManager.inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(false);
+        uiManager.JoinHostCanves.gameObject.SetActive(true);
+        uiManager.chatWindow.gameObject.SetActive(true);
+    }
+
 
 }

@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1683687127927448257}
   - component: {fileID: 1683687127927448256}
-  - component: {fileID: -7053356663939101583}
+  - component: {fileID: 8813394982891620679}
+  - component: {fileID: 391465320394137951}
+  - component: {fileID: 1639642287522077522}
   m_Layer: 0
   m_Name: MapGeneration
   m_TagString: Untagged
@@ -44,10 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4935988bde145d288e712911056246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grass_prefab: {fileID: 1097737170242908504, guid: d1122ce2f07df4854b9d0cbbb7244539, type: 3}
-  dirt_prefab: {fileID: 2413120426729481788, guid: bbf3adb16ff914c57869424024e9bfdd, type: 3}
-  water_prefab: {fileID: 6565119189370887253, guid: c8b8b3b3f766c403581b26d5e45631b8, type: 3}
---- !u!114 &-7053356663939101583
+  grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
+  dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
+  water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
+--- !u!114 &8813394982891620679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,11 +58,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683687127927448259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: fe54594d313dc4bbf8e9b0803acff86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 56a9a3f125e1e7442adec7b2ad4fcb7e
-  hasSpawned: 0
+  rock: {fileID: 7614713393542160236, guid: 564345542ded17d4da4fd53b4eb073f2, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+--- !u!114 &391465320394137951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683687127927448259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf2d4e81571e4363bc901c59a38d8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: {fileID: 7326615202421249311, guid: e156d658d6a09ce46af9d99a5e2c9c20, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+--- !u!114 &1639642287522077522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683687127927448259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ff73e82a8774186b74f22c2e6d4037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
