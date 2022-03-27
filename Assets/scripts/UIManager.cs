@@ -24,6 +24,7 @@ public class UIManager : NetworkBehaviour
     public Canvas inGameCanvas;
     public Canvas FriendUI;
     public SessionInfo sessionInfoClass;
+    public GameObject MapMenuUI;
 
     public GameObject mapgen;
 
@@ -85,6 +86,7 @@ public class UIManager : NetworkBehaviour
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
+        MapMenuUI.gameObject.SetActive(false);
     }
 
     //-----------
