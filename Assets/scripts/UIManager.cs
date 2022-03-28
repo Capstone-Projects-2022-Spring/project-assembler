@@ -121,6 +121,7 @@ public class UIManager : NetworkBehaviour
     {
         inGameCanvas.gameObject.SetActive(true);
         inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
+        inGameCanvas.gameObject.transform.Find("CraftingCanvas").gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
     }

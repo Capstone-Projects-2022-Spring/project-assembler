@@ -16,6 +16,7 @@ public class PlayerControl : NetworkBehaviour
     Canvas ingamecanves;
     Canvas chatUI;
     GameObject InventoryCanvas;
+    GameObject craftingCanvas;
     GameObject sessionStats;
     InputField messageInput;
     Text sessionChatText;
@@ -34,12 +35,13 @@ public class PlayerControl : NetworkBehaviour
         ingamecanves.gameObject.transform.Find("PauseMenu").gameObject.SetActive(false);
 
         chatUI = GameObject.Find("UIscripts").GetComponent<UIManager>().chatWindow;
-
         chatCanvas = ingamecanves.gameObject.transform.Find("SessionChat").gameObject;
         chatCanvas.SetActive(true);
         sessionChatText = ingamecanves.gameObject.transform.Find("SessionChat/Panel/ChatHistory").GetComponent<Text>();
         InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
         InventoryCanvas.SetActive(true);
+        craftingCanvas = ingamecanves.gameObject.transform.Find("CraftingCanvas").gameObject;
+        craftingCanvas.SetActive(true);
 
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });
@@ -114,9 +116,12 @@ public class PlayerControl : NetworkBehaviour
                     currentObjectEquipped = inventoryCanvas.GetChild(8).GetComponent<InventorySlotScript>().itemInSlot;
                 }
             }
-            
 
-
+            // Open/close the crafting canvas when 'c' is pressed 
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                craftingCanvas.SetActive(!craftingCanvas.gameObject.activeSelf);
+            }
 
             // Open chat if enter is clicked
             if (Input.GetKeyDown(KeyCode.F1))
