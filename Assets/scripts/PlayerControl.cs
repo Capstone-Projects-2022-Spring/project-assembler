@@ -23,9 +23,11 @@ public class PlayerControl : NetworkBehaviour
     GameObject chatCanvas;
     SessionInfo sessionInfoClass;
     Transform inventoryCanvas;
+    Transform mainInventory;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
-    GameObject currentObjectEquipped; // The item that is currently selected by the player
+    UIManager uimanager;
+    public GameObject currentObjectEquipped; // The item that is currently selected by the player
 
     void Awake()
     {
@@ -41,19 +43,22 @@ public class PlayerControl : NetworkBehaviour
         InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
         InventoryCanvas.SetActive(true);
 
+        //Chat
         messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
         messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });
         sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
 
+        //In game
         displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
         sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
-
+        mainInventory = ingamecanves.gameObject.transform.Find("InventoryCanvas/MainInventory").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        Transform inventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").transform;
+        inventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").transform;
 
         //GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
         sessionChat.Callback += onChatHistoryChange;
+        uimanager = GameObject.Find("UIscripts").GetComponent<UIManager>();
     }
 
    
@@ -64,19 +69,34 @@ public class PlayerControl : NetworkBehaviour
         // don't control other player's rackets
         if (isLocalPlayer)
         {
+            if (uimanager.changeMap)
+            {
+                Debug.Log($"CAlled from player script {uimanager.seedinputInUIManager.text}");
+                servergenerate(uimanager.seedinputInUIManager.text);
+                uimanager.changeMap = false;
+            }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
             //if the game is paused
             if (!isPaused)
             {
                 rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    interectWithObjectAtPos(mousepos);
+                    if (!interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
+                    {
+                        currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
+                    }
 
                 }
 
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    mainInventory.gameObject.SetActive(!mainInventory.gameObject.activeSelf);
+                }
+
+                #region
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     currentObjectEquipped =  inventoryCanvas.GetChild(0).GetComponent<InventorySlotScript>().itemInSlot;
@@ -113,8 +133,9 @@ public class PlayerControl : NetworkBehaviour
                 {
                     currentObjectEquipped = inventoryCanvas.GetChild(8).GetComponent<InventorySlotScript>().itemInSlot;
                 }
+                #endregion
             }
-            
+
 
 
 
@@ -158,7 +179,7 @@ public class PlayerControl : NetworkBehaviour
      * It detects the gameobject at the mouse position and calls 
      * the interact function if that object has a script that inherits GameItem. 
      */
-    void interectWithObjectAtPos(Vector3 pos)
+    bool interectWithObjectAtPos(Vector3 pos)
     {
         Collider2D collided;
         if(collided = Physics2D.OverlapBox(pos, new Vector2(1f, 1f), 0))
@@ -170,13 +191,53 @@ public class PlayerControl : NetworkBehaviour
                 if (gameItem != null)
                 {
                     gameItem.interact(this);
-
-
+                    return true;
                 }
             }
 
         }
+        return false;
+    }
 
+    [Command]
+    void updateLocation(Vector3 changeposition,  GameObject thegameobject, bool newGroundValue)
+    {
+        thegameobject.transform.position = changeposition;
+        thegameobject.GetComponent<GameItem>().isOnGround = newGroundValue;
+    }
+
+    public bool addToInvenotry(GameObject item, bool transferToOrigin)
+    {
+        Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
+        for (int i = 0; i < paranetCanvas.childCount-1; i++)
+        {
+            if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+            {
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = item;
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+                if (transferToOrigin)
+                {
+                    updateLocation(new Vector3(0, 0, 1), item, false);
+                }
+                return true;
+            }
+        }
+
+        for (int i = 0; i < mainInventory.childCount - 1; i++)
+        {
+            if (mainInventory.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
+            {
+                mainInventory.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = item;
+                mainInventory.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+                if (transferToOrigin)
+                {
+                    updateLocation(new Vector3(0, 0, 1), item, false);
+                }
+                return true;
+            }
+        }
+
+        return false;
     }
 
     //Chat functions
@@ -211,10 +272,18 @@ public class PlayerControl : NetworkBehaviour
         {
             sessionChat.Add($"{displaynamefromsender}: {input}");
         }
+
         //foreach (string message in sessionChat)
         //{
         //    Debug.Log($"{message}, ");
         //}
+    }
+
+    [Command]
+    void servergenerate(string seed)
+    {
+        Debug.Log($"Called inside player on server {seed}");
+        uimanager.serverGenrateMap(seed);
     }
 
     void updateChat(string newline)

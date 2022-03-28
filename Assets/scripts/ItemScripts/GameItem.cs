@@ -6,12 +6,11 @@ using Mirror;
 
 public class GameItem : NetworkBehaviour
 {
-    [SyncVar]
-    public string itemName;
     public Rigidbody2D rigidbody;
     public Collider2D collisionBox;
 
     public bool isInInventory = true;
+    [SyncVar(hook = nameof(onChngeOfOnGround))]
     public bool isOnGround = true;
     public bool isAttachedToMouse = false;
 
@@ -26,4 +25,21 @@ public class GameItem : NetworkBehaviour
         return;
     }
 
+    public virtual void onChngeOfOnGround(bool oldvalue, bool newvalue)
+    {
+        if (!newvalue)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = !gameObject.GetComponent<SpriteRenderer>().enabled;
+            this.gameObject.GetComponent<Collider2D>().enabled = !gameObject.GetComponent<Collider2D>().enabled;
+        } else
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            this.gameObject.GetComponent<Collider2D>().enabled = true;
+        }
+    }
+
+    public virtual void actionFromInventroy(PlayerControl player)
+    {
+        return;
+    }
 }

@@ -11,6 +11,7 @@ public class RockGen : MonoBehaviour
 
     int map_width = 200;
     int map_height = 200;
+    public int map_seed = 0;
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -29,12 +30,19 @@ public class RockGen : MonoBehaviour
     int rabdomOffsetY;
 
 
-    public void Start()
+    public void FakeStart()
     {
-        randomOffsetX = Random.Range(0, 500);
-        rabdomOffsetY = Random.Range(0, 500);
-        Debug.Log("off set X is " + randomOffsetX);
-        Debug.Log("off set Y is " + rabdomOffsetY);
+        System.Random xrandom;
+        if (map_seed == 0)
+        {
+            xrandom = new System.Random(System.DateTime.Now.Second);
+        }
+        else
+        {
+            xrandom = new System.Random(map_seed + 200);
+        }
+        randomOffsetX = xrandom.Next(0, 500);
+        rabdomOffsetY = xrandom.Next(0, 500);
 
         CreateTileset();
         CreateTileGroup();
@@ -46,15 +54,15 @@ public class RockGen : MonoBehaviour
     {
         tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, rock);
-        tileset.Add(1, transparentTile);
-        tileset.Add(2, transparentTile);
-        tileset.Add(3, transparentTile);
-        tileset.Add(4, transparentTile);
-        tileset.Add(5, transparentTile);
-        tileset.Add(6, transparentTile);
-        tileset.Add(7, transparentTile);
-        tileset.Add(8, transparentTile);
-        tileset.Add(9, transparentTile);
+        tileset.Add(1, null);
+        tileset.Add(2, null);
+        tileset.Add(3, null);
+        tileset.Add(4, null);
+        tileset.Add(5, null);
+        tileset.Add(6, null);
+        tileset.Add(7, null);
+        tileset.Add(8, null);
+        tileset.Add(9, null);
     }
 
     void CreateTileGroup()
@@ -62,10 +70,14 @@ public class RockGen : MonoBehaviour
         tile_groups = new Dictionary<int, GameObject>();
         foreach (KeyValuePair<int, GameObject> prefab_pair in tileset)
         {
-            GameObject tile_group = new GameObject(prefab_pair.Value.name);
-            tile_group.transform.parent = gameObject.transform;
-            tile_group.transform.localPosition = new Vector3(-(map_width / 2), -(map_height / 2), 0);
-            tile_groups.Add(prefab_pair.Key, tile_group);
+            GameObject tile_group;
+            if (prefab_pair.Value != null)
+            {
+                tile_group = new GameObject(prefab_pair.Value.name);
+                tile_group.transform.parent = this.gameObject.transform;
+                tile_group.transform.localPosition = new Vector3(0, 0, 0);
+                tile_groups.Add(prefab_pair.Key, tile_group);
+            }
         }
     }
 
@@ -105,12 +117,16 @@ public class RockGen : MonoBehaviour
 
     void CreateTile(int tile_id, int x, int y)
     {
+        if (tileset[tile_id] == null)
+        {
+            return;
+        }
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
         GameObject tile = Instantiate(tile_prefab, tile_group.transform);
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
-        tile.transform.localPosition = new Vector3(x, y, 0);
+        tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width / 2), -(map_height / 2), 0);
 
         tile_grid[x].Add(tile);
     }

@@ -5,6 +5,7 @@ using Mirror;
 
 public class SessionInfo : NetworkBehaviour
 {
+
     public struct playerInfo
     {
         public string playFabID;
@@ -134,6 +135,8 @@ public class SessionInfo : NetworkBehaviour
 
     }
 
+
+
     [ClientRpc]
     public void kick(string displayName)
     {
@@ -142,5 +145,9 @@ public class SessionInfo : NetworkBehaviour
             NetworkManager.singleton.StopClient();
         }
     }
-
+    //public void updateMap(GameObject oldObject, GameObject newObject)
+    //{
+    //    Debug.Log("Updated map");
+    //    NetworkServer.Spawn(Instantiate(newObject));
+    //}
 }

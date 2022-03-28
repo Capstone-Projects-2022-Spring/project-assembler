@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Mirror;
 using System.IO;
 using PlayFab;
 using PlayFab.ClientModels;
-using PlayFab.Json;
 using PlayFab.DataModels;
 
 public class UIManager : NetworkBehaviour
@@ -24,8 +21,14 @@ public class UIManager : NetworkBehaviour
     public Canvas inGameCanvas;
     public Canvas FriendUI;
     public SessionInfo sessionInfoClass;
+    public GameObject MapMenuUI;
 
     public GameObject mapgen;
+    public InputField seedinputInUIManager;
+    public InputField IPaddressToJoin;
+
+    public bool changeMap = false;
+    GameObject map;
 
     void Awake()
     {
@@ -85,7 +88,10 @@ public class UIManager : NetworkBehaviour
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
+        MapMenuUI.gameObject.SetActive(false);
     }
+
+
 
     //-----------
 
@@ -99,13 +105,13 @@ public class UIManager : NetworkBehaviour
             manager.networkAddress = address.text.Trim();
     }
 
-    public void onclientJoinButtonClick(GameObject map)
+    public void onclientJoinButtonClick()
     {
         checkManager();
         manager.StartClient();
     }
 
-    public void onHostButtonClick(GameObject map)
+    public void onHostButtonClick()
     {
         checkManager();
         manager.StartHost();
@@ -123,14 +129,8 @@ public class UIManager : NetworkBehaviour
         inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(true);
         JoinHostCanves.gameObject.SetActive(false);
         chatWindow.gameObject.SetActive(false);
-    }
-
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-        inGameCanvas.gameObject.SetActive(false);
-        JoinHostCanves.gameObject.SetActive(true);
-        chatWindow.gameObject.SetActive(true);
+        MapMenuUI.gameObject.SetActive(false);
+        StartGameManu.gameObject.SetActive(false);
     }
 
     //public override void OnStartClient()
@@ -141,10 +141,6 @@ public class UIManager : NetworkBehaviour
     //    Debug.Log("Recived the map???");
     //}
 
-    public override void OnStartServer()
-    {
-        //GameObject.Find("GameCanvas").transform.GetChild(1).gameObject.SetActive(false);
-    }
 
     public void onJoinHostBackClick()
     {
@@ -167,6 +163,18 @@ public class UIManager : NetworkBehaviour
             Directory.CreateDirectory("saves");
         }
         File.WriteAllText($"saves/{name}", JsonUtility.ToJson(savefile));
+    }
+
+    public void OnOpenTechTreeClick()
+    {
+        //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(true);
+        ingameCanvas.transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    public void OnCloseTechTreeClick()
+    {
+        //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(false);
+        ingameCanvas.transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public void onInGameExit()
@@ -289,19 +297,74 @@ public class UIManager : NetworkBehaviour
 
     }
 
-    [Command(requiresAuthority = false)]
-    public void transferMap(int seed)
+    public void transferMap()
     {
-        //GameObject tempmap = new GameObject("transferMap");
-        this.mapgen.GetComponent<PerlinNoiseMap>().Start();
-        this.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-        this.mapgen.GetComponent<CopperGen>().Start();
-        this.mapgen.GetComponent<CopperGen>().GenerateMap();
-        this.mapgen.GetComponent<MetalGen>().Start();
-        this.mapgen.GetComponent<MetalGen>().GenerateMap();
-        this.mapgen.GetComponent<RockGen>().Start();
-        this.mapgen.GetComponent<RockGen>().GenerateMap();
-        Debug.Log("Recived the map");
+        checkManager();
+        Debug.Log("Connecting to server and generating the map");
+        if (IPaddressToJoin.text == "")
+        {
+            manager.networkAddress = "localhost";
+        } else
+        {
+            manager.networkAddress = IPaddressToJoin.text;
+        }
+        changeMap = true;
+        manager.StartClient();
     }
+
+    public void calltocallgenerate(string temp)
+    {
+        Debug.Log("Calling generate inside calltocallgenerate?");
+    }
+
+    public void serverGenrateMap(string seed)
+    {
+        Debug.Log("Generating map on server");
+        unSpawnMap();
+        map = Instantiate(this.mapgen);
+        if(seed != "")
+        {
+            map.GetComponent<PerlinNoiseMap>().map_seed = int.Parse(seed);
+            map.GetComponent<CopperGen>().map_seed = int.Parse(seed);
+            map.GetComponent<MetalGen>().map_seed = int.Parse(seed);
+            map.GetComponent<RockGen>().map_seed = int.Parse(seed);
+        }
+
+
+        map.GetComponent<PerlinNoiseMap>().FakeStart();
+        map.GetComponent<PerlinNoiseMap>().GenerateMap();
+        map.GetComponent<CopperGen>().FakeStart();
+        map.GetComponent<CopperGen>().GenerateMap();
+        map.GetComponent<MetalGen>().FakeStart();
+        map.GetComponent<MetalGen>().GenerateMap();
+        map.GetComponent<RockGen>().FakeStart();
+        map.GetComponent<RockGen>().GenerateMap();
+        for (int i = 0; i < map.transform.childCount; i++)
+        {
+            GameObject temp = map.transform.GetChild(i).gameObject;
+            for (int q = 0; q < temp.transform.childCount; q++)
+            {
+                NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
+            }
+        }
+    }
+
+    void unSpawnMap()
+    {
+        if(map == null)
+        {
+            return;
+        }
+        for (int i = 0; i < map.transform.childCount; i++)
+        {
+            GameObject temp = map.transform.GetChild(i).gameObject;
+            for (int q = 0; q < temp.transform.childCount; q++)
+            {
+                NetworkServer.UnSpawn(temp.transform.GetChild(q).gameObject);
+            }
+        }
+        Destroy(map);
+    }
+
 
 }
