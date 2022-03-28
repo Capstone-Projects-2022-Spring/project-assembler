@@ -2,12 +2,27 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.IO;
+//using System.Text.Json;
 using UnityEngine;
 using Mirror;
 using Unity.Collections;
+//using StackExchange;
+using StackExchange.Redis;
 
 namespace kcp2k
 {
+    public class DataPacket
+    {
+        public double Time { get; set; }
+        public int ConnectionCount { get; set; }
+        public long MaxSendRate { get; set; }
+        public long MaxRecvRate { get; set; }
+        public long SendQueue { get; set; }
+        public long ReceiveQueue { get; set; }
+        public long SendBuffer { get; set; }
+        public long ReceiveBuffer { get; set; }
+    }
     [HelpURL("https://mirror-networking.gitbook.io/docs/transports/kcp-transport")]
     [DisallowMultipleComponent]
     public class KcpTransport : Transport
@@ -66,7 +81,11 @@ namespace kcp2k
             channel == KcpChannel.Reliable ? Channels.Reliable : Channels.Unreliable;
 
         static KcpChannel ToKcpChannel(int channel) =>
-        channel == Channels.Reliable ? KcpChannel.Reliable : KcpChannel.Unreliable;
+            channel == Channels.Reliable ? KcpChannel.Reliable : KcpChannel.Unreliable;
+        //redis
+        //TODO: check if server?
+        static ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost,abortConnect=false,connectRetry=5");
+        static ISubscriber pub = redis.GetSubscriber(); //pub-sub model
 
         void Awake()
         {
@@ -79,6 +98,7 @@ namespace kcp2k
                 Log.Info = _ => {};
             Log.Warning = Debug.LogWarning;
             Log.Error = Debug.LogError;
+
 
 #if ENABLE_IL2CPP
             // NonAlloc doesn't work with IL2CPP builds
@@ -127,8 +147,9 @@ namespace kcp2k
                       MaxRetransmit,
                       MaximizeSendReceiveBuffersToOSLimit);
 
-            if (statisticsLog)
-                InvokeRepeating(nameof(OnLogStatistics), 1, 1);
+            //if (statisticsLog) //todo: remove if statement
+            InvokeRepeating(nameof(OnLogStatistics), 1, 1); //TODO modify to change reporting interval
+            
 
             Debug.Log("KcpTransport initialized!");
         }
@@ -311,7 +332,7 @@ namespace kcp2k
 
         void OnLogStatistics()
         {
-            if (ServerActive())
+            if (ServerActive()) //&& server.connections.Count > 0) //only report if we have clients to save memory
             {
                 string log = "kcp SERVER @ time: " + NetworkTime.localTime + "\n";
                 log += $"  connections: {server.connections.Count}\n";
@@ -321,7 +342,29 @@ namespace kcp2k
                 log += $"  ReceiveQueue: {GetTotalReceiveQueue()}\n";
                 log += $"  SendBuffer: {GetTotalSendBuffer()}\n";
                 log += $"  ReceiveBuffer: {GetTotalReceiveBuffer()}\n\n";
+
+                DataPacket dp = new DataPacket
+                {
+                    Time = NetworkTime.localTime,
+                    ConnectionCount = server.connections.Count,
+                    MaxSendRate = GetAverageMaxSendRate(),
+                    MaxRecvRate = GetAverageMaxReceiveRate(),
+                    SendQueue = GetTotalSendQueue(),
+                    ReceiveQueue = GetTotalReceiveQueue(),
+                    SendBuffer = GetTotalSendBuffer(),
+                    ReceiveBuffer = GetTotalReceiveBuffer()
+                };
+
+                string JsonString = JsonUtility.ToJson(dp);
+                //Debug.Log(JsonString);
                 Debug.Log(log);
+
+                DateTime today = DateTime.Today;
+
+                //File.WriteAllText(today+".json", JsonString);
+
+                pub.Publish("network-data", log);
+                
             }
 
             if (ClientConnected())
