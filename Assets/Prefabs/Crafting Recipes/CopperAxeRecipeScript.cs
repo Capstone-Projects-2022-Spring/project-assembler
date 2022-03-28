@@ -37,9 +37,7 @@ public class CopperAxeRecipeScript : NetworkBehaviour
 
                 if(copperOreLeft == 0)
                 {
-                    GameObject result = Instantiate(copperAxe);
-                    NetworkServer.Spawn(result);
-                    NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(result, true);
+                    spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }
             }
@@ -72,7 +70,7 @@ public class CopperAxeRecipeScript : NetworkBehaviour
     }
 
 
-    [Command]
+    [Command(requiresAuthority = false)]
     void spawnItem(uint conn)
     {
         GameObject result = Instantiate(copperAxe);
@@ -84,8 +82,11 @@ public class CopperAxeRecipeScript : NetworkBehaviour
     [ClientRpc]
     void getResultItem(uint conn,GameObject item)
     {
-        if(NetworkClient.localPlayer.netId == conn)
+        Debug.Log(item + " the item spawned");
+        if (NetworkClient.localPlayer.netId == conn)
+        {
             NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, true);
+        }
     }
 
 

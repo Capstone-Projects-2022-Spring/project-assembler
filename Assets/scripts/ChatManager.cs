@@ -218,11 +218,27 @@ public class ChatManager : MonoBehaviour, IChatClientListener
         {
             string dispalyname = playFabIdtoDisplayName(sender);
             IDtoDisplaynamedict.Add(sender, dispalyname);
+            PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
+            {
+                TitleDisplayName = sender
+            }, (PlayFab.ClientModels.GetAccountInfoResult result) =>
+            {
+                if (dropOptions.Contains(result.AccountInfo.TitleInfo.DisplayName) == false && result.AccountInfo.PlayFabId != userAccountInfo.AccountInfo.PlayFabId)
+                {
+                    dropOptions.Add(result.AccountInfo.TitleInfo.DisplayName);
+                    IDtoDisplaynamedict.Add(result.AccountInfo.PlayFabId, result.AccountInfo.TitleInfo.DisplayName);
+                    chathistories.Add(result.AccountInfo.PlayFabId, "");
+                }
+
+                //Re-add the entire dropoptions menu
+                friendDropMenu.ClearOptions();
+                friendDropMenu.AddOptions(dropOptions);
+                onFriendListChange(friendDropMenu);
+            }, onPlayFabError);
+
 
             chathistories.Add(sender, $"{IDtoDisplaynamedict[sender]}: {(string)message}\n");
         }
-
-        onFriendListChange(friendDropMenu);
     }
 
     void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)

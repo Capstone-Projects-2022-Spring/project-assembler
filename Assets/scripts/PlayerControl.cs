@@ -85,6 +85,7 @@ public class PlayerControl : NetworkBehaviour
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     if (!interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
                     {
+                        Debug.Log("wtf");
                         currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
                     }
 
@@ -201,6 +202,7 @@ public class PlayerControl : NetworkBehaviour
     [Command]
     void updateLocation(Vector3 changeposition,  GameObject thegameobject, bool newGroundValue)
     {
+        Debug.Log($"{changeposition},{thegameobject},{newGroundValue}"); 
         thegameobject.transform.position = changeposition;
         thegameobject.GetComponent<GameItem>().isOnGround = newGroundValue;
     }

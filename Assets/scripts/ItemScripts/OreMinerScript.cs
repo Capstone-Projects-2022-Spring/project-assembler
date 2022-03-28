@@ -34,6 +34,7 @@ public class OreMinerScript : GameItem
     private void Start()
     {
         lastTimeMined = Time.timeAsDouble;
+        activeToggle.onValueChanged.AddListener(delegate { changeToggle(); });
     }
 
     private void FixedUpdate()
@@ -58,10 +59,6 @@ public class OreMinerScript : GameItem
 
                 }
             }
-        }
-        if(active != activeToggle.isOn && Mirror.NetworkManager.singleton.isNetworkActive)
-        {
-            changeToggle();
         }
     }
 
