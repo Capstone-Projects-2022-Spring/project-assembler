@@ -42,6 +42,14 @@ public class PlayFabLogin : MonoBehaviour
     {
         var request = new LoginWithEmailAddressRequest { Email = emailText.text, Password = password.GetComponent<InputField>().text };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, onPlayerFabError);
+        if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+        {
+            /*
+            Please change the titleId below to your own titleId from PlayFab Game Manager.
+            If you have already set the value in the Editor Extensions, this can be skipped.
+            */
+            PlayFabSettings.staticSettings.TitleId = "59E24";
+        }
     }
 
     public void onCreateAccountButton()
