@@ -59,7 +59,7 @@ public class OreMinerScript : GameItem
                 }
             }
         }
-        if(active != activeToggle.isOn)
+        if(active != activeToggle.isOn && Mirror.NetworkManager.singleton.isNetworkActive)
         {
             changeToggle();
         }

@@ -20,6 +20,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     public RawImage avaterImage;
     public Text playerName;
     public InputField addchatinput;
+    //new for invites
+    public InputField usernameToInvite;
+    public Button invitePlayerButton;
+    public Button acceptedInvite;
 
     public PlayFab.ClientModels.GetAccountInfoResult userAccountInfo;
     List<string> dropOptions = new List<string>();
@@ -256,6 +260,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
         return returnvalue;
     }
+
     ChatAppSettings getSettings(Photon.Realtime.AppSettings appSettings)
     {
         return new ChatAppSettings
@@ -273,5 +278,38 @@ public class ChatManager : MonoBehaviour, IChatClientListener
     void onPlayFabError(PlayFabError error)
     {
         Debug.Log(error);
+    }
+
+    //function for invites
+    public void onInviteMessage() //,ipAddress currentSessionIP)
+    {
+        if(usernameToInvite.text == "")
+        {
+            return;
+        }
+        string user = usernameToInvite.text;
+        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {Mirror.NetworkManager.singleton.networkAddress}";//acceptedInvite; 
+        string userID = "";
+        PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
+        {
+            TitleDisplayName = user
+        }, (PlayFab.ClientModels.GetAccountInfoResult result) =>
+        {
+            userID = result.AccountInfo.PlayFabId;
+            if (chathistories.ContainsKey(userID))
+            {
+                chathistories[userID] += $"{IDtoDisplaynamedict[userID]}: {(string)message}\n";
+                chatClient.SendPrivateMessage(userID, message);
+            }
+            else
+            {
+                IDtoDisplaynamedict.Add(userID, user);
+                chathistories.Add(userID, $"{IDtoDisplaynamedict[userID]}: {(string)message}\n");
+                chatClient.SendPrivateMessage(userID, message);
+            }
+            onFriendListChange(friendDropMenu);
+            //Debug.Log($"The name entered {usernameToInvite.text}, The user id {userID}");
+        }
+        , onPlayFabError);
     }
 }

@@ -27,7 +27,7 @@ public class RawMaterialsScript : GameItem
 
     public bool mine()
     {
-        if (Time.timeAsDouble - lastTimeClickedon >= 0.25)
+        if (Time.timeAsDouble - lastTimeClickedon >= 0.25 && NetworkManager.singleton.isNetworkActive)
         {
             lastTimeClickedon = Time.timeAsDouble;
             countLeftToGather -= 1;
