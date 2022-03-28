@@ -11,6 +11,7 @@ public class MetalGen : MonoBehaviour
 
     int map_width = 200;
     int map_height = 200;
+    public int map_seed = 0;
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -29,10 +30,18 @@ public class MetalGen : MonoBehaviour
     int rabdomOffsetY;
 
 
-    public void Start()
+    public void FakeStart()
     {
-        randomOffsetX = Random.Range(0, 500);
-        rabdomOffsetY = Random.Range(0, 500);
+        System.Random xrandom;
+        if (map_seed == 0)
+        {
+            xrandom = new System.Random(System.DateTime.Now.Second);
+        } else
+        {
+            xrandom = new System.Random(map_seed+100);
+        }
+        randomOffsetX = xrandom.Next(0, 500);
+        rabdomOffsetY = xrandom.Next(0, 500);
 
         CreateTileset();
         CreateTileGroup();

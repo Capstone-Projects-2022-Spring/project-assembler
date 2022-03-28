@@ -26,6 +26,7 @@ public class PlayerControl : NetworkBehaviour
     Transform mainInventory;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
+    UIManager uimanager;
     public GameObject currentObjectEquipped; // The item that is currently selected by the player
 
     void Awake()
@@ -57,6 +58,7 @@ public class PlayerControl : NetworkBehaviour
         //GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
         sessionChat.Callback += onChatHistoryChange;
+        uimanager = GameObject.Find("UIscripts").GetComponent<UIManager>();
     }
 
    
@@ -67,6 +69,12 @@ public class PlayerControl : NetworkBehaviour
         // don't control other player's rackets
         if (isLocalPlayer)
         {
+            if (uimanager.changeMap)
+            {
+                Debug.Log($"CAlled from player script {uimanager.seedinputInUIManager.text}");
+                servergenerate(uimanager.seedinputInUIManager.text);
+                uimanager.changeMap = false;
+            }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
 
             //if the game is paused
@@ -264,10 +272,18 @@ public class PlayerControl : NetworkBehaviour
         {
             sessionChat.Add($"{displaynamefromsender}: {input}");
         }
+
         //foreach (string message in sessionChat)
         //{
         //    Debug.Log($"{message}, ");
         //}
+    }
+
+    [Command]
+    void servergenerate(string seed)
+    {
+        Debug.Log($"Called inside player on server {seed}");
+        uimanager.serverGenrateMap(seed);
     }
 
     void updateChat(string newline)

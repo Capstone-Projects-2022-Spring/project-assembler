@@ -13,6 +13,7 @@ public class PerlinNoiseMap : MonoBehaviour
 
     int map_width = 200;
     int map_height = 200;
+    public int map_seed = 0;
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -31,9 +32,17 @@ public class PerlinNoiseMap : MonoBehaviour
     int rabdomOffsetY;
 
 
-    public void Start()
+    public void FakeStart()
     {
-        System.Random xrandom = new System.Random(DateTime.Now.Second);
+        System.Random xrandom;
+        if (map_seed == 0)
+        {
+            xrandom = new System.Random(System.DateTime.Now.Second);
+        }
+        else
+        {
+            xrandom = new System.Random(map_seed);
+        }
         randomOffsetX = xrandom.Next(0, 500);
         rabdomOffsetY = xrandom.Next(0, 500);
         //Debug.Log(randomOffsetX);

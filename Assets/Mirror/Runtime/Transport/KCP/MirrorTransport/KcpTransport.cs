@@ -66,7 +66,7 @@ namespace kcp2k
             channel == KcpChannel.Reliable ? Channels.Reliable : Channels.Unreliable;
 
         static KcpChannel ToKcpChannel(int channel) =>
-            channel == Channels.Reliable ? KcpChannel.Reliable : KcpChannel.Unreliable;
+        channel == Channels.Reliable ? KcpChannel.Reliable : KcpChannel.Unreliable;
 
         void Awake()
         {

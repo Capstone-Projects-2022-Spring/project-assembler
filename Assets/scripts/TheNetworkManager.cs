@@ -1,35 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class TheNetworkManager : NetworkManager
 {
     public UIManager uiManager;
     GameObject generatedMap;
+    public InputField seedinputInManager;
 
     public override void OnStartServer()
     {
         base.OnStartServer();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
-        generatedMap = Instantiate(uiManager.mapgen);
-        generatedMap.GetComponent<PerlinNoiseMap>().Start();
-        generatedMap.GetComponent<PerlinNoiseMap>().GenerateMap();
-        generatedMap.GetComponent<CopperGen>().Start();
-        generatedMap.GetComponent<CopperGen>().GenerateMap();
-        generatedMap.GetComponent<MetalGen>().Start();
-        generatedMap.GetComponent<MetalGen>().GenerateMap();
-        generatedMap.GetComponent<RockGen>().Start();
-        generatedMap.GetComponent<RockGen>().GenerateMap();
-        for (int i = 0; i < generatedMap.transform.childCount; i++)
-        {
-            GameObject temp = generatedMap.transform.GetChild(i).gameObject;
-            for (int q = 0; q < temp.transform.childCount; q++)
-            {
-                NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
-            }
-        }
         //uiManager.sessionInfoClass.theMap = uiManager.mapgen;
     }
 
@@ -45,9 +30,7 @@ public class TheNetworkManager : NetworkManager
         base.OnClientConnect();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
-        //uiManager.mapgen.GetComponent<PerlinNoiseMap>().Start();
-        //uiManager.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-        //uiManager.transferMap(12312312);
+        Debug.Log(uiManager.changeMap);
     }
 
 
