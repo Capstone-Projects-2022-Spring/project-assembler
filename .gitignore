@@ -49,3 +49,6 @@ crashlytics-build.properties
 
 #Web server stuff
 node_modules/
+
+#mac stuff
+.DS_Store
