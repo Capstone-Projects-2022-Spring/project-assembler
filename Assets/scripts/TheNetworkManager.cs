@@ -37,6 +37,7 @@ public class TheNetworkManager : NetworkManager
     {
         base.OnClientDisconnect();
         uiManager.inGameCanvas.gameObject.SetActive(false);
+        uiManager.JoinHostCanves.gameObject.SetActive(true);
         uiManager.inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(false);
         uiManager.chatWindow.gameObject.SetActive(true);
     }

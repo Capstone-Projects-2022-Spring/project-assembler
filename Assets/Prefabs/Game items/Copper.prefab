@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4520672234095188351}
   - component: {fileID: -2442913824001212956}
   - component: {fileID: 5178149090682299823}
-  - component: {fileID: 6785768135150348504}
   m_Layer: 0
   m_Name: Copper
   m_TagString: Untagged
@@ -101,12 +100,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  itemName: Copper
   rigidbody: {fileID: 4520672234095188351}
   collisionBox: {fileID: -2442913824001212956}
   isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
+  power: 1
 --- !u!50 &4520672234095188351
 Rigidbody2D:
   serializedVersion: 4
@@ -171,37 +170,3 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 35953755f0b538748811bddaa7a56979
   hasSpawned: 0
---- !u!114 &6785768135150348504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6011598230636231168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

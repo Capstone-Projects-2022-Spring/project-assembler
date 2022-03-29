@@ -34,6 +34,7 @@ public class OreMinerScript : GameItem
     private void Start()
     {
         lastTimeMined = Time.timeAsDouble;
+        activeToggle.isOn = false;
         activeToggle.onValueChanged.AddListener(delegate { changeToggle(); });
     }
 
@@ -54,6 +55,7 @@ public class OreMinerScript : GameItem
                             if (ore != null)
                             {
                                 ore.mine();
+                                
                             }
                         }
 
@@ -63,7 +65,6 @@ public class OreMinerScript : GameItem
     }
 
 
-    [Mirror.Command(requiresAuthority = false)]
     void changeToggle()
     {
        active = activeToggle.isOn;

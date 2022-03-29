@@ -18,16 +18,16 @@ public class RawMaterialsScript : GameItem
 
     public override void interact(PlayerControl player)
     {
-        if (mine() && player.currentObjectEquipped != null && player.currentObjectEquipped.GetComponent<AxeScript>() != null)
+        if (mine() != null && player.currentObjectEquipped != null && player.currentObjectEquipped.GetComponent<AxeScript>() != null)
         {
             player.addToInvenotry(this.gameObject, false);
         }
 
     }
 
-    public bool mine()
+    public GameObject mine()
     {
-        if (Time.timeAsDouble - lastTimeClickedon >= 0.25 && NetworkManager.singleton.isNetworkActive)
+        if (Time.timeAsDouble - lastTimeClickedon >= 0.25)
         {
             lastTimeClickedon = Time.timeAsDouble;
             countLeftToGather -= 1;
@@ -37,10 +37,10 @@ public class RawMaterialsScript : GameItem
                 countLeftToGather = 5;
                 materialCount -= 1;
                 updateNums(countLeftToGather, materialCount);
-                return true;
+                return this.gameObject;
             }
         }
-        return false;
+        return null;
     }
 
     [Command(requiresAuthority = false)]
