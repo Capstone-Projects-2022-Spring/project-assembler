@@ -71,7 +71,6 @@ public class PlayerControl : NetworkBehaviour
         {
             if (uimanager.changeMap)
             {
-                Debug.Log($"CAlled from player script {uimanager.seedinputInUIManager.text}");
                 servergenerate(uimanager.seedinputInUIManager.text);
                 uimanager.changeMap = false;
             }
@@ -282,7 +281,6 @@ public class PlayerControl : NetworkBehaviour
     [Command]
     void servergenerate(string seed)
     {
-        Debug.Log($"Called inside player on server {seed}");
         uimanager.serverGenrateMap(seed);
     }
 

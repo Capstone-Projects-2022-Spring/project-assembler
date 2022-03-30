@@ -30,7 +30,6 @@ public class TheNetworkManager : NetworkManager
         base.OnClientConnect();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
-        Debug.Log(uiManager.changeMap);
     }
 
 

@@ -297,10 +297,9 @@ public class UIManager : NetworkBehaviour
 
     }
 
-    public void transferMap()
+    public void transferMap(bool hostOrNot)
     {
         checkManager();
-        Debug.Log("Connecting to server and generating the map");
         if (IPaddressToJoin.text == "")
         {
             manager.networkAddress = "localhost";
@@ -309,17 +308,17 @@ public class UIManager : NetworkBehaviour
             manager.networkAddress = IPaddressToJoin.text;
         }
         changeMap = true;
-        manager.StartClient();
-    }
-
-    public void calltocallgenerate(string temp)
-    {
-        Debug.Log("Calling generate inside calltocallgenerate?");
+        if (hostOrNot)
+        {
+            manager.StartHost();
+        } else
+        {
+            manager.StartClient();
+        }
     }
 
     public void serverGenrateMap(string seed)
     {
-        Debug.Log("Generating map on server");
         unSpawnMap();
         map = Instantiate(this.mapgen);
         if(seed != "")

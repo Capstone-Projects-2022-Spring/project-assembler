@@ -93,7 +93,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3645712316372985202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -302,12 +302,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  itemName: 
   rigidbody: {fileID: 1135574496127973044}
   collisionBox: {fileID: 5008137678085295769}
   isInInventory: 1
   isOnGround: 1
   isAttachedToMouse: 0
+  power: 1
   activeToggle: {fileID: 6841189468558294065}
   theInventoryCanvas: {fileID: 847004782735416936}
 --- !u!61 &5008137678085295769

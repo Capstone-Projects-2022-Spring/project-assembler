@@ -35,7 +35,7 @@ public class MetalGen : MonoBehaviour
         System.Random xrandom;
         if (map_seed == 0)
         {
-            xrandom = new System.Random(System.DateTime.Now.Second);
+            xrandom = new System.Random(System.DateTime.Now.Second + 100);
         } else
         {
             xrandom = new System.Random(map_seed+100);

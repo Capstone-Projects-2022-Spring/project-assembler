@@ -36,7 +36,7 @@ public class CopperGen : MonoBehaviour
         System.Random xrandom;
         if (map_seed == 0)
         {
-            xrandom = new System.Random(System.DateTime.Now.Second);
+            xrandom = new System.Random(System.DateTime.Now.Second + 300);
         }
         else
         {
