@@ -8,7 +8,7 @@ public class TheNetworkManager : NetworkManager
 {
     public UIManager uiManager;
     GameObject generatedMap;
-    public InputField seedinputInManager;
+    public GameObject techtree;
 
     public override void OnStartServer()
     {
@@ -37,7 +37,7 @@ public class TheNetworkManager : NetworkManager
     {
         base.OnClientDisconnect();
         uiManager.inGameCanvas.gameObject.SetActive(false);
-        uiManager.JoinHostCanves.gameObject.SetActive(true);
+        uiManager.StartGameManu.gameObject.SetActive(true);
         uiManager.inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(false);
         uiManager.chatWindow.gameObject.SetActive(true);
     }

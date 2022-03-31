@@ -8,7 +8,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.DataModels;
 
-public class UIManager : NetworkBehaviour
+public class UIManager : MonoBehaviour
 {
 
     NetworkManager manager;
@@ -23,12 +23,14 @@ public class UIManager : NetworkBehaviour
     public SessionInfo sessionInfoClass;
     public GameObject MapMenuUI;
 
-    public GameObject mapgen;
+    public GameObject mapgenprefab;
+    public GameObject techtreeprefab;
     public InputField seedinputInUIManager;
     public InputField IPaddressToJoin;
 
     public bool changeMap = false;
     GameObject map;
+    GameObject techtree;
 
     void Awake()
     {
@@ -179,14 +181,7 @@ public class UIManager : NetworkBehaviour
 
     public void onInGameExit()
     {
-        if (isServer)
-        {
-            manager.StopHost();
-        }
-        else
-        {
-            manager.StopClient();
-        }
+        manager.StopClient();
         JoinHostCanves.gameObject.SetActive(true);
         inGameCanvas.gameObject.SetActive(false);
     }
@@ -320,7 +315,10 @@ public class UIManager : NetworkBehaviour
     public void serverGenrateMap(string seed)
     {
         unSpawnMap();
-        map = Instantiate(this.mapgen);
+        techtree = Instantiate(this.techtreeprefab);
+        NetworkServer.Spawn(techtree);
+
+        map = Instantiate(this.mapgenprefab);
         if(seed != "")
         {
             map.GetComponent<PerlinNoiseMap>().map_seed = int.Parse(seed);
@@ -350,7 +348,7 @@ public class UIManager : NetworkBehaviour
 
     void unSpawnMap()
     {
-        if(map == null)
+        if(map == null || techtree == null)
         {
             return;
         }
@@ -363,6 +361,7 @@ public class UIManager : NetworkBehaviour
             }
         }
         Destroy(map);
+        Destroy(techtree);
     }
 
 

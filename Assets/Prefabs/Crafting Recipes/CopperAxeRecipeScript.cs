@@ -45,6 +45,10 @@ public class CopperAxeRecipeScript : NetworkBehaviour
 
         for (int i = 0; i < mainInventory.childCount - 1; i++)
         {
+            if(copperOreLeft == 0)
+            {
+                break;
+            }
             InventorySlotScript slot = paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>();
             if (slot.itemInSlot != null)
             {
@@ -82,7 +86,6 @@ public class CopperAxeRecipeScript : NetworkBehaviour
     [ClientRpc]
     void getResultItem(uint conn,GameObject item)
     {
-        Debug.Log(item + " the item spawned");
         if (NetworkClient.localPlayer.netId == conn)
         {
             NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, true);

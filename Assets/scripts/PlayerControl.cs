@@ -43,17 +43,17 @@ public class PlayerControl : NetworkBehaviour
         InventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").gameObject;
         InventoryCanvas.SetActive(true);
 
-        //Chat
-        messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
-        messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName,messageInput.text); });
-        sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
-
         //In game
         displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
         sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
         mainInventory = ingamecanves.gameObject.transform.Find("InventoryCanvas/MainInventory").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         inventoryCanvas = ingamecanves.gameObject.transform.Find("InventoryCanvas").transform;
+
+        //Chat
+        messageInput = ingamecanves.gameObject.transform.Find("SessionChat/EnterMessage").GetComponent<InputField>();
+        messageInput.onEndEdit.AddListener(delegate { onMessageEntered(displayName, messageInput.text); });
+        sessionInfoClass = GameObject.Find("SessionInfo").GetComponent<SessionInfo>();
 
         //GameObject.Find("UIscripts").GetComponent<UIManager>().onJoinOrHost();
 
