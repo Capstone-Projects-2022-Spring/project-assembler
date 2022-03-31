@@ -1,16 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class TheNetworkManager : NetworkManager
 {
     public UIManager uiManager;
+    GameObject generatedMap;
+    public GameObject techtree;
+
     public override void OnStartServer()
     {
         base.OnStartServer();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
+        //uiManager.sessionInfoClass.theMap = uiManager.mapgen;
+    }
+
+    public override void OnServerConnect(NetworkConnection conn)
+    {
+        base.OnServerConnect(conn);
+        //NetworkServer.Spawn(generatedMap);
+        //NetworkServer.Spawn(uiManager.mapgen);
     }
 
     public override void OnClientConnect()
@@ -18,16 +30,17 @@ public class TheNetworkManager : NetworkManager
         base.OnClientConnect();
         uiManager.gameObject.SetActive(true);
         uiManager.onJoinOrHost();
-        uiManager.mapgen.GetComponent<PerlinNoiseMap>().Start();
-        uiManager.mapgen.GetComponent<PerlinNoiseMap>().GenerateMap();
-        uiManager.mapgen.GetComponent<CopperGen>().Start();
-        uiManager.mapgen.GetComponent<CopperGen>().GenerateMap();
-        uiManager.mapgen.GetComponent<MetalGen>().Start();
-        uiManager.mapgen.GetComponent<MetalGen>().GenerateMap();
-        uiManager.mapgen.GetComponent<RockGen>().Start();
-        uiManager.mapgen.GetComponent<RockGen>().GenerateMap();
-        //uiManager.transferMap(12312312);
-        Debug.Log("Recived the map??? (in networkManager)");
     }
+
+
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        uiManager.inGameCanvas.gameObject.SetActive(false);
+        uiManager.StartGameManu.gameObject.SetActive(true);
+        uiManager.inGameCanvas.gameObject.transform.Find("InventoryCanvas").gameObject.SetActive(false);
+        uiManager.chatWindow.gameObject.SetActive(true);
+    }
+
 
 }

@@ -155,7 +155,9 @@ MonoBehaviour:
   itemName: Axe
   rigidbody: {fileID: 9009453118196753398}
   collisionBox: {fileID: 4533632347135810936}
+  isInInventory: 0
   isOnGround: 1
+  isAttachedToMouse: 0
 --- !u!61 &4533632347135810936
 BoxCollider2D:
   m_ObjectHideFlags: 0

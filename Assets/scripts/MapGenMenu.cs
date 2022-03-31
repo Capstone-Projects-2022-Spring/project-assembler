@@ -8,7 +8,7 @@ public class MapGenMenu : MonoBehaviour
     public Slider RockFrequency, CopperFrequency, MetalFrequency, DirtFrequency, WaterFrequency, GrassFrequency, EnemyBaseFrequency;
     public Slider RockRichness, CopperRichness, MetalRichness;
     public Slider EnemyBaseSize, StartingAreaSize;
-    public Slider MaxGroup, MinGroup, MaxCooldown, MinCooldown, MaxExpansion, TimeFactor, DestroyFactor, PollutionFactor;
+    public Slider MaxGroup, MinGroup, MaxCooldown, MinCooldown, MaxExpansion;
     public Text maxGroupText, minGroupText, maxCooldownText, minCooldownText, maxExpansionText, timeText, destoryText, pollutionText;
     public GameObject TerrainLayout;
     public GameObject ResourcesLayout;
@@ -18,7 +18,7 @@ public class MapGenMenu : MonoBehaviour
     float[] terrainSliderValues = new float[3]; //dirt, water, grass 
     float[] resourceSliderValues = new float[6]; //rockF, rockR, copperF, copperR, metalF, metalR
     float[] enemyAISliderValues = new float[3]; //baseF, baseS, areaS
-    float[] inputValues = new float[8]; //MaxGroup, MinGroup, MaxCooldown, MinCooldown, MaxExpansion, TimeFactor, DestroyFactor, PollutionFactor
+    float[] inputValues = new float[5]; //MaxGroup, MinGroup, MaxCooldown, MinCooldown, MaxExpansion, TimeFactor, DestroyFactor, PollutionFactor
     
     public void onOpenMapGen(){
         MapGenUI.SetActive(true);
@@ -98,9 +98,6 @@ public class MapGenMenu : MonoBehaviour
         inputValues[2] = MaxCooldown.value;
         inputValues[3] = MinCooldown.value;
         inputValues[4] = MaxExpansion.value;
-        inputValues[5] = TimeFactor.value;
-        inputValues[6] = DestroyFactor.value;
-        inputValues[7] = PollutionFactor.value;
 
         MaxGroup.onValueChanged.AddListener((v) => {
             maxGroupText.text = v.ToString("0.00");
@@ -116,15 +113,6 @@ public class MapGenMenu : MonoBehaviour
         });
         MaxExpansion.onValueChanged.AddListener((v) => {
             maxExpansionText.text = v.ToString("0.00");
-        });
-        TimeFactor.onValueChanged.AddListener((v) => {
-            timeText.text = v.ToString("0.00");
-        });
-        DestroyFactor.onValueChanged.AddListener((v) => {
-            destoryText.text = v.ToString("0.00");
-        });
-        PollutionFactor.onValueChanged.AddListener((v) => {
-            pollutionText.text = v.ToString("0.00");
         });
     }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class PerlinNoiseMap : MonoBehaviour
 
     int map_width = 200;
     int map_height = 200;
+    public int map_seed = 0;
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -30,9 +32,17 @@ public class PerlinNoiseMap : MonoBehaviour
     int rabdomOffsetY;
 
 
-    public void Start()
+    public void FakeStart()
     {
-        System.Random xrandom = new System.Random(2000);
+        System.Random xrandom;
+        if (map_seed == 0)
+        {
+            xrandom = new System.Random(System.DateTime.Now.Second);
+        }
+        else
+        {
+            xrandom = new System.Random(map_seed);
+        }
         randomOffsetX = xrandom.Next(0, 500);
         rabdomOffsetY = xrandom.Next(0, 500);
         //Debug.Log(randomOffsetX);
@@ -64,7 +74,7 @@ public class PerlinNoiseMap : MonoBehaviour
         {
             GameObject tile_group = new GameObject(prefab_pair.Value.name);
             tile_group.transform.parent = gameObject.transform;
-            tile_group.transform.localPosition = new Vector3(-(map_width / 2), -(map_height / 2), 0);
+            tile_group.transform.localPosition = new Vector3(0, 0, 0);
             tile_groups.Add(prefab_pair.Key, tile_group);
         }
     }
@@ -107,10 +117,11 @@ public class PerlinNoiseMap : MonoBehaviour
     {
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
-        GameObject tile = Instantiate(tile_prefab, tile_group.transform);
+        GameObject tile = Instantiate(tile_prefab,tile_group.transform);
+
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
-        tile.transform.localPosition = new Vector3(x, y, 0);
+        tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width/2), -(map_height/2), 0);
 
         tile_grid[x].Add(tile);
     }
