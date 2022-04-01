@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 6495984505339077233}
   - component: {fileID: 771320145402801784}
   - component: {fileID: 6848260432616403064}
-  - component: {fileID: 9022643958714735530}
   - component: {fileID: 8763543936953803060}
   - component: {fileID: 7407339593474577370}
   - component: {fileID: 3212498603538272384}
   - component: {fileID: -2859209453436759688}
   - component: {fileID: 4198408490182634804}
+  - component: {fileID: 7366938754550215129}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -111,26 +111,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 8ba4f03a475b83e42976419c136d638a
   hasSpawned: 0
---- !u!114 &9022643958714735530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9208857490081928894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3c0ae488cb45d48887bbf3d583b382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  speed: 1500
-  rigidbody2d: {fileID: 8763543936953803060}
-  collidbox: {fileID: 7407339593474577370}
-  playFabID: 
-  displayName: 
-  currentObjectEquipped: {fileID: 0}
 --- !u!50 &8763543936953803060
 Rigidbody2D:
   serializedVersion: 4
@@ -144,7 +124,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 5
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -242,3 +222,19 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &7366938754550215129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9208857490081928894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d43c1813bafc3a45a1ed5ee16f1f17e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  rigidbody2d: {fileID: 8763543936953803060}
+  currentHealth: 100

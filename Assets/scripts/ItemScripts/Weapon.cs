@@ -16,7 +16,7 @@ public class Weapon : GameItem
 
     public override void interact(PlayerControl player)
     {
-        if (isOnGround == true)
+        if (isOnGround == true && Input.GetMouseButtonDown(0))
         {
             if (player.addToInvenotry(this.gameObject, true))
             {
@@ -39,10 +39,7 @@ public class Weapon : GameItem
 
     public override void actionFromInventroy(PlayerControl player)
     {
-        if (lastShot != null && Time.timeAsDouble - lastShot < 0.1)
-        {
-            lastShot = Time.timeAsDouble;
-        }else
+        if (Time.timeAsDouble - lastShot > 0.1)
         {
             Shoot(player.transform, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             lastShot = Time.timeAsDouble;

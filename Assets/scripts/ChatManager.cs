@@ -234,11 +234,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
                 friendDropMenu.ClearOptions();
                 friendDropMenu.AddOptions(dropOptions);
                 onFriendListChange(friendDropMenu);
+                chathistories.Add(sender, $"{IDtoDisplaynamedict[sender]}: {(string)message}\n");
             }, onPlayFabError);
-
-
-            chathistories.Add(sender, $"{IDtoDisplaynamedict[sender]}: {(string)message}\n");
         }
+        onFriendListChange(friendDropMenu);
     }
 
     void IChatClientListener.OnStatusUpdate(string user, int status, bool gotMessage, object message)
@@ -304,7 +303,8 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             return;
         }
         string user = usernameToInvite.text;
-        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {Mirror.NetworkManager.singleton.networkAddress}";//acceptedInvite; 
+        GameObject.Find("SessionInfo").GetComponent<SessionInfo>().GetLocalIPv4();
+        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {GameObject.Find("SessionInfo").GetComponent<SessionInfo>().serverIPaddress}";//acceptedInvite; 
         string userID = "";
         PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
         {
