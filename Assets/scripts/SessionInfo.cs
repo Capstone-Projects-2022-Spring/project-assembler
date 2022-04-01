@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Net;
+using System.Linq;
 using Mirror;
 
 public class SessionInfo : NetworkBehaviour
@@ -17,6 +19,8 @@ public class SessionInfo : NetworkBehaviour
     public GameObject attachedToMouseItem;
     public playerInfo localplayerinfo;
     public GameObject playerTag;
+    [SyncVar]
+    public string serverIPaddress;
 
     void Update()
     {
@@ -150,4 +154,13 @@ public class SessionInfo : NetworkBehaviour
     //    Debug.Log("Updated map");
     //    NetworkServer.Spawn(Instantiate(newObject));
     //}
+
+    [Command(requiresAuthority = false)]
+    public void GetLocalIPv4()
+    {
+        serverIPaddress = Dns.GetHostEntry(Dns.GetHostName())
+            .AddressList.First(
+                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            .ToString();
+    }
 }
