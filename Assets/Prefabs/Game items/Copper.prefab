@@ -106,6 +106,7 @@ MonoBehaviour:
   isOnGround: 1
   isAttachedToMouse: 0
   power: 1
+  oretype: copper
 --- !u!50 &4520672234095188351
 Rigidbody2D:
   serializedVersion: 4

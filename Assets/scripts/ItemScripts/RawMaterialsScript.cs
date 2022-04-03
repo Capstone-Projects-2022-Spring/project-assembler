@@ -5,6 +5,7 @@ using Mirror;
 
 public class RawMaterialsScript : GameItem
 {
+    public string oretype;
     double lastTimeClickedon;
     [SyncVar]
     int materialCount = 100;
