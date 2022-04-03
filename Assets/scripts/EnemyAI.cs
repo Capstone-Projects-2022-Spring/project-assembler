@@ -24,6 +24,36 @@ public class EnemyAI : NetworkBehaviour
         }
     }
 
+    [ServerCallback]
+    private void FixedUpdate()
+    {
+        Collider2D[] collided;
+        collided = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(20f, 20f), 0);
+        foreach (Collider2D obj in collided)
+        {
+            var selectedObj = obj.gameObject;
+            if (selectedObj.GetComponent<PlayerControl>() != null)
+            {
+                PlayerControl player = selectedObj.GetComponent<PlayerControl>();
+                Vector3 velcoity3 = player.transform.position - this.transform.position;
+                if(velcoity3.magnitude > 5)
+                {
+                    rigidbody2d.velocity = new Vector3(velcoity3.x, velcoity3.y).normalized * 20f;
+                }
+                else
+                {
+                    rigidbody2d.velocity = new Vector3(0, 0);
+                }
+            }
+
+        }
+
+
+
+        
+    }
+
+
     [Command(requiresAuthority = false)]
     public void destory()
     {

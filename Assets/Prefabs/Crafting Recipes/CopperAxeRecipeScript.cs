@@ -29,7 +29,7 @@ public class CopperAxeRecipeScript : NetworkBehaviour
             InventorySlotScript slot = paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>();
             if (slot.itemInSlot != null)
             {
-                if(slot.itemInSlot.GetComponent<RawMaterialsScript>() != null)
+                if(slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "copper")
                 {
                     recipeItems.Add(slot);
                     copperOreLeft -= 1;
@@ -52,7 +52,7 @@ public class CopperAxeRecipeScript : NetworkBehaviour
             InventorySlotScript slot = paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>();
             if (slot.itemInSlot != null)
             {
-                if (slot.itemInSlot.GetComponent<RawMaterialsScript>() != null)
+                if (slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "copper")
                 {
                     recipeItems.Add(slot);
                     copperOreLeft -= 1;

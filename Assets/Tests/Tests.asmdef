@@ -1,0 +1,31 @@
+{
+    "name": "Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:08a110bd598f7604f9519c2d7e1fb3cc",
+        "GUID:8aa8a8085039f0e4ba1c8d6480d45262",
+        "GUID:0da6d172d18a54e4389d0dce1e1ffdf2",
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:831409e8f9d13b5479a3baef9822ad34",
+        "GUID:8f342294dfb958a4694b67859092b749",
+        "GUID:a738238285a7a8246af046cbf977522f",
+        "GUID:7024f760fc566cf45a16d2c838e22b2d",
+        "GUID:57c32fc907df0f54e8e6e8f0d2488336",
+        "GUID:8b0e35c01b4e70e41b535fed5673f93d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

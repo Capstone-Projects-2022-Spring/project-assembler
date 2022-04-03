@@ -5,6 +5,9 @@ using Mirror;
 
 public class AxeScript : GameItem
 {
+    public string axeType;
+    public double power;
+
     public override void interact(PlayerControl player)
     {
         if (isOnGround == true && Input.GetMouseButtonDown(0))
