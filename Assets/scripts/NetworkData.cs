@@ -39,7 +39,8 @@ public class NetworkData : MonoBehaviour
             conn = factory.CreateConnection();
             channel = conn.CreateModel();
 
-            channel.ExchangeDeclare("test", ExchangeType.Fanout);
+            channel.ExchangeDeclare("data-in", ExchangeType.Fanout);
+            channel.ExchangeDeclare("data-out", ExchangeType.Fanout);
 
             InvokeRepeating(nameof(clearMessages), 1.0f, 1.0f);
         }
@@ -71,8 +72,8 @@ public class NetworkData : MonoBehaviour
         Debug.Log("Messages In: " + inMsg);
         Debug.Log("Messages Out: " + outMsg);
 
-        channel.BasicPublish(exchange: "test", routingKey: "testIn", basicProperties: null, body: inMsg);
-        channel.BasicPublish(exchange: "test", routingKey: "testOut", basicProperties: null, body: outMsg);
+        channel.BasicPublish(exchange: "data-in", routingKey: "testIn", basicProperties: null, body: inMsg);
+        channel.BasicPublish(exchange: "data-out", routingKey: "testOut", basicProperties: null, body: outMsg);
 
         MessagesIn.Clear();
         MessagesOut.Clear();
