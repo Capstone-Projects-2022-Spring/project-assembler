@@ -50,3 +50,5 @@ crashlytics-build.properties
 #mac stuff
 .DS_Store
 
+#random metadata file
+Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.sln.meta

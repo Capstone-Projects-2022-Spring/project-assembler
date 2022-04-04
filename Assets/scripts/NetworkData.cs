@@ -14,10 +14,6 @@ public class NetworkData : MonoBehaviour
     public bool EnableMessageLogging;
     public bool EnableRedis;
 
-#if UNITY_SERVER
-    EnableMessageLogging = true;
-    EnableRedis = true;
-#endif
     public static ConnectionFactory factory = new ConnectionFactory
     {
         Uri = new System.Uri("amqp://guest:guest@localhost:5672/")
