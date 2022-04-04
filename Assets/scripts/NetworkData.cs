@@ -12,7 +12,6 @@ public class NetworkData : MonoBehaviour
     List<NetworkDiagnostics.MessageInfo> MessagesOut = new List<NetworkDiagnostics.MessageInfo>();
 
     public bool EnableMessageLogging;
-    public bool EnableRedis;
 
     public static ConnectionFactory factory = new ConnectionFactory
     {
@@ -40,10 +39,6 @@ public class NetworkData : MonoBehaviour
 
             InvokeRepeating(nameof(clearMessages), 1.0f, 1.0f);
         }
-        if (EnableRedis)
-        {
-           
-        }
     }
 
     // Update is called once per frame
@@ -65,8 +60,8 @@ public class NetworkData : MonoBehaviour
         char[] msgOut = MessagesOut.Count.ToString().ToCharArray();
         byte[] inMsg = Encoding.UTF8.GetBytes(msgIn);
         byte[] outMsg = Encoding.UTF8.GetBytes(msgOut);
-        Debug.Log("Messages In: " + inMsg);
-        Debug.Log("Messages Out: " + outMsg);
+        //Debug.Log("Messages In: " + inMsg);
+        //Debug.Log("Messages Out: " + outMsg);
 
         channel.BasicPublish(exchange: "data-in", routingKey: "testIn", basicProperties: null, body: inMsg);
         channel.BasicPublish(exchange: "data-out", routingKey: "testOut", basicProperties: null, body: outMsg);
