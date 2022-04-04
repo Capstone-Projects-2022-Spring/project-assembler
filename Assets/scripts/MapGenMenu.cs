@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class MapGenMenu : MonoBehaviour
 {
@@ -15,11 +16,13 @@ public class MapGenMenu : MonoBehaviour
     public GameObject EnemyAiLayout;
     public GameObject MapGenUI;
     public InputField seed;
-    float[] terrainSliderValues = new float[3]; //dirt, water, grass 
+    double[] terrainSliderValues = new double[3]; //dirt, water, grass 
     float[] resourceSliderValues = new float[6]; //rockF, rockR, copperF, copperR, metalF, metalR
     float[] enemyAISliderValues = new float[3]; //baseF, baseS, areaS
     float[] inputValues = new float[5]; //MaxGroup, MinGroup, MaxCooldown, MinCooldown, MaxExpansion, TimeFactor, DestroyFactor, PollutionFactor
-    
+    public double dirtShare, waterShare, grassShare;
+
+
     public void onOpenMapGen(){
         MapGenUI.SetActive(true);
     }
@@ -116,7 +119,17 @@ public class MapGenMenu : MonoBehaviour
         });
     }
 
-    public void onPlay(){
+    public void onPreview(){
+        
+        double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
+        dirtShare = Math.Round((terrainSliderValues[0] / sum) *6);
+        waterShare = Math.Round((terrainSliderValues[1] / sum) *6);
+        grassShare = Math.Round((terrainSliderValues[2] / sum) *6);
+        
+        Debug.Log( "The dirt values are " + $"{dirtShare}");
+        Debug.Log( "The water values are " + $"{waterShare}");
+        Debug.Log( "The grass values are " + $"{grassShare}");
+        
         //start of stuff to delete
         
         //end of stuff to delete
@@ -127,4 +140,5 @@ public class MapGenMenu : MonoBehaviour
             values of sliders are zero until a tab is clicked on
         */
     }
+    
 }
