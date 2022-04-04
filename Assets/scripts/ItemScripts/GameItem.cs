@@ -14,7 +14,7 @@ public class GameItem : NetworkBehaviour
     public bool isOnGround = true;
     public bool isAttachedToMouse = false;
 
-    public double power = 1.0;
+    
     //scale power from 0-1
     //similar to minecraft with stone -> diamond
     //time to mine = durability / power

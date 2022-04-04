@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class PlayerControl : NetworkBehaviour
 {
     public float speed = 30;
+    public float MaxHealth = 100;
+    [SyncVar]
+    public float currentHealth = 100;
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
 

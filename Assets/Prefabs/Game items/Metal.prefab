@@ -99,12 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  itemName: Metal
   rigidbody: {fileID: 8531048477270164331}
   collisionBox: {fileID: 266592638247316995}
   isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
+  power: 1
+  oretype: metal
 --- !u!61 &266592638247316995
 BoxCollider2D:
   m_ObjectHideFlags: 0

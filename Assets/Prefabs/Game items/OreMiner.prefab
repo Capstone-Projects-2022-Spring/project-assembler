@@ -308,7 +308,6 @@ MonoBehaviour:
   isInInventory: 1
   isOnGround: 1
   isAttachedToMouse: 0
-  power: 1
   activeToggle: {fileID: 6841189468558294065}
   theInventoryCanvas: {fileID: 847004782735416936}
 --- !u!61 &5008137678085295769

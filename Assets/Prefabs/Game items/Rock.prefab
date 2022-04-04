@@ -105,6 +105,7 @@ MonoBehaviour:
   isOnGround: 1
   isAttachedToMouse: 0
   power: 1
+  oretype: rock
 --- !u!50 &-3905651697927698724
 Rigidbody2D:
   serializedVersion: 4
