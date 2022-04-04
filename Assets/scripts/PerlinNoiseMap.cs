@@ -14,7 +14,7 @@ public class PerlinNoiseMap : MonoBehaviour
     public Slider DirtFrequency, WaterFrequency, GrassFrequency;
     public GameObject TerrainLayout;
     public double[] terrainSliderValues = new double[3]; //dirt, water, grass 
-    public int dirt, water, grass;
+    public double dirtShare, waterShare, grassShare;
 
     int map_width = 200;
     int map_height = 200;
@@ -63,6 +63,11 @@ public class PerlinNoiseMap : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {   
+        for (int i = 0; i < 6; i++){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(i, grass_prefab);
+        }
+        /*
         tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, grass_prefab);
         tileset.Add(1, grass_prefab);
@@ -70,7 +75,7 @@ public class PerlinNoiseMap : MonoBehaviour
         tileset.Add(3, dirt_prefab);
         tileset.Add(4, dirt_prefab);
         tileset.Add(5, dirt_prefab);
-        
+        */
     }
     void CreateTileGroup()
     {
@@ -152,20 +157,19 @@ public class PerlinNoiseMap : MonoBehaviour
         GrassFrequency.onValueChanged.AddListener((v) => {
             terrainSliderValues[2] = v;
         });
+
+        
     }
     public void onSave(){
         double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
         
-        double dirtShare = Math.Round((terrainSliderValues[0] / sum) *6);
-        double waterShare = Math.Round((terrainSliderValues[1] / sum) *6);
-        double grassShare = Math.Round((terrainSliderValues[2] / sum) *6);
+        dirtShare = Math.Round((terrainSliderValues[0] / sum) *6);
+        waterShare = Math.Round((terrainSliderValues[1] / sum) *6);
+        grassShare = Math.Round((terrainSliderValues[2] / sum) *6);
         
-        dirt = Convert.ToInt32(dirtShare);
-        water = Convert.ToInt32(waterShare);
-        grass = Convert.ToInt32(grassShare);
         //deletable logs
-        Debug.Log( "The dirt values are " + $"{dirt}");
-        Debug.Log( "The water values are " + $"{water}");
-        Debug.Log( "The grass values are " + $"{grass}");
+        Debug.Log( "The dirt values are " + $"{dirtShare}");
+        Debug.Log( "The water values are " + $"{waterShare}");
+        Debug.Log( "The grass values are " + $"{grassShare}");
     }
 }
