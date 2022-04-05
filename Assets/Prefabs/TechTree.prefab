@@ -47,7 +47,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: 7fd4b28ef16aa1b488baca059d71db71
   hasSpawned: 0
 --- !u!114 &5679764264740873178
 MonoBehaviour:
@@ -63,4 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  oreMined: 0
+  rockMined: 0
+  ironMined: 0
+  metalPickAxe: {fileID: 5188076099012687107, guid: b46b9ff99f9b87b4cb9a41863e716d64, type: 3}
+  rockAxe: {fileID: 3936943474936690987, guid: a09011f61f80b3140bc26ccd8e85a2e7, type: 3}

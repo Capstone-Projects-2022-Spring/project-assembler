@@ -6,7 +6,7 @@ using Mirror;
 public class AxeScript : GameItem
 {
     public string axeType;
-    public double power;
+    public int power;
 
     public override void interact(PlayerControl player)
     {

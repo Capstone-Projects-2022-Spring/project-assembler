@@ -181,9 +181,9 @@ public class UIManager : MonoBehaviour
 
     public void onInGameExit()
     {
+        sessionInfoClass.OnExitClick();
         manager.StopClient();
-        JoinHostCanves.gameObject.SetActive(true);
-        inGameCanvas.gameObject.SetActive(false);
+        manager.StopServer();
     }
 
     //-----------
