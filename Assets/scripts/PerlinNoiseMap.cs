@@ -74,23 +74,23 @@ public class PerlinNoiseMap : MonoBehaviour
                 tileset.Add(i, grass_prefab);
                 grass--;
             }
-            else if(water != 0){
-                tileset.Add(i, water_prefab);
-                water--;
-            }
             else if (dirt != 0){
                 tileset.Add(i, dirt_prefab);
                 dirt--;
             }
+            else if(water != 0){
+                tileset.Add(i, water_prefab);
+                water--;
+            }
         }
+        
         /*
-        tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, grass_prefab);
         tileset.Add(1, grass_prefab);
         tileset.Add(2, grass_prefab);
-        tileset.Add(3, dirt_prefab);
+        tileset.Add(3, dirt);
         tileset.Add(4, dirt_prefab);
-        tileset.Add(5, dirt_prefab);
+        tileset.Add(5, water_prefab);
         */
     }
     void CreateTileGroup()
