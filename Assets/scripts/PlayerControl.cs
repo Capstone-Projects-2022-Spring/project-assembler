@@ -18,7 +18,7 @@ public class PlayerControl : NetworkBehaviour
 
     Canvas ingamecanves;
     Canvas chatUI;
-    GameObject InventoryCanvas;
+    public GameObject InventoryCanvas;
     GameObject sessionStats;
     InputField messageInput;
     Text sessionChatText;
@@ -26,7 +26,7 @@ public class PlayerControl : NetworkBehaviour
     GameObject chatCanvas;
     SessionInfo sessionInfoClass;
     Transform inventoryCanvas;
-    Transform mainInventory;
+    public Transform mainInventory;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
     UIManager uimanager;
@@ -270,11 +270,7 @@ public class PlayerControl : NetworkBehaviour
     [Command]
     void onMessageEntered(string displaynamefromsender, string input)
     {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
-        {
-            sessionChat.Add($"{displaynamefromsender}: {input}");
-        }
-
+        sessionChat.Add($"{displaynamefromsender}: {input}");
         //foreach (string message in sessionChat)
         //{
         //    Debug.Log($"{message}, ");
