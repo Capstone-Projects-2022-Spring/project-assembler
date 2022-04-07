@@ -202,10 +202,9 @@ MonoBehaviour:
   syncInterval: 0.1
   rigidbody: {fileID: 6158055491151623617}
   collisionBox: {fileID: 1627907979462003535}
-  isInInventory: 1
+  isInInventory: 0
   isOnGround: 1
-  isAttachedToMouse: 1
-  power: 1
+  isAttachedToMouse: 0
   firePoint: {fileID: 8929949229579871409}
   bulletPrefab: {fileID: 1808575932861734992, guid: 5add931210ea7074fbcf783586130140, type: 3}
 --- !u!1 &8929949229579871408

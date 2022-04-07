@@ -159,10 +159,15 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   speed: 1500
+  MaxHealth: 100
+  currentHealth: 100
   rigidbody2d: {fileID: -6356492195478957761}
   collidbox: {fileID: 0}
   playFabID: 
   displayName: 
+  chatUI: {fileID: 0}
+  InventoryCanvas: {fileID: 0}
+  mainInventory: {fileID: 0}
   currentObjectEquipped: {fileID: 0}
 --- !u!50 &-6356492195478957761
 Rigidbody2D:

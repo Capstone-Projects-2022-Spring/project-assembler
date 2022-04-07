@@ -6,10 +6,9 @@ using Mirror;
 
 public class MetalPickAxeRecipe : CraftingRecipe
 {
+    public int metalOreLeft = 3;
     public override void onCraftClick()
     {
-        int metalOreLeft = 3;
-        int sticksLeft = 1;
         List<InventorySlotScript> recipeItems = new List<InventorySlotScript>();
         for (int i = 0; i < paranetCanvas.childCount - 1; i++)
         {

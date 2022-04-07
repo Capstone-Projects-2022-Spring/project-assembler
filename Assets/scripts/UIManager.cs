@@ -28,9 +28,14 @@ public class UIManager : MonoBehaviour
     public InputField seedinputInUIManager;
     public InputField IPaddressToJoin;
 
+    
+
     public bool changeMap = false;
     GameObject map;
     GameObject techtree;
+
+    [Header("Ores")]
+    public GameObject copper;
 
     void Awake()
     {
@@ -300,7 +305,7 @@ public class UIManager : MonoBehaviour
             manager.networkAddress = "localhost";
         } else
         {
-            manager.networkAddress = IPaddressToJoin.text;
+            manager.networkAddress = IPaddressToJoin.text.Trim();
         }
         changeMap = true;
         if (hostOrNot)
@@ -344,6 +349,8 @@ public class UIManager : MonoBehaviour
                 NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
             }
         }
+
+        GameObject.Find("PathFinding").GetComponent<AstarPath>().Scan();
     }
 
     void unSpawnMap()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class PlayerControl : NetworkBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerControl : NetworkBehaviour
     public string displayName;
 
     Canvas ingamecanves;
-    Canvas chatUI;
+    public Canvas chatUI;
     public GameObject InventoryCanvas;
     GameObject sessionStats;
     InputField messageInput;
@@ -31,6 +32,10 @@ public class PlayerControl : NetworkBehaviour
     public readonly SyncList<string> sessionChat = new SyncList<string>();
     UIManager uimanager;
     public GameObject currentObjectEquipped; // The item that is currently selected by the player
+    
+    double idleTime;
+    double lastMovementAI;
+    Vector2 direction;
 
     void Awake()
     {
@@ -62,6 +67,8 @@ public class PlayerControl : NetworkBehaviour
 
         sessionChat.Callback += onChatHistoryChange;
         uimanager = GameObject.Find("UIscripts").GetComponent<UIManager>();
+        idleTime = Time.timeAsDouble;
+        lastMovementAI = Time.timeAsDouble;
     }
 
    
@@ -86,6 +93,10 @@ public class PlayerControl : NetworkBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    if(mousepos != new Vector2(0, 0))
+                    {
+                        idleTime = Time.timeAsDouble;
+                    }
                     if (!interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
                     {
                         currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
@@ -172,7 +183,21 @@ public class PlayerControl : NetworkBehaviour
                     chatUI.gameObject.SetActive(true);
                 }
             }
+            AIBhavior();
+        }
+    }
 
+
+    void AIBhavior()
+    {
+        if (Time.timeAsDouble - idleTime > 6)
+        {
+            if(Time.timeAsDouble - lastMovementAI > 4)
+            {
+                //direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f,1f)).normalized;
+                lastMovementAI = Time.timeAsDouble;
+            }
+            //rigidbody2d.velocity = direction * 10;
         }
     }
 
@@ -202,7 +227,7 @@ public class PlayerControl : NetworkBehaviour
     }
 
     [Command]
-    void updateLocation(Vector3 changeposition,  GameObject thegameobject, bool newGroundValue)
+    public void updateLocation(Vector3 changeposition,  GameObject thegameobject, bool newGroundValue)
     {
         thegameobject.transform.position = changeposition;
         thegameobject.GetComponent<GameItem>().isOnGround = newGroundValue;

@@ -41,12 +41,14 @@ public class InventorySlotScript : MonoBehaviour
             //StartCoroutine(itemInSlot.itemAttaching());
             sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = false;
             itemInSlot.GetComponent<GameItem>().isAttachedToMouse = true;
+            itemInSlot.GetComponent<GameItem>().moveToGorund = false;
             GameObject temp = sessionInfo.attachedToMouseItem;
             sessionInfo.attachedToMouseItem = itemInSlot;
             itemInSlot = temp;
 
             updateImage();
         }
+        
     }
 
     public void updateImage()
