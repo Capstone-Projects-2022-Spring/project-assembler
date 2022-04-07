@@ -10,14 +10,12 @@ public class MetalGen : MonoBehaviour
     Dictionary<int, GameObject> tile_groups;
     public GameObject metal;
     public GameObject transparentTile;
-    //start
+    
     public Slider MetalFrequency, MetalRichness;
     public static float metalF, metalR;
     public static int value = 10;
     
-
     public void onStart(){
-
         metalF = MetalFrequency.value;
         metalR = MetalRichness.value;
         MetalFrequency.onValueChanged.AddListener((v) => {
@@ -117,8 +115,18 @@ public class MetalGen : MonoBehaviour
             tileset.Add(6, null);
             value = 7;
         }
-        
-        
+        /*
+        tileset.Add(0, metal);
+        tileset.Add(1, null);
+        tileset.Add(2, null);
+        tileset.Add(3, null);
+        tileset.Add(4, null);
+        tileset.Add(5, null);
+        tileset.Add(6, null);
+        tileset.Add(7, null);
+        tileset.Add(8, null);
+        tileset.Add(9, null);
+        */
     }
 
     void CreateTileGroup()
@@ -192,6 +200,4 @@ public class MetalGen : MonoBehaviour
     {
         return tile_grid[x][y];
     }
-
-
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class RockGen : MonoBehaviour
 {
@@ -8,6 +10,21 @@ public class RockGen : MonoBehaviour
     Dictionary<int, GameObject> tile_groups;
     public GameObject rock;
     public GameObject transparentTile;
+
+    public Slider RockFrequency, RockRichness;
+    public static float rockF, rockR;
+    public static int value = 10;
+
+    public void onStart(){
+        rockF = RockFrequency.value;
+        rockR = RockRichness.value;
+        RockFrequency.onValueChanged.AddListener((v) => {
+            rockF = v;
+        });
+        RockRichness.onValueChanged.AddListener((v) => {
+            rockR = v;
+        });
+    }
 
     int map_width = 200;
     int map_height = 200;
@@ -52,6 +69,53 @@ public class RockGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
+        Debug.Log("omg" + $"{rockF}");
+           
+        if (rockF == 2){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, rock);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            tileset.Add(7, null);
+            tileset.Add(8, null);
+            tileset.Add(9, null);
+        }
+        else if (rockF == 1){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, rock);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            tileset.Add(7, null);
+            tileset.Add(8, null);
+            tileset.Add(9, null);
+            tileset.Add(10, null);
+            tileset.Add(11, null);
+            tileset.Add(12, null);
+            tileset.Add(13, null);
+            tileset.Add(14, null);
+            value = 15;
+
+        }
+        else if (rockF == 3){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, rock);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            value = 7;
+        }
+        /*
         tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, rock);
         tileset.Add(1, null);
@@ -63,6 +127,7 @@ public class RockGen : MonoBehaviour
         tileset.Add(7, null);
         tileset.Add(8, null);
         tileset.Add(9, null);
+        */
     }
 
     void CreateTileGroup()
@@ -107,9 +172,9 @@ public class RockGen : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 10)
+        if (scale_perlin == value)
         {
-            scale_perlin = 9;
+            scale_perlin = (value - 1);
         }
 
         return Mathf.FloorToInt(scale_perlin);
