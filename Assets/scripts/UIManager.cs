@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
-        //usage: ./Assembler.exe 8888
+        //usage: ./Assembler.exe -port 8888
 
         string serverPort = GetArg("-port");
         Debug.Log(serverPort);
@@ -127,6 +127,9 @@ public class UIManager : MonoBehaviour
         if(splitAddress.Length > 1) //if there's a port
         {
             NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+        } else
+        {
+            NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = 7777;
         }
 
     }
@@ -324,7 +327,14 @@ public class UIManager : MonoBehaviour
             manager.networkAddress = "localhost";
         } else
         {
-            manager.networkAddress = IPaddressToJoin.text;
+            string[] splitAddress = IPaddressToJoin.text.Split(':');
+
+            manager.networkAddress = splitAddress[0];
+
+            if (splitAddress.Length > 1) //if there's a port
+            {
+                NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+            }
         }
         changeMap = true;
         if (hostOrNot)
