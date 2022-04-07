@@ -69,7 +69,7 @@ public class CopperGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log("omg" + $"{copperF}");
+        Debug.Log("copper generation " + $"{copperF}");
            
         if (copperF == 2){
             tileset = new Dictionary<int, GameObject>();

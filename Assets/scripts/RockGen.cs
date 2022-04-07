@@ -69,7 +69,7 @@ public class RockGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log("omg" + $"{rockF}");
+        Debug.Log("rock frequency generation " + $"{rockF}");
            
         if (rockF == 2){
             tileset = new Dictionary<int, GameObject>();
