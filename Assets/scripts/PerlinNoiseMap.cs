@@ -11,8 +11,8 @@ public class PerlinNoiseMap : MonoBehaviour
     public GameObject grass_prefab;
     public GameObject dirt_prefab;
     public GameObject water_prefab;
+
     public Slider DirtFrequency, WaterFrequency, GrassFrequency;
-    public GameObject TerrainLayout;
     public double[] terrainSliderValues = new double[3]; //dirt, water, grass 
     public static int dirt, water, grass;
 
@@ -157,7 +157,6 @@ public class PerlinNoiseMap : MonoBehaviour
         return tile_grid[x][y];
     }
     public void onTerrainClick(){
-        TerrainLayout.SetActive(true);
         
         //initialize values
         terrainSliderValues[0] = DirtFrequency.value;
@@ -176,6 +175,7 @@ public class PerlinNoiseMap : MonoBehaviour
 
         
     }
+    
     public void onSave(){
         double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
         
@@ -193,4 +193,5 @@ public class PerlinNoiseMap : MonoBehaviour
         Debug.Log( "The water values are " + $"{water}");
         Debug.Log( "The grass values are " + $"{grass}");
     }
+    
 }
