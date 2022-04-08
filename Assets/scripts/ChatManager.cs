@@ -165,7 +165,7 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
     public void OnConnected()
     {
-        Debug.Log($"Connected to photon chat server as {chatClient.UserId}");
+        //Debug.Log($"Connected to photon chat server as {chatClient.UserId}");
 
         this.gameObject.SetActive(true);
         StartCoroutine(DownloadAvater());
@@ -176,7 +176,10 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             foreach (var FriendName in result.Friends){
                 dropOptions.Add(FriendName.TitleDisplayName);
                 IDtoDisplaynamedict.Add(FriendName.FriendPlayFabId, FriendName.TitleDisplayName);
-                chathistories.Add(FriendName.FriendPlayFabId, "");
+                if (!chathistories.ContainsKey(FriendName.FriendPlayFabId))
+                {
+                    chathistories.Add(FriendName.FriendPlayFabId, "");
+                }
             }
             friendDropMenu.ClearOptions();
             friendDropMenu.AddOptions(dropOptions);

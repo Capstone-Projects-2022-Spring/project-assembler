@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
         //usage: ./Assembler.exe -port 8888
 
         string serverPort = GetArg("-port");
-        Debug.Log(serverPort);
+        Debug.Log("Server port: " + serverPort);
         if(!String.IsNullOrEmpty(serverPort))
         {
             manager.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(serverPort);
@@ -103,7 +103,6 @@ public class UIManager : MonoBehaviour
     {
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
         MapMenuUI.gameObject.SetActive(false);
     }
 
@@ -299,6 +298,7 @@ public class UIManager : MonoBehaviour
         // Execute request and update friends when we are done
         PlayFabClientAPI.AddFriend(request, result => {
             Debug.Log("Friend added successfully!");
+            this.GetComponent<ChatManager>().OnConnected();
         }, DisplayPlayFabError);
     }
 
@@ -306,7 +306,7 @@ public class UIManager : MonoBehaviour
         friendSearch = idInput;
     }
     public void SubmitFirendRequest(){
-        AddFriend(FriendIdType.PlayFabId, friendSearch);
+        AddFriend(FriendIdType.DisplayName, friendSearch);
     }
     //----------- //end friends UI 
 
