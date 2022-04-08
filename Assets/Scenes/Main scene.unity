@@ -2731,6 +2731,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1482258208}
+        m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
+        m_MethodName: onSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &205165085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6742,10 +6754,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1758324607}
   m_HandleRect: {fileID: 122597351}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0.5
+  m_MinValue: 1
+  m_MaxValue: 3
+  m_WholeNumbers: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8101,6 +8113,42 @@ MonoBehaviour:
       - m_Target: {fileID: 1482258211}
         m_TargetAssemblyTypeName: MapGenMenu, Assembly-CSharp
         m_MethodName: onResourcesClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258212}
+        m_TargetAssemblyTypeName: RockGen, GameAssembly
+        m_MethodName: onStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258213}
+        m_TargetAssemblyTypeName: MetalGen, GameAssembly
+        m_MethodName: onStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258214}
+        m_TargetAssemblyTypeName: CopperGen, GameAssembly
+        m_MethodName: onStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9544,10 +9592,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 686636612}
   m_HandleRect: {fileID: 1832203024}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0.5
+  m_MinValue: 1
+  m_MaxValue: 3
+  m_WholeNumbers: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13457,6 +13505,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: transferMap
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1482258208}
+        m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
+        m_MethodName: onSave
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17808,6 +17868,54 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1482258208}
+        m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
+        m_MethodName: onTerrainClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258214}
+        m_TargetAssemblyTypeName: CopperGen, GameAssembly
+        m_MethodName: onStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258213}
+        m_TargetAssemblyTypeName: MetalGen, GameAssembly
+        m_MethodName: onStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258212}
+        m_TargetAssemblyTypeName: RockGen, GameAssembly
+        m_MethodName: onStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1190330773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19012,6 +19120,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1482258211}
         m_TargetAssemblyTypeName: MapGenMenu, Assembly-CSharp
+        m_MethodName: onTerrainClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1482258208}
+        m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
         m_MethodName: onTerrainClick
         m_Mode: 1
         m_Arguments:
@@ -20527,10 +20647,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 336823508}
   m_HandleRect: {fileID: 2022947124}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0.5
+  m_MinValue: 1
+  m_MaxValue: 3
+  m_WholeNumbers: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -22977,6 +23097,10 @@ GameObject:
   - component: {fileID: 1482258210}
   - component: {fileID: 1482258209}
   - component: {fileID: 1482258211}
+  - component: {fileID: 1482258214}
+  - component: {fileID: 1482258213}
+  - component: {fileID: 1482258212}
+  - component: {fileID: 1482258208}
   m_Layer: 0
   m_Name: UIscripts
   m_TagString: Untagged
@@ -23026,6 +23150,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1482258208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482258205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4935988bde145d288e712911056246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
+  dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
+  water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
+  DirtFrequency: {fileID: 1039236564}
+  WaterFrequency: {fileID: 184290344}
+  GrassFrequency: {fileID: 509218660}
+  terrainSliderValues:
+  - 0
+  - 0
+  - 0
+  map_seed: 0
 --- !u!114 &1482258209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23190,36 +23337,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c895c07d8f6ef34bbbc4d84c2b77a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RockFrequency: {fileID: 1349589313}
-  CopperFrequency: {fileID: 501906340}
-  MetalFrequency: {fileID: 675813096}
-  DirtFrequency: {fileID: 1039236564}
-  WaterFrequency: {fileID: 184290344}
-  GrassFrequency: {fileID: 509218660}
-  EnemyBaseFrequency: {fileID: 1533520093}
-  RockRichness: {fileID: 1746512994}
-  CopperRichness: {fileID: 1895299435}
-  MetalRichness: {fileID: 1993019060}
-  EnemyBaseSize: {fileID: 1081201576}
-  StartingAreaSize: {fileID: 903464036}
-  MaxGroup: {fileID: 957796416}
-  MinGroup: {fileID: 138761588}
-  MaxCooldown: {fileID: 717726318}
-  MinCooldown: {fileID: 896770598}
-  MaxExpansion: {fileID: 647859489}
-  maxGroupText: {fileID: 1641739280}
-  minGroupText: {fileID: 253165476}
-  maxCooldownText: {fileID: 1934404322}
-  minCooldownText: {fileID: 1970637567}
-  maxExpansionText: {fileID: 863208071}
-  timeText: {fileID: 0}
-  destoryText: {fileID: 0}
-  pollutionText: {fileID: 0}
   TerrainLayout: {fileID: 1517685604}
   ResourcesLayout: {fileID: 471735951}
   EnemyAiLayout: {fileID: 1204886754}
   MapGenUI: {fileID: 1164233703}
-  seed: {fileID: 1296755792}
+--- !u!114 &1482258212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482258205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe54594d313dc4bbf8e9b0803acff86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rock: {fileID: 0}
+  transparentTile: {fileID: 0}
+  map_seed: 0
+  RockFrequency: {fileID: 1349589313}
+  RockRichness: {fileID: 1746512994}
+--- !u!114 &1482258213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482258205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf2d4e81571e4363bc901c59a38d8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: {fileID: 0}
+  transparentTile: {fileID: 0}
+  map_seed: 0
+  MetalFrequency: {fileID: 675813096}
+  MetalRichness: {fileID: 1993019060}
+--- !u!114 &1482258214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482258205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ff73e82a8774186b74f22c2e6d4037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copper: {fileID: 0}
+  transparentTile: {fileID: 0}
+  map_seed: 0
+  CopperFrequency: {fileID: 501906340}
+  CopperRichness: {fileID: 1895299435}
 --- !u!1 &1487696697
 GameObject:
   m_ObjectHideFlags: 0

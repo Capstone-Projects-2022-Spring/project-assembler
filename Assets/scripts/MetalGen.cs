@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class MetalGen : MonoBehaviour
 {
@@ -12,6 +14,21 @@ public class MetalGen : MonoBehaviour
     int map_width = 200;
     int map_height = 200;
     public int map_seed = 0;
+
+    public Slider MetalFrequency, MetalRichness;
+    public static float metalF, metalR;
+    public static int value = 10;
+    
+    public void onStart(){
+        metalF = MetalFrequency.value;
+        metalR = MetalRichness.value;
+        MetalFrequency.onValueChanged.AddListener((v) => {
+            metalF = v;
+        });
+        MetalRichness.onValueChanged.AddListener((v) => {
+            metalR = v;
+        });
+    }
 
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
@@ -51,6 +68,53 @@ public class MetalGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
+        Debug.Log("Metal generation " + $"{metalF}");
+           
+        if (metalF == 2){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, metal);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            tileset.Add(7, null);
+            tileset.Add(8, null);
+            tileset.Add(9, null);
+        }
+        else if (metalF == 1){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, metal);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            tileset.Add(7, null);
+            tileset.Add(8, null);
+            tileset.Add(9, null);
+            tileset.Add(10, null);
+            tileset.Add(11, null);
+            tileset.Add(12, null);
+            tileset.Add(13, null);
+            tileset.Add(14, null);
+            value = 15;
+
+        }
+        else if (metalF == 3){
+            tileset = new Dictionary<int, GameObject>();
+            tileset.Add(0, metal);
+            tileset.Add(1, null);
+            tileset.Add(2, null);
+            tileset.Add(3, null);
+            tileset.Add(4, null);
+            tileset.Add(5, null);
+            tileset.Add(6, null);
+            value = 7;
+        }
+        /*
         tileset = new Dictionary<int, GameObject>();
         tileset.Add(0, metal);
         tileset.Add(1, null);
@@ -62,7 +126,7 @@ public class MetalGen : MonoBehaviour
         tileset.Add(7, null);
         tileset.Add(8, null);
         tileset.Add(9, null);
-
+        */
     }
 
     void CreateTileGroup()
@@ -108,9 +172,9 @@ public class MetalGen : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 10)
+        if (scale_perlin == value)
         {
-            scale_perlin = 9;
+            scale_perlin = (value - 1);
         }
 
         return Mathf.FloorToInt(scale_perlin);
