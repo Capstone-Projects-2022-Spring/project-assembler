@@ -6,11 +6,9 @@ using Mirror;
 
 public class RockAxeRecipeScript : CraftingRecipe
 {
-
+    public int rockOreLeft = 3;
     public override void onCraftClick()
     {
-        int rockOreLeft = 3;
-        int sticksLeft = 1;
         List<InventorySlotScript> recipeItems = new List<InventorySlotScript>();
         for (int i = 0; i < paranetCanvas.childCount - 1; i++)
         {

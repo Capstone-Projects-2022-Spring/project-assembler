@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System;
 using System.IO;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -28,13 +29,26 @@ public class UIManager : MonoBehaviour
     public InputField seedinputInUIManager;
     public InputField IPaddressToJoin;
 
+    
+
     public bool changeMap = false;
     GameObject map;
     GameObject techtree;
 
+    [Header("Ores")]
+    public GameObject copper;
+
     void Awake()
     {
         manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
+        //usage: ./Assembler.exe -port 8888
+
+        string serverPort = GetArg("-port");
+        Debug.Log("Server port: " + serverPort);
+        if(!String.IsNullOrEmpty(serverPort))
+        {
+            manager.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(serverPort);
+        }
 #if UNITY_SERVER
         Debug.Log("In server mode");
 #endif
@@ -89,7 +103,6 @@ public class UIManager : MonoBehaviour
     {
         mainMenuCanves.gameObject.SetActive(true);
         StartGameManu.gameObject.SetActive(false);
-        chatWindow.gameObject.SetActive(false);
         MapMenuUI.gameObject.SetActive(false);
     }
 
@@ -104,7 +117,25 @@ public class UIManager : MonoBehaviour
     public void onIPAddressFieldChange(InputField address)
     {
             checkManager();
-            manager.networkAddress = address.text.Trim();
+
+        string destination = address.text.Trim();
+        string[] splitAddress = destination.Split(':');
+
+        foreach(var x in splitAddress)
+        {
+            Debug.Log(x);
+        }
+
+        manager.networkAddress = splitAddress[0];
+
+        if(splitAddress.Length > 1) //if there's a port
+        {
+            NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+        } else
+        {
+            NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = 7777;
+        }
+
     }
 
     public void onclientJoinButtonClick()
@@ -267,6 +298,7 @@ public class UIManager : MonoBehaviour
         // Execute request and update friends when we are done
         PlayFabClientAPI.AddFriend(request, result => {
             Debug.Log("Friend added successfully!");
+            this.GetComponent<ChatManager>().OnConnected();
         }, DisplayPlayFabError);
     }
 
@@ -274,7 +306,7 @@ public class UIManager : MonoBehaviour
         friendSearch = idInput;
     }
     public void SubmitFirendRequest(){
-        AddFriend(FriendIdType.PlayFabId, friendSearch);
+        AddFriend(FriendIdType.DisplayName, friendSearch);
     }
     //----------- //end friends UI 
 
@@ -300,7 +332,14 @@ public class UIManager : MonoBehaviour
             manager.networkAddress = "localhost";
         } else
         {
-            manager.networkAddress = IPaddressToJoin.text;
+            string[] splitAddress = IPaddressToJoin.text.Split(':');
+
+            manager.networkAddress = splitAddress[0];
+
+            if (splitAddress.Length > 1) //if there's a port
+            {
+                NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+            }
         }
         changeMap = true;
         if (hostOrNot)
@@ -344,6 +383,8 @@ public class UIManager : MonoBehaviour
                 NetworkServer.Spawn(temp.transform.GetChild(q).gameObject);
             }
         }
+
+        GameObject.Find("PathFinding").GetComponent<AstarPath>().Scan();
     }
 
     void unSpawnMap()
@@ -363,6 +404,17 @@ public class UIManager : MonoBehaviour
         Destroy(map);
         Destroy(techtree);
     }
-
-
+    private static string GetArg(string name)
+    {
+        var args = Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length; i++)
+        {
+            if (args[i] == name && args.Length > i + 1)
+            {
+                return args[i + 1];
+            }
+        }
+        return null;
+    }
 }
+

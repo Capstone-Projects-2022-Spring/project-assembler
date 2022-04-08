@@ -10,7 +10,6 @@ public class TechTree : NetworkBehaviour
     public int rockMined = 0;
     [SyncVar(hook = nameof(changeIronMined))]
     public int ironMined = 0;
-    Dictionary<string, bool> typesofrecipes = new Dictionary<string, bool>();
 
     [Header("RecipesPrefabs")]
     public GameObject metalPickAxe;
@@ -19,8 +18,6 @@ public class TechTree : NetworkBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        typesofrecipes.Add("RockAxeRecipeScript", false);
-        typesofrecipes.Add("MetalPickAxeRecipe", false);
 
         Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
         for (int i = 0; i < craftinmenu.childCount; i++)
@@ -31,7 +28,7 @@ public class TechTree : NetworkBehaviour
         changeRockMined(4, rockMined);
         //InvokeRepeating(nameof(updateCraftingMenu), 0f, 5f);
     }
-   
+
 
     public void changeIronMined(int old, int newvalue)
     {
@@ -42,7 +39,22 @@ public class TechTree : NetworkBehaviour
                 Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
                 for (int i = 0; i < craftinmenu.childCount; i++)
                 {
-                    if (craftinmenu.GetChild(i).GetComponent("MetalPickAxeRecipe") != null)
+                    if (craftinmenu.GetChild(i).name == "MetalPickAxeRecipe")
+                    {
+                        craftinmenu.GetChild(i).gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+
+        if (old < 10)
+        {
+            if (newvalue >= 10)
+            {
+                Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+                for (int i = 0; i < craftinmenu.childCount; i++)
+                {
+                    if (craftinmenu.GetChild(i).name == "AkBasicRecipe")
                     {
                         craftinmenu.GetChild(i).gameObject.SetActive(true);
                     }

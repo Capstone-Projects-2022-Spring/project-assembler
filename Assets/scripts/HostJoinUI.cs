@@ -27,6 +27,10 @@ public class HostJoinUI : NetworkBehaviour
 
         manager = NetworkManager.singleton;
         Debug.Log("from HostJoin" + manager);
+
+        //must be done before calling StartServer/Host/Client
+        //NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = 8888;
+
         hostbutton.onClick.AddListener(onhostbuttonClick);
         clientJoinButton.onClick.AddListener(onclientJoinButtonClick);
         cancelConnecting.onClick.AddListener(() => {
