@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using System;
 using System.IO;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -40,6 +41,14 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
+        //usage: ./Assembler.exe -port 8888
+
+        string serverPort = GetArg("-port");
+        Debug.Log(serverPort);
+        if(!String.IsNullOrEmpty(serverPort))
+        {
+            manager.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(serverPort);
+        }
 #if UNITY_SERVER
         Debug.Log("In server mode");
 #endif
@@ -109,7 +118,25 @@ public class UIManager : MonoBehaviour
     public void onIPAddressFieldChange(InputField address)
     {
             checkManager();
-            manager.networkAddress = address.text.Trim();
+
+        string destination = address.text.Trim();
+        string[] splitAddress = destination.Split(':');
+
+        foreach(var x in splitAddress)
+        {
+            Debug.Log(x);
+        }
+
+        manager.networkAddress = splitAddress[0];
+
+        if(splitAddress.Length > 1) //if there's a port
+        {
+            NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+        } else
+        {
+            NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = 7777;
+        }
+
     }
 
     public void onclientJoinButtonClick()
@@ -305,7 +332,14 @@ public class UIManager : MonoBehaviour
             manager.networkAddress = "localhost";
         } else
         {
-            manager.networkAddress = IPaddressToJoin.text.Trim();
+            string[] splitAddress = IPaddressToJoin.text.Split(':');
+
+            manager.networkAddress = splitAddress[0];
+
+            if (splitAddress.Length > 1) //if there's a port
+            {
+                NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
+            }
         }
         changeMap = true;
         if (hostOrNot)
@@ -370,6 +404,17 @@ public class UIManager : MonoBehaviour
         Destroy(map);
         Destroy(techtree);
     }
-
-
+    private static string GetArg(string name)
+    {
+        var args = Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length; i++)
+        {
+            if (args[i] == name && args.Length > i + 1)
+            {
+                return args[i + 1];
+            }
+        }
+        return null;
+    }
 }
+
