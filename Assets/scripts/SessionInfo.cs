@@ -11,7 +11,7 @@ public class SessionInfo : NetworkBehaviour
     public struct playerInfo
     {
         public string playFabID;
-        public List<GameItem> _keys;
+        public List<GameObject> _keys;
         public List<int> _values;
         public string displayName;
     }
@@ -44,7 +44,7 @@ public class SessionInfo : NetworkBehaviour
         localplayerinfo = new playerInfo
         {
             playFabID = accountID.AccountInfo.PlayFabId,
-            _keys = new List<GameItem>(),
+            _keys = new List<GameObject>(),
             _values = new List<int>(),
             displayName = accountID.AccountInfo.TitleInfo.DisplayName
         };
@@ -59,8 +59,49 @@ public class SessionInfo : NetworkBehaviour
     public override void OnStopClient()
     {
         base.OnStopClient();
-        playersList.Remove(localplayerinfo);
     }
+
+
+    public void OnExitClick()
+    {
+        playerInfo tempInfo = new playerInfo
+        {
+            playFabID = localplayerinfo.playFabID,
+            _keys = new List<GameObject>(),
+            _values = new List<int>(),
+            displayName = localplayerinfo.displayName,
+        };
+        for (int i = 0; i < playersList.Count; i++)
+        {
+            if (playersList[i].playFabID == localplayerinfo.playFabID)
+            {
+                removeListAt(i);
+                break;
+            }
+        }
+
+        Transform inventoryBar = NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().InventoryCanvas.transform;
+        Transform inventoryMain = NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().mainInventory.transform;
+        for (int i = 0; i < inventoryBar.childCount - 1; i++)
+        {
+            Destroy(inventoryBar.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+            inventoryBar.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = null;
+            tempInfo._keys.Add(inventoryBar.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+            //Debug.Log(inventoryBar.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+        }
+
+        for (int i = 0; i < inventoryMain.childCount - 1; i++)
+        {
+            Destroy(inventoryMain.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+            inventoryMain.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = null;
+            tempInfo._keys.Add(inventoryMain.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+            //Debug.Log(inventoryMain.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot);
+        }
+
+        addToList(tempInfo);
+    }
+
+
 
     void onPlayersListChange(SyncList<playerInfo>.Operation op, int index, playerInfo oldItem, playerInfo newItem)
     {
@@ -76,8 +117,6 @@ public class SessionInfo : NetworkBehaviour
             case SyncList<playerInfo>.Operation.OP_INSERT:
                 break;
             case SyncList<playerInfo>.Operation.OP_REMOVEAT:
-                // index is where it was removed from the list
-                // oldItem is the item that was removed
                 break;
             case SyncList<playerInfo>.Operation.OP_SET:
                 break;
@@ -86,12 +125,12 @@ public class SessionInfo : NetworkBehaviour
                 break;
         }
 
-        string toprint = "";
-        for (int i = 0; i < playersList.Count; i++)
-        {
-            toprint += playersList[i].playFabID + " " + playersList[i].displayName + ",";
-        }
-        Debug.Log(toprint);
+        //string toprint = "";
+        //for (int i = 0; i < playersList.Count; i++)
+        //{
+        //    toprint += playersList[i].playFabID + " " + playersList[i].displayName + "," + playersList[i]._keys.Count;
+        //}
+        //Debug.Log(toprint);
     }
 
     [Command(requiresAuthority = false)]
@@ -100,11 +139,11 @@ public class SessionInfo : NetworkBehaviour
         playerInfo characterMessage = new playerInfo
         {
             playFabID = playfabP,
-            _keys = new List<GameItem>(),
+            _keys = new List<GameObject>(),
             _values = new List<int>(),
             displayName = displayNameP,
         };
-
+        bool foundAccount = false;
 
         if (playersList != null)
         {
@@ -113,7 +152,16 @@ public class SessionInfo : NetworkBehaviour
                 if (info.playFabID == playfabP)
                 {
                     characterMessage = info;
-                    return;
+                    foreach(var item in info._keys)
+                    {
+                        GameObject result = Instantiate(item);
+                        NetworkServer.Spawn(result);
+                        Debug.Log(item);
+                        sendToInventory(info.displayName, result);
+                    }
+                    //Debug.Log($"{info.displayName} {info.playFabID} {info._keys.Count}");
+                    foundAccount = true;
+                    break;
                 }
             }
         }
@@ -122,7 +170,14 @@ public class SessionInfo : NetworkBehaviour
         Transform sessionStatsTransform = GameObject.Find("UIscripts").GetComponent<UIManager>().ingameCanvas.gameObject.transform.Find("SessionStats/StatsScrollView/Viewport");
         GameObject temp = Instantiate(playerTag, sessionStatsTransform);
         temp.GetComponent<UnityEngine.UI.Text>().text = displayNameP;
-        playersList.Add(characterMessage);
+        if(!foundAccount)
+            playersList.Add(characterMessage);
+
+        //foreach (playerInfo info in playersList)
+        //{
+        //    Debug.Log($"{info.displayName}   {info.playFabID}");
+        //}
+        //Debug.Log("------------");
     }
 
     [Command(requiresAuthority = false)]
@@ -140,7 +195,6 @@ public class SessionInfo : NetworkBehaviour
     }
 
 
-
     [ClientRpc]
     public void kick(string displayName)
     {
@@ -149,11 +203,6 @@ public class SessionInfo : NetworkBehaviour
             NetworkManager.singleton.StopClient();
         }
     }
-    //public void updateMap(GameObject oldObject, GameObject newObject)
-    //{
-    //    Debug.Log("Updated map");
-    //    NetworkServer.Spawn(Instantiate(newObject));
-    //}
 
     [Command(requiresAuthority = false)]
     public void GetLocalIPv4()
@@ -162,5 +211,26 @@ public class SessionInfo : NetworkBehaviour
             .AddressList.First(
                 f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
             .ToString();
+    }
+
+    [ClientRpc]
+    public void sendToInventory(string displayname, GameObject item)
+    {
+        if (localplayerinfo.displayName == displayname)
+        {
+            NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, true);
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void addToList(playerInfo info)
+    {
+        playersList.Add(info);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void removeListAt(int index)
+    {
+        playersList.RemoveAt(index);
     }
 }

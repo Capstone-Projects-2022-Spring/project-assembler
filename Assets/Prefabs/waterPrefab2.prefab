@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1386879133925226719}
   - component: {fileID: 3502440913738771158}
   - component: {fileID: -8655669789636222301}
-  m_Layer: 0
+  - component: {fileID: 6905052547737811427}
+  m_Layer: 6
   m_Name: waterPrefab2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 1.0666667, y: 1.0666667}
     newSize: {x: 1.0666667, y: 1.0666667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -127,3 +128,19 @@ MonoBehaviour:
   visible: 0
   m_AssetId: f802afc89c8384410b15163cf4ff661e
   hasSpawned: 0
+--- !u!208 &6905052547737811427
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154322944266436295}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.53300005, y: 0.53300005, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

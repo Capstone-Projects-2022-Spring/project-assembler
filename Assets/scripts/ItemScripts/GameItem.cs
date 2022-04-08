@@ -13,6 +13,7 @@ public class GameItem : NetworkBehaviour
     [SyncVar(hook = nameof(onChngeOfOnGround))]
     public bool isOnGround = true;
     public bool isAttachedToMouse = false;
+    public bool moveToGorund = false;
 
     
     //scale power from 0-1
@@ -41,5 +42,26 @@ public class GameItem : NetworkBehaviour
     public virtual void actionFromInventroy(PlayerControl player)
     {
         return;
+    }
+
+    public void Update()
+    {
+        if (moveToGorund)
+        {
+            actionWhenAttechedToMouse();
+            isAttachedToMouse = false;
+            moveToGorund = false;
+        }
+        if(isAttachedToMouse && Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            moveToGorund = true;
+        }
+    }
+
+    public virtual void actionWhenAttechedToMouse()
+    {
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().updateLocation(new Vector3(mousepos.x, mousepos.y, 0), this.gameObject, true);
     }
 }

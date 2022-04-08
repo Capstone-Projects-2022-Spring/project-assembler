@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Mirror;
 
 public class RawMaterialsScript : GameItem
@@ -8,9 +9,9 @@ public class RawMaterialsScript : GameItem
     public string oretype;
     double lastTimeClickedon;
     [SyncVar]
-    int materialCount = 100;
+    public int materialCount = 100;
     [SyncVar]
-    int countLeftToGather = 5;
+    int countLeftToGather = 12;
 
     private void Start()
     {
@@ -19,26 +20,50 @@ public class RawMaterialsScript : GameItem
 
     public override void interact(PlayerControl player)
     {
-        if (mine() != null && player.currentObjectEquipped != null && player.currentObjectEquipped.GetComponent<AxeScript>() != null)
+        if(player.currentObjectEquipped == null)
         {
-            player.addToInvenotry(this.gameObject, false);
+            GameObject temp = mine(2);
+            if (temp != null)
+            {
+                player.addToInvenotry(temp, false);
+            }
+        } else if(player.currentObjectEquipped.GetComponent<AxeScript>() != null)
+        {
+            GameObject temp = mine(player.currentObjectEquipped.GetComponent<AxeScript>().power);
+            if (temp != null)
+            {
+                player.addToInvenotry(temp, false);
+            }
         }
 
     }
 
-    public GameObject mine()
+    public GameObject mine(int subtract)
     {
         if (Time.timeAsDouble - lastTimeClickedon >= 0.25)
         {
             lastTimeClickedon = Time.timeAsDouble;
-            countLeftToGather -= 1;
+            countLeftToGather -= subtract;
             updateNums(countLeftToGather, materialCount, materialCount);
             if (countLeftToGather == 0)
             {
-                countLeftToGather = 5;
+                countLeftToGather = 12;
                 materialCount -= 1;
                 updateNums(countLeftToGather, materialCount, materialCount + 1);
-                return this.gameObject;
+                GameObject result;
+                if (oretype == "metal")
+                {
+                    result = Instantiate(Resources.Load<GameObject>("Metal"));
+                }
+                else if (oretype == "copper")
+                {
+                    result = Instantiate(Resources.Load<GameObject>("Copper"));
+                }
+                else
+                {
+                    result = Instantiate(Resources.Load<GameObject>("Rock"));
+                }
+                return result;
             }
         }
         return null;
@@ -49,12 +74,11 @@ public class RawMaterialsScript : GameItem
     {
         countLeftToGather = newcountlefttogather;
         materialCount = newMatreilCount;
-        GameObject.FindGameObjectWithTag("TechTree").GetComponent<TechTree>().updateOreMined(oldMaterialCount - newMatreilCount);
+        GameObject.FindGameObjectWithTag("TechTree").GetComponent<TechTree>().updateOreMined(oldMaterialCount - newMatreilCount, oretype);
     }
 
-    //void onMatrialChange(int oldvalue, int newValue)
-    //{
-    //    GameObject.FindGameObjectWithTag("TechTree").GetComponent<TechTree>().updateOreMined(oldvalue - newValue);
-    //}
-
+    public override void actionWhenAttechedToMouse()
+    {
+        return;
+    }
 }

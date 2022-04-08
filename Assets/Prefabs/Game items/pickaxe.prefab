@@ -158,7 +158,7 @@ MonoBehaviour:
   isOnGround: 1
   isAttachedToMouse: 0
   axeType: rock
-  power: 2
+  power: 4
 --- !u!61 &7888881771026204721
 BoxCollider2D:
   m_ObjectHideFlags: 0

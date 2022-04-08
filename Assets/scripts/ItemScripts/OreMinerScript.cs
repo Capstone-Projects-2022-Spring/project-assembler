@@ -54,7 +54,7 @@ public class OreMinerScript : GameItem
                             RawMaterialsScript ore = selectedObj.GetComponent<RawMaterialsScript>();
                             if (ore != null)
                             {
-                                ore.mine();
+                                ore.mine(3);
                                 
                             }
                         }

@@ -145,7 +145,6 @@ public class PerlinNoiseMap : MonoBehaviour
         GameObject tile_group = tile_groups[tile_id];
         GameObject tile = Instantiate(tile_prefab,tile_group.transform);
 
-
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
         tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width/2), -(map_height/2), 0);
 

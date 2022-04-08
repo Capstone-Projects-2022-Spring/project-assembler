@@ -2,18 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Pathfinding;
 
 public class EnemyAI : NetworkBehaviour
 {
     public Rigidbody2D rigidbody2d;
-    float speed = 200;
+    public float speed = 800;
     int maxHealth = 100;
+    public float nextWaypointDistance = 3f;
     [SyncVar(hook = nameof(onChangeHealth))]
     public int currentHealth = 100;
 
+    public Transform target;
+    Path path;
+    Seeker seeker;
+    int currentWayPoint = 0;
+    bool reachedEndOfPath = false;
+    double lastRandMovePath;
+
     public override void OnStartServer()
     {
-        InvokeRepeating(nameof(randomMovement), 0, 4f);
+        seeker = GetComponent<Seeker>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        InvokeRepeating(nameof(detectPlayers), 0f, 1f);
+        lastRandMovePath = Time.timeAsDouble;
     }
 
     public void onChangeHealth(int oldvalue, int newvalue)
@@ -27,8 +39,37 @@ public class EnemyAI : NetworkBehaviour
     [ServerCallback]
     private void FixedUpdate()
     {
+        if (path == null)
+            return;
+
+        if(currentWayPoint >= path.vectorPath.Count)
+        {
+            reachedEndOfPath = true;
+            return;
+        } else
+        {
+            reachedEndOfPath = false;
+        }
+
+        Vector2 directionToMove = ((Vector2)path.vectorPath[currentWayPoint] - rigidbody2d.position).normalized;
+        Vector2 force = directionToMove * speed * Time.deltaTime;
+
+        float distance = Vector2.Distance(rigidbody2d.position, path.vectorPath[currentWayPoint]);
+        //rigidbody2d.AddForce(force);
+        rigidbody2d.velocity = directionToMove * speed * Time.deltaTime;
+
+        if (distance < nextWaypointDistance)
+        {
+            currentWayPoint++;
+        }
+
+    }
+
+    void detectPlayers()
+    {
+        bool pass = false;
         Collider2D[] collided;
-        collided = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(20f, 20f), 0);
+        collided = Physics2D.OverlapCircleAll(this.transform.position, 40f);
         foreach (Collider2D obj in collided)
         {
             var selectedObj = obj.gameObject;
@@ -36,21 +77,26 @@ public class EnemyAI : NetworkBehaviour
             {
                 PlayerControl player = selectedObj.GetComponent<PlayerControl>();
                 Vector3 velcoity3 = player.transform.position - this.transform.position;
-                if(velcoity3.magnitude > 5)
-                {
-                    rigidbody2d.velocity = new Vector3(velcoity3.x, velcoity3.y).normalized * 20f;
-                }
-                else
-                {
-                    rigidbody2d.velocity = new Vector3(0, 0);
-                }
+                seeker.StartPath(this.transform.position, selectedObj.transform.position, OnPathFound);
+                pass = true;
+                break;
             }
 
         }
+        if(Time.timeAsDouble - lastRandMovePath > 7 && !pass) 
+        {
+            seeker.StartPath(this.transform.position, new Vector3(this.transform.position.x + Random.Range(-100f, 100f), this.transform.position.y + Random.Range(-100f, 100f), 0), OnPathFound);
+            lastRandMovePath = Time.timeAsDouble;
+        }
+    }
 
-
-
-        
+    void OnPathFound(Path p)
+    {
+        if (!p.error)
+        {
+            path = p;
+            currentWayPoint = 0;
+        }
     }
 
 

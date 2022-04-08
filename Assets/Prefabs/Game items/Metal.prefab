@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7175076916651082385}
   - component: {fileID: 266592638247316995}
   - component: {fileID: 8531048477270164331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Metal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,8 +104,9 @@ MonoBehaviour:
   isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
-  power: 1
+  moveToGorund: 0
   oretype: metal
+  materialCount: 100
 --- !u!61 &266592638247316995
 BoxCollider2D:
   m_ObjectHideFlags: 0
