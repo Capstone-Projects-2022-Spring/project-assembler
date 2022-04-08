@@ -1,5 +1,6 @@
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.AdminModels;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -24,6 +25,7 @@ public class PlayFabLogin : MonoBehaviour
     public GameObject chatui;
 
     public GetAccountInfoResult accountInfo;
+    public string newlyCreatedAccountId;
 
     public void Start()
     {
@@ -53,31 +55,34 @@ public class PlayFabLogin : MonoBehaviour
     }
 
     public void onCreateAccountButton()
-    {
+    { 
         var request = new LoginWithCustomIDRequest { CustomId = emailTextToCreate.text, CreateAccount = true};
         PlayFabClientAPI.LoginWithCustomID(request, OnCreationSuccess, onPlayerFabError);
     }
 
     private void OnCreationSuccess(LoginResult result)
     {
+        newlyCreatedAccountId = result.PlayFabId;
         var request = new AddOrUpdateContactEmailRequest { EmailAddress = emailTextToCreate.text };
-        PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult result) =>
+        PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult inresult) =>
         {
+            Debug.Log($"Added the email: {emailTextToCreate.text}");
+            var passwordrequest = new AddUsernamePasswordRequest { Password = passwordToCreate.text, Email = emailTextToCreate.text, Username = displayNameToSet.text };
+            PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult inresult2) =>
+            {
+                Debug.Log($"the user name: {inresult2.Username}");
+                var displayrequest = new PlayFab.ClientModels.UpdateUserTitleDisplayNameRequest { DisplayName = displayNameToSet.text };
+                PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (PlayFab.ClientModels.UpdateUserTitleDisplayNameResult inresult3) =>
+                {
+                    Debug.Log($"the new display name: {inresult3.DisplayName}");
+                    onBackToLoginButton();
 
-        }, onPlayerFabError);
 
-        var passwordrequest = new AddUsernamePasswordRequest { Password = passwordToCreate.text };
-        PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult result) =>
-        {
+                }, OnCreationError);
+            }, OnCreationError);
+        }, OnCreationError);
 
-        }, onPlayerFabError);
 
-        var displayrequest = new UpdateUserTitleDisplayNameRequest { DisplayName = displayNameToSet.text };
-        PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (UpdateUserTitleDisplayNameResult result) =>
-        {
-
-        }, onPlayerFabError);
-        onBackToLoginButton();
     }
 
     private void OnLoginSuccess(LoginResult result)
@@ -89,9 +94,25 @@ public class PlayFabLogin : MonoBehaviour
         this.gameObject.GetComponent<ChatManager>().Connect(result.PlayFabId);
     }
 
+    private void OnCreationError(PlayFabError obj)
+    {;
+        var deleterequest = new DeleteMasterPlayerAccountRequest { PlayFabId = newlyCreatedAccountId };
+        PlayFabAdminAPI.DeleteMasterPlayerAccount(deleterequest, (DeleteMasterPlayerAccountResult result) =>
+        {
+            Debug.Log($"deleted the user after an error");
+            newlyCreatedAccountId = "";
+        }, onPlayerFabError);
+
+
+        Debug.Log($"PlayFabError: {obj.GenerateErrorReport()}");
+        prompt.GetComponent<Text>().text = obj.GenerateErrorReport();
+
+    }
+
 
     private void onPlayerFabError(PlayFabError obj)
     {
+        Debug.Log($"PlayFabError: {obj.GenerateErrorReport()}");
         prompt.GetComponent<Text>().text = obj.GenerateErrorReport();
     }
     public void onSkipButtonClick()
