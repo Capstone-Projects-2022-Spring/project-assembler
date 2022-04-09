@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
     GameObject techtree;
     public Slider DirtFrequency, WaterFrequency, GrassFrequency;
     public Slider CopperFrequency, CopperRichness;
+    public Slider RockFrequency, RockRichness;
+    public Slider MetalFrequency, MetalRichness;
 
     [Header("Ores")]
     public GameObject copper;
@@ -353,7 +355,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue)
+    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue, float CopperFrequencyvalue, float MetalFrequencyvalue, float RockFrequencyvalue)
     {
         unSpawnMap();
         techtree = Instantiate(this.techtreeprefab);
@@ -373,6 +375,14 @@ public class UIManager : MonoBehaviour
         map.GetComponent<PerlinNoiseMap>().terrainSliderValues[1] = WaterFrequencyvalue;
         map.GetComponent<PerlinNoiseMap>().terrainSliderValues[2] = GrassFrequencyvalue;
         map.GetComponent<PerlinNoiseMap>().onSave();
+
+        map.GetComponent<CopperGen>().copperF = CopperFrequencyvalue;
+        map.GetComponent<CopperGen>().onStart();
+        map.GetComponent<MetalGen>().metalF = MetalFrequencyvalue;
+        map.GetComponent<MetalGen>().onStart();
+        map.GetComponent<RockGen>().rockF = RockFrequencyvalue;
+        map.GetComponent<RockGen>().onStart();
+        
 
 
 

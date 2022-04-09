@@ -23278,6 +23278,12 @@ MonoBehaviour:
   DirtFrequency: {fileID: 1039236564}
   WaterFrequency: {fileID: 184290344}
   GrassFrequency: {fileID: 509218660}
+  CopperFrequency: {fileID: 501906340}
+  CopperRichness: {fileID: 1895299435}
+  RockFrequency: {fileID: 0}
+  RockRichness: {fileID: 0}
+  MetalFrequency: {fileID: 0}
+  MetalRichness: {fileID: 0}
   copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
   friendScrollView: {fileID: 1448419174}
   FriendListing: {fileID: 4299633363631135292, guid: 723fb2586057cc44195164e37042f155, type: 3}
@@ -23504,6 +23510,8 @@ MonoBehaviour:
   map_seed: 0
   RockFrequency: {fileID: 1349589313}
   RockRichness: {fileID: 1746512994}
+  rockF: 0
+  rockR: 0
 --- !u!114 &1482258213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23521,6 +23529,8 @@ MonoBehaviour:
   map_seed: 0
   MetalFrequency: {fileID: 675813096}
   MetalRichness: {fileID: 1993019060}
+  metalF: 0
+  metalR: 0
 --- !u!114 &1482258214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23538,6 +23548,8 @@ MonoBehaviour:
   map_seed: 0
   CopperFrequency: {fileID: 501906340}
   CopperRichness: {fileID: 1895299435}
+  copperF: 0
+  copperR: 0
 --- !u!1 &1487696697
 GameObject:
   m_ObjectHideFlags: 0

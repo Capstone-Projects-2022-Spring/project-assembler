@@ -16,7 +16,7 @@ public class CopperGen : MonoBehaviour
     public int map_seed = 0;
 
     public Slider CopperFrequency, CopperRichness;
-    public static float copperF, copperR;
+    public float copperF, copperR;
     public static int value = 10;
 
     public void onStart(){

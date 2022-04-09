@@ -16,7 +16,7 @@ public class MetalGen : MonoBehaviour
     public int map_seed = 0;
 
     public Slider MetalFrequency, MetalRichness;
-    public static float metalF, metalR;
+    public float metalF, metalR;
     public static int value = 10;
     
     public void onStart(){

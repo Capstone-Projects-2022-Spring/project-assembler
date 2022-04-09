@@ -96,7 +96,7 @@ public class PlayerControl : NetworkBehaviour
         {
             if (uimanager.changeMap)
             {
-                servergenerate(uimanager.seedinputInUIManager.text, uimanager.DirtFrequency.value, uimanager.WaterFrequency.value, uimanager.GrassFrequency.value);
+                servergenerate(uimanager.seedinputInUIManager.text, uimanager.DirtFrequency.value, uimanager.WaterFrequency.value, uimanager.GrassFrequency.value, uimanager.CopperFrequency.value, uimanager.MetalFrequency.value, uimanager.RockFrequency.value);
                 uimanager.changeMap = false;
             }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
@@ -333,9 +333,9 @@ public class PlayerControl : NetworkBehaviour
 
 
     [Command]
-    void servergenerate(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue)
+    void servergenerate(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue, float CopperFrequencyvalue, float MetalFrequencyvalue, float RockFrequencyvalue)
     {
-        uimanager.serverGenrateMap(seed, DirtFrequencyvalue, GrassFrequencyvalue, WaterFrequencyvalue);
+        uimanager.serverGenrateMap(seed, DirtFrequencyvalue, GrassFrequencyvalue, WaterFrequencyvalue, CopperFrequencyvalue, MetalFrequencyvalue, RockFrequencyvalue);
     }
 
     void updateChat(string newline)

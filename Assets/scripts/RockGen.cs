@@ -16,7 +16,7 @@ public class RockGen : MonoBehaviour
     public int map_seed = 0;
 
     public Slider RockFrequency, RockRichness;
-    public static float rockF, rockR;
+    public float rockF, rockR;
     public static int value = 10;
 
     public void onStart(){
