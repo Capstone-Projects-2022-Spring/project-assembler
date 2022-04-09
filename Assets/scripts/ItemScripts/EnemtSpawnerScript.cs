@@ -19,7 +19,7 @@ public class EnemtSpawnerScript : NetworkBehaviour
     void SpawnEnemy()
     {
         float angle = Random.Range(-4f, 4f);
-        GameObject result = Instantiate(enemyObject,  this.transform.position - new Vector3(Mathf.Sin(angle),Mathf.Cos(angle),0),Quaternion.identity);
+        GameObject result = Instantiate(enemyObject, this.transform.position - new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0), Quaternion.identity);
         NetworkServer.Spawn(result);
     }
 }

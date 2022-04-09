@@ -194,6 +194,14 @@ public class SessionInfo : NetworkBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if(isLocalPlayer && attachedToMouseItem != null)
+        {
+
+        }
+    }
+
 
     [ClientRpc]
     public void kick(string displayName)

@@ -8,7 +8,7 @@ public class PlayerControl : NetworkBehaviour
 {
     public int speed = 30;
     public int MaxHealth = 100;
-    [SyncVar(hook = nameof(OnChangeCurrentHealth))]
+    [SyncVar]
     public int currentHealth = 100;
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
@@ -199,16 +199,6 @@ public class PlayerControl : NetworkBehaviour
                 lastMovementAI = Time.timeAsDouble;
             }
             rigidbody2d.velocity = direction * 10;
-        }
-    }
-
-    [ServerCallback]
-    void OnChangeCurrentHealth(int oldvalue, int newValue)
-    {
-        if(newValue < 0)
-        {
-            this.transform.position = new Vector3(0, 0, 0);
-            currentHealth = 100;
         }
     }
 
