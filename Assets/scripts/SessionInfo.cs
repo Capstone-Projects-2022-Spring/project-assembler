@@ -20,6 +20,8 @@ public class SessionInfo : NetworkBehaviour
     public playerInfo localplayerinfo;
     public GameObject playerTag;
 
+
+
     void Update()
     {
         //Attach teh sprite of the attached item to the mouse location

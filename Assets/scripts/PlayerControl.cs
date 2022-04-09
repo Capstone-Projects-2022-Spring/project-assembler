@@ -19,6 +19,7 @@ public class PlayerControl : NetworkBehaviour
     [SyncVar]
     public int port;
 
+
     public string playFabID;
     public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
     public string displayName;
@@ -95,7 +96,7 @@ public class PlayerControl : NetworkBehaviour
         {
             if (uimanager.changeMap)
             {
-                servergenerate(uimanager.seedinputInUIManager.text);
+                servergenerate(uimanager.seedinputInUIManager.text, uimanager.DirtFrequency.value, uimanager.WaterFrequency.value, uimanager.GrassFrequency.value);
                 uimanager.changeMap = false;
             }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
@@ -330,10 +331,11 @@ public class PlayerControl : NetworkBehaviour
         //}
     }
 
+
     [Command]
-    void servergenerate(string seed)
+    void servergenerate(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue)
     {
-        uimanager.serverGenrateMap(seed);
+        uimanager.serverGenrateMap(seed, DirtFrequencyvalue, GrassFrequencyvalue, WaterFrequencyvalue);
     }
 
     void updateChat(string newline)

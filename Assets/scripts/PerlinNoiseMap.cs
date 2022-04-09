@@ -62,9 +62,9 @@ public class PerlinNoiseMap : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log( "The dirt values are " + $"{dirt}");
-        Debug.Log( "The water values are " + $"{water}");
-        Debug.Log( "The grass values are " + $"{grass}");
+        Debug.Log( "The dirt values are " + $"{dirt} from {this.gameObject.name}");
+        Debug.Log( "The water values are " + $"{water} from {this.gameObject.name}");
+        Debug.Log( "The grass values are " + $"{grass} from {this.gameObject.name}");
 
         tileset = new Dictionary<int, GameObject>();
         
@@ -156,7 +156,8 @@ public class PerlinNoiseMap : MonoBehaviour
         return tile_grid[x][y];
     }
 
-    public void onTerrainClick(){
+    public void onTerrainClick()
+    {
         
         //initialize values
         terrainSliderValues[0] = DirtFrequency.value;
@@ -173,6 +174,8 @@ public class PerlinNoiseMap : MonoBehaviour
             terrainSliderValues[2] = v;
         });
     }
+
+
     public void onSave(){
         double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
         

@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     public SessionInfo sessionInfoClass;
     public GameObject MapMenuUI;
 
+    public GameObject mapgenprefab;
     public GameObject techtreeprefab;
     public InputField seedinputInUIManager;
     public InputField IPaddressToJoin;
@@ -33,6 +34,8 @@ public class UIManager : MonoBehaviour
     public bool changeMap = false;
     public GameObject map;
     GameObject techtree;
+    public Slider DirtFrequency, WaterFrequency, GrassFrequency;
+    public Slider CopperFrequency, CopperRichness;
 
     [Header("Ores")]
     public GameObject copper;
@@ -350,20 +353,27 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void serverGenrateMap(string seed)
+    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue)
     {
         unSpawnMap();
         techtree = Instantiate(this.techtreeprefab);
         NetworkServer.Spawn(techtree);
 
-        //map = GameObject.Find("MapGeneration");
-        if(seed != "")
+        map = Instantiate(mapgenprefab);
+        if (seed != "")
         {
             map.GetComponent<PerlinNoiseMap>().map_seed = int.Parse(seed);
             map.GetComponent<CopperGen>().map_seed = int.Parse(seed);
             map.GetComponent<MetalGen>().map_seed = int.Parse(seed);
             map.GetComponent<RockGen>().map_seed = int.Parse(seed);
+
         }
+
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[0] = DirtFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[1] = WaterFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[2] = GrassFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().onSave();
+
 
 
         map.GetComponent<PerlinNoiseMap>().FakeStart();
@@ -401,6 +411,7 @@ public class UIManager : MonoBehaviour
                 Destroy(temp.transform.GetChild(q).gameObject);
             }
         }
+        Destroy(map);
         Destroy(techtree);
     }
 
