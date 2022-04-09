@@ -49,6 +49,13 @@ MonoBehaviour:
   grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
   dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
   water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
+  DirtFrequency: {fileID: 0}
+  WaterFrequency: {fileID: 0}
+  GrassFrequency: {fileID: 0}
+  terrainSliderValues:
+  - 0
+  - 0
+  - 0
   map_seed: 0
 --- !u!114 &8813394982891620679
 MonoBehaviour:
@@ -65,6 +72,8 @@ MonoBehaviour:
   rock: {fileID: 7614713393542160236, guid: 564345542ded17d4da4fd53b4eb073f2, type: 3}
   transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
   map_seed: 0
+  RockFrequency: {fileID: 0}
+  RockRichness: {fileID: 0}
 --- !u!114 &391465320394137951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +89,8 @@ MonoBehaviour:
   metal: {fileID: 7326615202421249311, guid: e156d658d6a09ce46af9d99a5e2c9c20, type: 3}
   transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
   map_seed: 0
+  MetalFrequency: {fileID: 0}
+  MetalRichness: {fileID: 0}
 --- !u!114 &1639642287522077522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,3 +106,5 @@ MonoBehaviour:
   copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
   transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
   map_seed: 0
+  CopperFrequency: {fileID: 0}
+  CopperRichness: {fileID: 0}
