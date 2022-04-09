@@ -306,8 +306,13 @@ public class ChatManager : MonoBehaviour, IChatClientListener
             return;
         }
         string user = usernameToInvite.text;
-        GameObject.Find("SessionInfo").GetComponent<SessionInfo>().GetLocalIPv4();
-        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {GameObject.Find("SessionInfo").GetComponent<SessionInfo>().serverIPaddress}";//acceptedInvite; 
+        string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().serverIPaddress}:{Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().port}";//acceptedInvite; 
+
+        //if (Mirror.NetworkManager.singleton.networkAddress == "localhost")
+        //{
+        //    GameObject.Find("SessionInfo").GetComponent<SessionInfo>().GetLocalIPv4();
+        //    string message = "You have been invited to join a game by " + $"{userAccountInfo.AccountInfo.TitleInfo.DisplayName}" + $" {GameObject.Find("SessionInfo").GetComponent<SessionInfo>().serverIPaddress}:";
+        //}
         string userID = "";
         PlayFabClientAPI.GetAccountInfo(new PlayFab.ClientModels.GetAccountInfoRequest
         {

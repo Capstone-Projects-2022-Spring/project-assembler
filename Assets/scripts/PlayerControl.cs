@@ -3,6 +3,8 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Net;
+using System.Linq;
 
 public class PlayerControl : NetworkBehaviour
 {
@@ -12,6 +14,10 @@ public class PlayerControl : NetworkBehaviour
     public int currentHealth = 100;
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
+    [SyncVar]
+    public string serverIPaddress;
+    [SyncVar]
+    public int port;
 
     public string playFabID;
     public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
@@ -69,9 +75,17 @@ public class PlayerControl : NetworkBehaviour
         uimanager = GameObject.Find("UIscripts").GetComponent<UIManager>();
         idleTime = Time.timeAsDouble;
         lastMovementAI = Time.timeAsDouble;
+
+
     }
 
-   
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        GetLocalIPv4();
+    }
+
+
 
     void Update()
     {
@@ -233,6 +247,19 @@ public class PlayerControl : NetworkBehaviour
         thegameobject.transform.position = changeposition;
         thegameobject.GetComponent<GameItem>().isOnGround = newGroundValue;
     }
+
+
+    [Command(requiresAuthority = false)]
+    public void GetLocalIPv4()
+    {
+        serverIPaddress = Dns.GetHostEntry(Dns.GetHostName())
+            .AddressList.First(
+                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            .ToString();
+        port = NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port;
+        Debug.Log($"Port = {port}, ipaddress = {serverIPaddress}");
+    }
+
 
     public bool addToInvenotry(GameObject item, bool transferToOrigin)
     {
