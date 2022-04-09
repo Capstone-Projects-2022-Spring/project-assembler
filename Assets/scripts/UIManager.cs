@@ -24,7 +24,6 @@ public class UIManager : MonoBehaviour
     public SessionInfo sessionInfoClass;
     public GameObject MapMenuUI;
 
-    public GameObject mapgenprefab;
     public GameObject techtreeprefab;
     public InputField seedinputInUIManager;
     public InputField IPaddressToJoin;
@@ -32,7 +31,7 @@ public class UIManager : MonoBehaviour
     
 
     public bool changeMap = false;
-    GameObject map;
+    public GameObject map;
     GameObject techtree;
 
     [Header("Ores")]
@@ -357,7 +356,7 @@ public class UIManager : MonoBehaviour
         techtree = Instantiate(this.techtreeprefab);
         NetworkServer.Spawn(techtree);
 
-        map = Instantiate(this.mapgenprefab);
+        //map = GameObject.Find("MapGeneration");
         if(seed != "")
         {
             map.GetComponent<PerlinNoiseMap>().map_seed = int.Parse(seed);
@@ -399,11 +398,12 @@ public class UIManager : MonoBehaviour
             for (int q = 0; q < temp.transform.childCount; q++)
             {
                 NetworkServer.UnSpawn(temp.transform.GetChild(q).gameObject);
+                Destroy(temp.transform.GetChild(q).gameObject);
             }
         }
-        Destroy(map);
         Destroy(techtree);
     }
+
     private static string GetArg(string name)
     {
         var args = Environment.GetCommandLineArgs();

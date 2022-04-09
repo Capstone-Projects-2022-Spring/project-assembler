@@ -1269,8 +1269,8 @@ RectTransform:
   m_Father: {fileID: 1418250799}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1972,8 +1972,8 @@ RectTransform:
   m_Father: {fileID: 1585385758}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2656,7 +2656,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258208}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
         m_MethodName: onSave
         m_Mode: 1
@@ -4243,7 +4243,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4502,7 +4502,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4810,7 +4810,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6103,7 +6103,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8152,7 +8152,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258212}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RockGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -8164,7 +8164,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258213}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MetalGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -8176,7 +8176,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258214}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CopperGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -9259,8 +9259,8 @@ RectTransform:
   m_Father: {fileID: 1910579756}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9864,7 +9864,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10765,8 +10765,8 @@ RectTransform:
   m_Father: {fileID: 436684759}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13573,7 +13573,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1482258208}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
         m_MethodName: onSave
         m_Mode: 1
@@ -15984,8 +15984,8 @@ RectTransform:
   m_Father: {fileID: 18762161}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16739,7 +16739,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16898,7 +16898,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17872,8 +17872,8 @@ RectTransform:
   m_Father: {fileID: 1120710668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18010,7 +18010,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258208}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
         m_MethodName: onTerrainClick
         m_Mode: 1
@@ -18022,7 +18022,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258214}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CopperGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -18034,7 +18034,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258213}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MetalGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -18046,7 +18046,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258212}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RockGen, GameAssembly
         m_MethodName: onStart
         m_Mode: 1
@@ -19357,7 +19357,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1482258208}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PerlinNoiseMap, GameAssembly
         m_MethodName: onTerrainClick
         m_Mode: 1
@@ -23238,10 +23238,6 @@ GameObject:
   - component: {fileID: 1482258210}
   - component: {fileID: 1482258209}
   - component: {fileID: 1482258211}
-  - component: {fileID: 1482258214}
-  - component: {fileID: 1482258213}
-  - component: {fileID: 1482258212}
-  - component: {fileID: 1482258208}
   m_Layer: 0
   m_Name: UIscripts
   m_TagString: Untagged
@@ -23270,11 +23266,11 @@ MonoBehaviour:
   FriendUI: {fileID: 528860261}
   sessionInfoClass: {fileID: 1017575549}
   MapMenuUI: {fileID: 1164233703}
-  mapgenprefab: {fileID: 1683687127927448259, guid: 56a9a3f125e1e7442adec7b2ad4fcb7e, type: 3}
   techtreeprefab: {fileID: 5679764264740873179, guid: 7fd4b28ef16aa1b488baca059d71db71, type: 3}
   seedinputInUIManager: {fileID: 1296755792}
   IPaddressToJoin: {fileID: 1956323980}
   changeMap: 0
+  map: {fileID: 8598561960736718136}
   copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
   friendScrollView: {fileID: 1448419174}
   FriendListing: {fileID: 4299633363631135292, guid: 723fb2586057cc44195164e37042f155, type: 3}
@@ -23292,29 +23288,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1482258208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482258205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4935988bde145d288e712911056246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
-  dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
-  water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
-  DirtFrequency: {fileID: 1039236564}
-  WaterFrequency: {fileID: 184290344}
-  GrassFrequency: {fileID: 509218660}
-  terrainSliderValues:
-  - 0
-  - 0
-  - 0
-  map_seed: 0
 --- !u!114 &1482258209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23467,6 +23440,7 @@ MonoBehaviour:
       Username: 
       XboxInfo:
         XboxUserId: 
+  newlyCreatedAccountId: 
 --- !u!114 &1482258211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23483,57 +23457,6 @@ MonoBehaviour:
   ResourcesLayout: {fileID: 471735951}
   EnemyAiLayout: {fileID: 1204886754}
   MapGenUI: {fileID: 1164233703}
---- !u!114 &1482258212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482258205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe54594d313dc4bbf8e9b0803acff86d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rock: {fileID: 0}
-  transparentTile: {fileID: 0}
-  map_seed: 0
-  RockFrequency: {fileID: 1349589313}
-  RockRichness: {fileID: 1746512994}
---- !u!114 &1482258213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482258205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bf2d4e81571e4363bc901c59a38d8ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  metal: {fileID: 0}
-  transparentTile: {fileID: 0}
-  map_seed: 0
-  MetalFrequency: {fileID: 675813096}
-  MetalRichness: {fileID: 1993019060}
---- !u!114 &1482258214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482258205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ff73e82a8774186b74f22c2e6d4037, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  copper: {fileID: 0}
-  transparentTile: {fileID: 0}
-  map_seed: 0
-  CopperFrequency: {fileID: 501906340}
-  CopperRichness: {fileID: 1895299435}
 --- !u!1 &1487696697
 GameObject:
   m_ObjectHideFlags: 0
@@ -26927,7 +26850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACYn+v5XMvlYwIAAB0FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoUxBMikt9YhpAcCE9rJxRchrbEGWfLoI3xk+O9dyTZ26Qnx3tvdt6uVv4hQtgLmtFkawVeaA/k+IOFMvg068hVOdK/VVlyg1XwI7oogolHzTp3QiI9DmNUlOCPYD7WXQZwg6JXItSkXfA+pts4inFNpASmjXYhWCH0NyAl/hk8h5IynyWM4XfD0lAyueGSgHJieNBnNGm1zDOJa6xWTtKyAB+NdyCS5ZU9qocKmGk1ogGkphW0cEXeuYscprazHflDABcUOo43paDxFpACxL1xI2Y9f57kF10zA0POzMDirOjH5qesBltQeanOfVPpQaj6Nruqcq//o4TjSudHla1t2HHtyhWCHd3pm1LregPvwc2d9HEd0pPJAdxI+ClBvemm0VxxJZ3wI9RYmz93fW2dpAezQ4bXVO9BX3czbibe3GXq4xuZPqRTlLlCjaQ1spY4Tj0sABu/mFxqOK2KbFIgGF38s/Kb7/i41xIsw1iHVdKmCvZ32JkjJIs4sdONdqo2CCDemK1BUuvMG07j7G7zjemXvmBcaXk1TvOHax3AXEuFOnyR31EYfb5dlC31cgS3W3kmhoDMdiDecU6qVqhesP5M2bOtNTlkvbO8F/3e1yA52D0nC+XTGHoGxZPgwownP55OHMZuzx+mMxN0TCvukclMbbcaDt6a65Ar3rP2YDJaGVnHZuaHHpbiUum9QqFxvmQFQ6zrFzTkYrIIPky+4wAltwTmh4oWTr4xIzQ7As1vNLLa6ODlDsy5LRirxqV1AMpLGz0dGAnxb5o2BTwHHULxNdiXXv1BLAwQUAAAICAAAmJ/rt1WDam0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0UlJqkrGBQUqKiWmyeWpysoGusWmiQUqamZGxYbJZsrmJqVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAmJ/r+VzL5WMCAAAdBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAmJ/rt1WDam0AAAB4AAAACQAkAAAAAAAAAAAAAACwAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGgDAAAAAA==
+    dataString: UEsDBBQAAAgIAACYn+ujJn/wYQIAAB4FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMly4jAU/BVK5yFltqQytxlDyBwSqDCpXHwR0jNWIUsuLSxJ8e/zJNvYYU6Iflt368lfRChbAXPaLI3gL5oD+Tkg4Ux+DLrgM5zoTquN+IQ250NwV4QkGnPeqBMa8VEos7oEZwT7pXYyJCcIeiVybcoF30GqrbMI51RawJDRLlQrhL4G5IQ/w8dQcsbT+CGcPvH0mAwueGSgHJheanI3a3KbY0iuc71ikpYV8EC8Kxkn1+5JnahQVJMTBDAtpbANI+LOVVSc0sp61IMJXFBUGGlM70ZTRAoQu8KFlv36VZ5bcI0Dhp7nwqBXdWPyW9cGltTua3IHKn0YdT+NrOqeL/+Fh6MYzo0un9uxo6jJFYLt3+iZUet6BvfheUd9FC06UrmnWwkfBahXvTTaK45BZ3wo9RbG8+7vVVlaANt3eE31BvRV53nreHubQcMlij+lUpTbELqb1sBG6uh4XAIweDd/kHBcEdu0QDSweLfwl+76u9QEnoSxDkONShXobbU3IZUsomdBjXepNgoi3JCuQFHpzmts425v8CbWG3sTeaLh1TTDm1j7GG5KItzlJ8lNaK2P18uyhT6+gC1W3kmhoCMdAq/oU6qVqhes70lbtvEmp6xXtvOCf18tsoXtJEk4n87YAzCWDCczmvD8fjwZsXv2MJ2RuHtCoU4q1zXRxh68tb4nChet/ZoMloZWcdu5ocel+Cx1n6FQud4wA6BW33tYMDgGXyZfcIEWbcA5oeKNk6+MSM32wLOroixqXZycoVnXJSOVOGgXkIyk8fuRkQBft3lt4CDgGIa3zS7k8g9QSwMEFAAACAgAAJif67dVg2ptAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tFJSapKxgUFKiolpsnlqcrKBrrFpokFKmpmRsWGyWbK5ialSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAJif66Mmf/BhAgAAHgUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJif67dVg2ptAAAAeAAAAAkAJAAAAAAAAAAAAAAArgIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABmAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -28077,7 +28000,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -29076,8 +28999,8 @@ RectTransform:
   m_Father: {fileID: 1918448162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -29393,7 +29316,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -30561,7 +30484,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   runInBackground: 1
   autoStartServerBuild: 1
-  serverTickRate: 30
+  serverTickRate: 60
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1886246551}
@@ -31668,8 +31591,8 @@ RectTransform:
   m_Father: {fileID: 1420958350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -33426,8 +33349,8 @@ RectTransform:
   m_Father: {fileID: 275278369}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -34544,6 +34467,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ead2bb3f56521044ebdba8e9be133313, type: 3}
+--- !u!114 &1893457999504185020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598561960736718136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe54594d313dc4bbf8e9b0803acff86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rock: {fileID: 7614713393542160236, guid: 564345542ded17d4da4fd53b4eb073f2, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+  map_seed: 0
+  RockFrequency: {fileID: 1349589313}
+  RockRichness: {fileID: 1746512994}
 --- !u!1001 &5327241798403188597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34610,6 +34550,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2944812126445887477, guid: 946d65b2eaae6d243ac8c298a83f3c0c, type: 3}
   m_PrefabInstance: {fileID: 8158863924391992806}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7306898723468787364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598561960736718136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf2d4e81571e4363bc901c59a38d8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: {fileID: 7326615202421249311, guid: e156d658d6a09ce46af9d99a5e2c9c20, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+  map_seed: 0
+  MetalFrequency: {fileID: 501906340}
+  MetalRichness: {fileID: 1895299435}
 --- !u!1001 &8158863924391992806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34711,6 +34668,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 946d65b2eaae6d243ac8c298a83f3c0c, type: 3}
+--- !u!114 &8559302160730342569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598561960736718136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ff73e82a8774186b74f22c2e6d4037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copper: {fileID: 6011598230636231168, guid: 35953755f0b538748811bddaa7a56979, type: 3}
+  transparentTile: {fileID: 7058721960455559585, guid: cb596532067f84680b24197cf8238468, type: 3}
+  map_seed: 0
+  CopperFrequency: {fileID: 675813096}
+  CopperRichness: {fileID: 1993019060}
+--- !u!1 &8598561960736718136
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8598561960736718138}
+  - component: {fileID: 8598561960736718139}
+  - component: {fileID: 1893457999504185020}
+  - component: {fileID: 7306898723468787364}
+  - component: {fileID: 8559302160730342569}
+  m_Layer: 0
+  m_Name: MapGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8598561960736718138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598561960736718136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8598561960736718139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598561960736718136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4935988bde145d288e712911056246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
+  dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
+  water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
+  DirtFrequency: {fileID: 1039236564}
+  WaterFrequency: {fileID: 184290344}
+  GrassFrequency: {fileID: 509218660}
+  terrainSliderValues:
+  - 0
+  - 0
+  - 0
+  map_seed: 0
 --- !u!1001 &8916955397552516408
 PrefabInstance:
   m_ObjectHideFlags: 0
