@@ -83,6 +83,11 @@ public class EnemyAI : NetworkBehaviour
                 if((this.transform.position - selectedObj.transform.position).magnitude < 3f)
                 {
                     selectedObj.GetComponent<PlayerControl>().currentHealth -= 5;
+                    if(selectedObj.GetComponent<PlayerControl>().currentHealth < 0)
+                    {
+                        respawn(selectedObj.GetComponent<NetworkIdentity>().netId);
+                        selectedObj.GetComponent<PlayerControl>().currentHealth = 100;
+                    }
                 }
                 break;
             }
@@ -101,6 +106,16 @@ public class EnemyAI : NetworkBehaviour
         {
             path = p;
             currentWayPoint = 0;
+        }
+    }
+
+
+    [ClientRpc]
+    public void respawn(uint conn)
+    {
+        if (NetworkClient.localPlayer.netId == conn)
+        {
+            NetworkClient.localPlayer.gameObject.transform.position = new Vector3(0, 0, 0);
         }
     }
 
