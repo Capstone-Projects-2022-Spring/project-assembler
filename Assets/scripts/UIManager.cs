@@ -347,7 +347,8 @@ public class UIManager : MonoBehaviour
             
             manager.networkAddress = splitAddress[0];
 
-            if (splitAddress.Length > 1) //if there's a port
+            if (splitAddress.Length > 1 && !String.IsNullOrEmpty(splitAddress[1])) //if there's a port
+
             {
                 NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
             }
