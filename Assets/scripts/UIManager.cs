@@ -36,12 +36,21 @@ public class UIManager : MonoBehaviour
     GameObject techtree;
     public Slider DirtFrequency, WaterFrequency, GrassFrequency;
     public Slider CopperFrequency, CopperRichness;
+    public Slider RockFrequency, RockRichness;
+    public Slider MetalFrequency, MetalRichness;
+    public Slider enemySpeed, enemyHealth, enemySpawnFrequency;
+    public int enemySpeedvalue;
+    public int enemyHealthvalue;
+    public int enemySpawnFrequencyvalue;
 
     [Header("Ores")]
     public GameObject copper;
 
     void Awake()
     {
+        enemySpawnFrequencyvalue = 15;
+        enemySpeedvalue = 400;
+        enemyHealthvalue = 70;
         manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
         //usage: ./Assembler.exe -port 8888
 
@@ -335,7 +344,7 @@ public class UIManager : MonoBehaviour
         } else
         {
             string[] splitAddress = IPaddressToJoin.text.Split(':');
-
+            
             manager.networkAddress = splitAddress[0];
 
             if (splitAddress.Length > 1) //if there's a port
@@ -353,11 +362,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue, float WaterFrequencyvalue)
+    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float WaterFrequencyvalue, 
+        float GrassFrequencyvalue, float CopperFrequency, float CopperRichness, float RockFrequency, float RockRichness, 
+        float MetalFrequency, float MetalRichness, int enemySpeedvalue, int enemyHealthvalue, int enemySpawnFrequencyvalue)
     {
         unSpawnMap();
         techtree = Instantiate(this.techtreeprefab);
         NetworkServer.Spawn(techtree);
+
+        this.enemySpeedvalue = enemySpeedvalue;
+        this.enemySpawnFrequencyvalue = enemySpawnFrequencyvalue;
+        this.enemyHealthvalue = enemyHealthvalue;
 
         map = Instantiate(mapgenprefab);
         if (seed != "")
@@ -373,7 +388,9 @@ public class UIManager : MonoBehaviour
         map.GetComponent<PerlinNoiseMap>().terrainSliderValues[1] = WaterFrequencyvalue;
         map.GetComponent<PerlinNoiseMap>().terrainSliderValues[2] = GrassFrequencyvalue;
         map.GetComponent<PerlinNoiseMap>().onSave();
-
+        map.GetComponent<CopperGen>().setValuesFandR(CopperFrequency, CopperRichness);
+        map.GetComponent<MetalGen>().setValuesFandR(MetalFrequency, MetalRichness);
+        map.GetComponent<RockGen>().setValuesFandR(RockFrequency, RockRichness);
 
 
         map.GetComponent<PerlinNoiseMap>().FakeStart();

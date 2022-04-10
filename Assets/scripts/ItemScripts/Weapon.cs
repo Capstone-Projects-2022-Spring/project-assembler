@@ -54,7 +54,7 @@ public class Weapon : GameItem
         Vector2 directionVector = new Vector2(mousepos.x - shootPosition.position.x, mousepos.y - shootPosition.position.y);
         angle.eulerAngles = new Vector3(0, 0, Vector2.Angle(new Vector3(1, 0, 0), directionVector));
 
-        float offset = 4;
+        float offset = 2;
         Vector3 postionToSpawnOn = new Vector3(shootPosition.position.x + offset * directionVector.normalized.x, shootPosition.position.y + offset * directionVector.normalized.y, 0);
         GameObject generatedBullet = Instantiate(bulletPrefab, postionToSpawnOn, angle);
         generatedBullet.GetComponent<Rigidbody2D>().velocity = 100f * directionVector.normalized;

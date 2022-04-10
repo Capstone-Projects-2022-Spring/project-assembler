@@ -62,35 +62,34 @@ public class PerlinNoiseMap : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log( "The dirt values are " + $"{dirt} from {this.gameObject.name}");
-        Debug.Log( "The water values are " + $"{water} from {this.gameObject.name}");
-        Debug.Log( "The grass values are " + $"{grass} from {this.gameObject.name}");
+        //Debug.Log( "The dirt values are " + $"{dirt} from {this.gameObject.name}");
+        //Debug.Log( "The water values are " + $"{water} from {this.gameObject.name}");
+        //Debug.Log( "The grass values are " + $"{grass} from {this.gameObject.name}");
 
         tileset = new Dictionary<int, GameObject>();
-        
-        for (int i = 0; i < 6; i++){
-            if(grass != 0){ 
-                tileset.Add(i, grass_prefab);
-                grass--;
-            }
-            else if (dirt != 0){
-                tileset.Add(i, dirt_prefab);
-                dirt--;
-            }
-            else if(water != 0){
-                tileset.Add(i, water_prefab);
-                water--;
-            }
+
+        List<GameObject> toAdd = new List<GameObject>();
+        for(int i = 0; i < dirt; i++)
+        {
+            //Debug.Log("dirt = " + i);
+            toAdd.Add(dirt_prefab);
         }
-        /*
-        tileset = new Dictionary<int, GameObject>();
-        tileset.Add(0, grass_prefab);
-        tileset.Add(1, grass_prefab);
-        tileset.Add(2, grass_prefab);
-        tileset.Add(3, dirt_prefab);
-        tileset.Add(4, dirt_prefab);
-        tileset.Add(5, water_prefab);
-        */
+        for (int i = 0; i < grass; i++)
+        {
+            //Debug.Log("grass = " + i);
+            toAdd.Add(grass_prefab);
+        }
+        for (int i = 0; i < water; i++)
+        {
+            //Debug.Log("Water = " + i);
+            toAdd.Add(water_prefab);
+        }
+
+        for(int i = 0; i < toAdd.Count; i++)
+        {
+            //Debug.Log($"{i}  {toAdd[i]}");
+            tileset.Add(i, toAdd[i]);
+        }
     }
 
     void CreateTileGroup()
@@ -131,9 +130,9 @@ public class PerlinNoiseMap : MonoBehaviour
         float clamp_perlin = Mathf.Clamp(raw_perlin, 0.0f, 1.0f);
         float scale_perlin = clamp_perlin * tileset.Count;
 
-        if (scale_perlin == 6)
+        if (scale_perlin == dirt+grass+water)
         {
-            scale_perlin = 5;
+            scale_perlin = dirt + grass + water - 1;
         }
 
         return Mathf.FloorToInt(scale_perlin);
@@ -177,19 +176,19 @@ public class PerlinNoiseMap : MonoBehaviour
 
 
     public void onSave(){
-        double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
+        //double sum = terrainSliderValues[0] + terrainSliderValues[1] + terrainSliderValues[2];
         
-        double dirtShare = Math.Round((terrainSliderValues[0] / sum) *6);
-        double waterShare = Math.Round((terrainSliderValues[1] / sum) *6);
-        double grassShare = Math.Round((terrainSliderValues[2] / sum) *6);
+        //double dirtShare = Math.Round((terrainSliderValues[0] / sum) *6);
+        //double waterShare = Math.Round((terrainSliderValues[1] / sum) *6);
+        //double grassShare = Math.Round((terrainSliderValues[2] / sum) *6);
 
-        grass = (int) grassShare;
-        water = (int) waterShare;
-        dirt = (int) dirtShare;
+        grass = (int)terrainSliderValues[0];
+        water = (int)terrainSliderValues[1];
+        dirt = (int)terrainSliderValues[2];
         
         //deletable logs
-        Debug.Log( "The dirt values are " + $"{dirt}");
-        Debug.Log( "The water values are " + $"{water}");
-        Debug.Log( "The grass values are " + $"{grass}");
+        //Debug.Log( "The dirt values are " + $"{dirt}");
+        //Debug.Log( "The water values are " + $"{water}");
+        //Debug.Log( "The grass values are " + $"{grass}");
     }
 }
