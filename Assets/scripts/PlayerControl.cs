@@ -256,7 +256,7 @@ public class PlayerControl : NetworkBehaviour
     public void GetLocalIPv4()
     {
         string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
-        var externalIp = IPAddress.Parse(serverIPaddress);
+        var externalIp = IPAddress.Parse(externalIpString);
         serverIPaddress = externalIp.ToString();
 
         port = NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port;
