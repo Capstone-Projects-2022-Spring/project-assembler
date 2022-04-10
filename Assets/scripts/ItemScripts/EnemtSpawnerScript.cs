@@ -18,8 +18,18 @@ public class EnemtSpawnerScript : NetworkBehaviour
     [ServerCallback]
     void SpawnEnemy()
     {
+        if (NetworkManager.singleton.numPlayers == 0)
+            return;
         float angle = Random.Range(-4f, 4f);
         GameObject result = Instantiate(enemyObject, this.transform.position - new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0), Quaternion.identity);
+        result.GetComponent<EnemyAI>().currentHealth = GameObject.Find("UIscripts").GetComponent<UIManager>().enemyHealthvalue;
+        result.GetComponent<EnemyAI>().speed = GameObject.Find("UIscripts").GetComponent<UIManager>().enemySpeedvalue;
         NetworkServer.Spawn(result);
+        if(spawnIntervel != GameObject.Find("UIscripts").GetComponent<UIManager>().enemySpawnFrequencyvalue)
+        {
+            spawnIntervel = GameObject.Find("UIscripts").GetComponent<UIManager>().enemySpawnFrequencyvalue;
+            CancelInvoke(nameof(SpawnEnemy));
+            InvokeRepeating(nameof(SpawnEnemy), spawnIntervel, spawnIntervel);
+        }
     }
 }

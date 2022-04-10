@@ -86,7 +86,7 @@ public class EnemyAI : NetworkBehaviour
                     if(selectedObj.GetComponent<PlayerControl>().currentHealth < 0)
                     {
                         respawn(selectedObj.GetComponent<NetworkIdentity>().netId);
-                        selectedObj.GetComponent<PlayerControl>().currentHealth = 100;
+                        selectedObj.GetComponent<PlayerControl>().currentHealth = selectedObj.GetComponent<PlayerControl>().MaxHealth;
                     }
                 }
                 break;

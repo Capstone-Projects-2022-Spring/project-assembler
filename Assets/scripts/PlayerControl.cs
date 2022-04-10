@@ -19,6 +19,7 @@ public class PlayerControl : NetworkBehaviour
     [SyncVar]
     public int port;
 
+
     public string playFabID;
     public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
     public string displayName;
@@ -95,7 +96,9 @@ public class PlayerControl : NetworkBehaviour
         {
             if (uimanager.changeMap)
             {
-                servergenerate(uimanager.seedinputInUIManager.text);
+                servergenerate(uimanager.seedinputInUIManager.text, uimanager.DirtFrequency.value, 
+                    uimanager.WaterFrequency.value, uimanager.GrassFrequency.value, uimanager.CopperFrequency.value, uimanager.CopperRichness.value, uimanager.RockFrequency.value, uimanager.RockRichness.value, 
+                    uimanager.MetalFrequency.value, uimanager.MetalRichness.value, (int)uimanager.enemySpeed.value, (int)uimanager.enemyHealth.value, (int)uimanager.enemySpawnFrequency.value);
                 uimanager.changeMap = false;
             }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
@@ -330,10 +333,13 @@ public class PlayerControl : NetworkBehaviour
         //}
     }
 
+
     [Command]
-    void servergenerate(string seed)
+    void servergenerate(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue,
+        float WaterFrequencyvalue, float CopperFrequency, float CopperRichness, float RockFrequency, float RockRichness, 
+        float MetalFrequency, float MetalRichness, int enemySpeedvalue, int enemyHealthvalue, int enemySpawnFrequencyvalue)
     {
-        uimanager.serverGenrateMap(seed);
+        uimanager.serverGenrateMap(seed, DirtFrequencyvalue, GrassFrequencyvalue, WaterFrequencyvalue, CopperFrequency, CopperRichness, RockFrequency, RockRichness, MetalFrequency, MetalRichness, enemySpeedvalue, enemyHealthvalue, enemySpawnFrequencyvalue);
     }
 
     void updateChat(string newline)

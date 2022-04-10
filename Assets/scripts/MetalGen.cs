@@ -30,6 +30,12 @@ public class MetalGen : MonoBehaviour
         });
     }
 
+    public void setValuesFandR(float metalFA, float metalRA)
+    {
+        metalF = metalFA;
+        metalR = metalRA;
+    }
+
     List<List<int>> noise_grid = new List<List<int>>();
     List<List<GameObject>> tile_grid = new List<List<GameObject>>();
 
@@ -68,7 +74,7 @@ public class MetalGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log("Metal generation " + $"{metalF}");
+        //Debug.Log("Metal generation " + $"{metalF}");
            
         if (metalF == 2){
             tileset = new Dictionary<int, GameObject>();
@@ -189,6 +195,7 @@ public class MetalGen : MonoBehaviour
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
         GameObject tile = Instantiate(tile_prefab, tile_group.transform);
+        tile.gameObject.GetComponent<RawMaterialsScript>().materialCount = (int)metalR;
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
         tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width / 2), -(map_height / 2), 0);
