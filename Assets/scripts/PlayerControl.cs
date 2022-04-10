@@ -255,10 +255,10 @@ public class PlayerControl : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void GetLocalIPv4()
     {
-        serverIPaddress = Dns.GetHostEntry(Dns.GetHostName())
-            .AddressList.First(
-                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-            .ToString();
+        string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+        var externalIp = IPAddress.Parse(serverIPaddress);
+        serverIPaddress = externalIp.ToString();
+
         port = NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port;
         Debug.Log($"Port = {port}, ipaddress = {serverIPaddress}");
     }
