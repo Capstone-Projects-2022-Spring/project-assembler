@@ -345,7 +345,7 @@ public class UIManager : MonoBehaviour
         {
             string[] splitAddress = IPaddressToJoin.text.Split(':');
             
-            manager.networkAddress = splitAddress[0];
+            manager.networkAddress = splitAddress[0].Trim();
 
             if (splitAddress.Length > 1 && !String.IsNullOrEmpty(splitAddress[1])) //if there's a port
             {
