@@ -36,6 +36,8 @@ public class NetworkData : MonoBehaviour
 
             channel.ExchangeDeclare("data-in", ExchangeType.Fanout);
             channel.ExchangeDeclare("data-out", ExchangeType.Fanout);
+            channel.ExchangeDeclare("data-rtt", ExchangeType.Fanout);
+            channel.ExchangeDeclare("data-time", ExchangeType.Fanout);
 
             InvokeRepeating(nameof(clearMessages), 1.0f, 1.0f);
         }
@@ -60,11 +62,20 @@ public class NetworkData : MonoBehaviour
         char[] msgOut = MessagesOut.Count.ToString().ToCharArray();
         byte[] inMsg = Encoding.UTF8.GetBytes(msgIn);
         byte[] outMsg = Encoding.UTF8.GetBytes(msgOut);
+
+        char[] rtt = NetworkTime.rtt.ToString().ToCharArray();
+        byte[] pingMsg = Encoding.UTF8.GetBytes(rtt);
+
+        char[] serverTime = NetworkTime.time.ToString().ToCharArray();
+        byte[] timeMsg = Encoding.UTF8.GetBytes(serverTime);
+
         //Debug.Log("Messages In: " + inMsg);
         //Debug.Log("Messages Out: " + outMsg);
 
         channel.BasicPublish(exchange: "data-in", routingKey: "testIn", basicProperties: null, body: inMsg);
         channel.BasicPublish(exchange: "data-out", routingKey: "testOut", basicProperties: null, body: outMsg);
+        channel.BasicPublish(exchange: "data-rtt", routingKey: "testPing", basicProperties: null, body: pingMsg);
+        channel.BasicPublish(exchange: "data-time", routingKey: "testTime", basicProperties: null, body: timeMsg);
 
         MessagesIn.Clear();
         MessagesOut.Clear();
