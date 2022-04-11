@@ -28,3 +28,16 @@ Please direct any questions to Jason Fleshel (tui82326@temple.edu).
 Please download our most recent release of Assembler [here.](https://github.com/Capstone-Projects-2022-Spring/project-assembler/releases/tag/v0.4)
 
 https://github.com/Capstone-Projects-2022-Spring/project-assembler/releases/tag/v0.4
+
+## Building the game
+
+To Build the game you will need the Unity editor version 2020.3.26f1 and download the source code from the the "demo 3 release" from the releases page.
+
+To install Unity editor 2020.3.26f1 :
+1. Downlaod Unity Hub [here](https://unity3d.com/get-unity/download) and install it.
+2. Go to https://unity3d.com/get-unity/download/archive and go down to Unity202.x.
+3. Scroll down until you see the 2020.3.26f1 version of unity.
+4. Click the green button with "Unity Hub" next to it. At this point your unity hub should start installing that version.
+5. After the unity editor finishes installing, unzip the source code and locate the folder from the unity hub where you unzipped the code.
+6. Click the project shown on the unity hub and it should starts up the unity editor.
+
