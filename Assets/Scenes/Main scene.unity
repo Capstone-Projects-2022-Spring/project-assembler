@@ -26426,7 +26426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1830262670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31600,6 +31600,14 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2529118465449360616, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529118465449360616, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2529118465449360616, guid: a156d3051784fe94595cb0ca67863063, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.73
       objectReference: {fileID: 0}
@@ -31642,6 +31650,46 @@ PrefabInstance:
     - target: {fileID: 2818638225852795468, guid: a156d3051784fe94595cb0ca67863063, type: 3}
       propertyPath: m_Name
       value: GunTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566246685335448529, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460406186608115423, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 341092c378992964b97f047a26ec519c, type: 3}
+    - target: {fileID: 6460406186608115423, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460406186608115423, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460406186608115423, guid: a156d3051784fe94595cb0ca67863063, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7227651267967836923, guid: a156d3051784fe94595cb0ca67863063, type: 3}
       propertyPath: sceneId
