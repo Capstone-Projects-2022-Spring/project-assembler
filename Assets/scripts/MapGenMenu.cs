@@ -10,61 +10,53 @@ public class MapGenMenu : MonoBehaviour
     public GameObject ResourcesLayout;
     public GameObject EnemyAiLayout;
     public GameObject MapGenUI;
+    public Slider enemyHealth;
+    public Text enemyHealthText;
+    public Slider enemySpeed;
+    public Text enemySpeedText;
+    public Slider enemyFrequacny;
+    public Text enemyFrequacnyText;
     //public InputField seed;
-    
-    public void onOpenMapGen(){
+
+    public void onOpenMapGen()
+    {
         MapGenUI.SetActive(true);
     }
-    
-    public void onTerrainClick(){
+
+    public void onTerrainClick()
+    {
         TerrainLayout.SetActive(true);
         ResourcesLayout.SetActive(false);
         EnemyAiLayout.SetActive(false);
     }
 
-    public void onResourcesClick(){
+    public void onResourcesClick()
+    {
         TerrainLayout.SetActive(false);
         ResourcesLayout.SetActive(true);
         EnemyAiLayout.SetActive(false);
     }
 
-    public void onEnemyAiClick(){
+    public void onEnemyAiClick()
+    {
         TerrainLayout.SetActive(false);
         ResourcesLayout.SetActive(false);
         EnemyAiLayout.SetActive(true);
+
+        enemyHealthText.text = $"{(int)enemyHealth.value}";
+        enemySpeedText.text = $"{(int)enemySpeed.value}";
+        enemyFrequacnyText.text = $"{(int)enemyFrequacny.value}";
+        enemyHealth.onValueChanged.AddListener((v) =>
+        {
+            enemyHealthText.text = $"{(int)v}";
+        });
+        enemySpeed.onValueChanged.AddListener((v) =>
+        {
+            enemySpeedText.text = $"{(int)v}";
+        });
+        enemyFrequacny.onValueChanged.AddListener((v) =>
+        {
+            enemyFrequacnyText.text = $"{(int)v}";
+        });
     }
 }
-/**
-enemyAISliderValues[0] = EnemyBaseFrequency.value;
-        enemyAISliderValues[1] = EnemyBaseSize.value;
-        enemyAISliderValues[2] = StartingAreaSize.value;
-        EnemyBaseFrequency.onValueChanged.AddListener((v) => {
-            enemyAISliderValues[0] = v;
-        });
-        EnemyBaseSize.onValueChanged.AddListener((v) => {
-            enemyAISliderValues[1] = v;
-        });
-        StartingAreaSize.onValueChanged.AddListener((v) => {
-            enemyAISliderValues[2] = v;
-        });
-        inputValues[0] = MaxGroup.value;
-        inputValues[1] = MinGroup.value;
-        inputValues[2] = MaxCooldown.value;
-        inputValues[3] = MinCooldown.value;
-        inputValues[4] = MaxExpansion.value;
-        MaxGroup.onValueChanged.AddListener((v) => {
-            maxGroupText.text = v.ToString("0.00");
-        });
-        MinGroup.onValueChanged.AddListener((v) => {
-            minGroupText.text = v.ToString("0.00");
-        });
-        MaxCooldown.onValueChanged.AddListener((v) => {
-            maxCooldownText.text = v.ToString("0.00");
-        });
-        MinCooldown.onValueChanged.AddListener((v) => {
-            minCooldownText.text = v.ToString("0.00");
-        });
-        MaxExpansion.onValueChanged.AddListener((v) => {
-            maxExpansionText.text = v.ToString("0.00");
-        });
-*/

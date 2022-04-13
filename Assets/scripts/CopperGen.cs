@@ -19,7 +19,8 @@ public class CopperGen : MonoBehaviour
     public static float copperF, copperR;
     public static int value = 10;
 
-    public void onStart(){
+    public void onStart()
+    {
         copperF = CopperFrequency.value;
         copperR = CopperRichness.value;
         CopperFrequency.onValueChanged.AddListener((v) => {
@@ -28,6 +29,12 @@ public class CopperGen : MonoBehaviour
         CopperRichness.onValueChanged.AddListener((v) => {
             copperR = v;
         });
+    }
+
+    public void setValuesFandR(float copperFA, float copperRA)
+    {
+        copperF = copperFA;
+        copperR = copperRA;
     }
 
     List<List<int>> noise_grid = new List<List<int>>();
@@ -69,7 +76,7 @@ public class CopperGen : MonoBehaviour
     //also remembers to change scale_perlin == values in the if loop in the GetIdUsingPerlin method
     void CreateTileset()
     {
-        Debug.Log("copper generation " + $"{copperF}");
+        //Debug.Log("copper generation " + $"{copperF}");
            
         if (copperF == 2){
             tileset = new Dictionary<int, GameObject>();
@@ -189,6 +196,7 @@ public class CopperGen : MonoBehaviour
         GameObject tile_prefab = tileset[tile_id];
         GameObject tile_group = tile_groups[tile_id];
         GameObject tile = Instantiate(tile_prefab, tile_group.transform);
+        tile.gameObject.GetComponent<RawMaterialsScript>().materialCount = (int)copperR;
 
         tile.name = string.Format("tile_x{0}_y{1}", x, y);
         tile.transform.localPosition = new Vector3(x, y, 0) + new Vector3(-(map_width / 2), -(map_height / 2), 0);

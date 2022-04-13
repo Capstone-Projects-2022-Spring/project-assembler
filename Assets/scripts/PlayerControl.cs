@@ -3,18 +3,25 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Net;
+using System.Linq;
 
 public class PlayerControl : NetworkBehaviour
 {
-    public float speed = 30;
-    public float MaxHealth = 100;
+    public int speed = 30;
+    public int MaxHealth = 100;
     [SyncVar]
-    public float currentHealth = 100;
+    public int currentHealth = 100;
     public Rigidbody2D rigidbody2d;
     public Collider2D collidbox;
+    [SyncVar]
+    public string serverIPaddress;
+    [SyncVar]
+    public int port;
 
     public string playFabID;
     public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
+    [SyncVar(hook = nameof(onChangeDisplayName))]
     public string displayName;
 
     Canvas ingamecanves;
@@ -52,7 +59,7 @@ public class PlayerControl : NetworkBehaviour
         InventoryCanvas.SetActive(true);
 
         //In game
-        displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
+        //displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
         sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
         mainInventory = ingamecanves.gameObject.transform.Find("InventoryCanvas/MainInventory").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -69,9 +76,29 @@ public class PlayerControl : NetworkBehaviour
         uimanager = GameObject.Find("UIscripts").GetComponent<UIManager>();
         idleTime = Time.timeAsDouble;
         lastMovementAI = Time.timeAsDouble;
+
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayName == "" ? "No name" : displayName;
     }
 
-   
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        GetLocalIPv4();
+        changeDisplayName(GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName);
+    }
+
+    [Command]
+    public void changeDisplayName(string displayname)
+    {
+        displayName = displayname;
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayname;
+        Debug.Log($"New display name {displayname}");
+    }
+
+    public void onChangeDisplayName(string oldvalue, string newvalue)
+    {
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = newvalue == "" ? "No name" : displayName;
+    }
 
     void Update()
     {
@@ -81,7 +108,9 @@ public class PlayerControl : NetworkBehaviour
         {
             if (uimanager.changeMap)
             {
-                servergenerate(uimanager.seedinputInUIManager.text);
+                servergenerate(uimanager.seedinputInUIManager.text, uimanager.DirtFrequency.value, 
+                    uimanager.WaterFrequency.value, uimanager.GrassFrequency.value, uimanager.CopperFrequency.value, uimanager.CopperRichness.value, uimanager.RockFrequency.value, uimanager.RockRichness.value, 
+                    uimanager.MetalFrequency.value, uimanager.MetalRichness.value, (int)uimanager.enemySpeed.value, (int)uimanager.enemyHealth.value, (int)uimanager.enemySpawnFrequency.value);
                 uimanager.changeMap = false;
             }
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -1);
@@ -90,18 +119,31 @@ public class PlayerControl : NetworkBehaviour
             if (!isPaused)
             {
                 rigidbody2d.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed * Time.fixedDeltaTime;
+                if (rigidbody2d.velocity != new Vector2(0, 0))
+                {
+                    idleTime = Time.timeAsDouble;
+                }
                 if (Input.GetMouseButton(0))
                 {
                     Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    if(mousepos != new Vector2(0, 0))
-                    {
-                        idleTime = Time.timeAsDouble;
-                    }
+                    
                     if (!interectWithObjectAtPos(mousepos) && currentObjectEquipped != null)
                     {
                         currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
                     }
 
+                }
+                if(mainCamera.GetComponent<Camera>().orthographicSize <= 35 && mainCamera.GetComponent<Camera>().orthographicSize >= 10)
+                {
+                    mainCamera.GetComponent<Camera>().orthographicSize += -Input.mouseScrollDelta.y;
+                    if(mainCamera.GetComponent<Camera>().orthographicSize > 35)
+                    {
+                        mainCamera.GetComponent<Camera>().orthographicSize = 35;
+                    }
+                    if (mainCamera.GetComponent<Camera>().orthographicSize < 10)
+                    {
+                        mainCamera.GetComponent<Camera>().orthographicSize = 10;
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
@@ -194,10 +236,10 @@ public class PlayerControl : NetworkBehaviour
         {
             if(Time.timeAsDouble - lastMovementAI > 4)
             {
-                //direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f,1f)).normalized;
+                direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f,1f)).normalized;
                 lastMovementAI = Time.timeAsDouble;
             }
-            //rigidbody2d.velocity = direction * 10;
+            rigidbody2d.velocity = direction * 10;
         }
     }
 
@@ -232,6 +274,19 @@ public class PlayerControl : NetworkBehaviour
         thegameobject.transform.position = changeposition;
         thegameobject.GetComponent<GameItem>().isOnGround = newGroundValue;
     }
+
+
+    [Command(requiresAuthority = false)]
+    public void GetLocalIPv4()
+    {
+        string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+        var externalIp = IPAddress.Parse(externalIpString);
+        serverIPaddress = externalIp.ToString();
+
+        port = NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port;
+        Debug.Log($"Port = {port}, ipaddress = {serverIPaddress}");
+    }
+
 
     public bool addToInvenotry(GameObject item, bool transferToOrigin)
     {
@@ -302,10 +357,13 @@ public class PlayerControl : NetworkBehaviour
         //}
     }
 
+
     [Command]
-    void servergenerate(string seed)
+    void servergenerate(string seed, float DirtFrequencyvalue, float GrassFrequencyvalue,
+        float WaterFrequencyvalue, float CopperFrequency, float CopperRichness, float RockFrequency, float RockRichness, 
+        float MetalFrequency, float MetalRichness, int enemySpeedvalue, int enemyHealthvalue, int enemySpawnFrequencyvalue)
     {
-        uimanager.serverGenrateMap(seed);
+        uimanager.serverGenrateMap(seed, DirtFrequencyvalue, GrassFrequencyvalue, WaterFrequencyvalue, CopperFrequency, CopperRichness, RockFrequency, RockRichness, MetalFrequency, MetalRichness, enemySpeedvalue, enemyHealthvalue, enemySpawnFrequencyvalue);
     }
 
     void updateChat(string newline)
