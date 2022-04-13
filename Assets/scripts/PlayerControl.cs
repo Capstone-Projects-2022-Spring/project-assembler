@@ -19,9 +19,9 @@ public class PlayerControl : NetworkBehaviour
     [SyncVar]
     public int port;
 
-
     public string playFabID;
     public Dictionary<GameItem, int> inventory = new Dictionary<GameItem, int>();
+    [SyncVar(hook = nameof(onChangeDisplayName))]
     public string displayName;
 
     Canvas ingamecanves;
@@ -59,7 +59,7 @@ public class PlayerControl : NetworkBehaviour
         InventoryCanvas.SetActive(true);
 
         //In game
-        displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
+        //displayName = GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName;
         sessionStats = ingamecanves.gameObject.transform.Find("SessionStats").gameObject;
         mainInventory = ingamecanves.gameObject.transform.Find("InventoryCanvas/MainInventory").transform;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -77,16 +77,28 @@ public class PlayerControl : NetworkBehaviour
         idleTime = Time.timeAsDouble;
         lastMovementAI = Time.timeAsDouble;
 
-
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayName == "" ? "No name" : displayName;
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         GetLocalIPv4();
+        changeDisplayName(GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName);
     }
 
+    [Command]
+    public void changeDisplayName(string displayname)
+    {
+        displayName = displayname;
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayname;
+        Debug.Log($"New display name {displayname}");
+    }
 
+    public void onChangeDisplayName(string oldvalue, string newvalue)
+    {
+        this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = newvalue == "" ? "No name" : displayName;
+    }
 
     void Update()
     {
@@ -120,6 +132,18 @@ public class PlayerControl : NetworkBehaviour
                         currentObjectEquipped.GetComponent<GameItem>().actionFromInventroy(this);
                     }
 
+                }
+                if(mainCamera.GetComponent<Camera>().orthographicSize <= 35 && mainCamera.GetComponent<Camera>().orthographicSize >= 10)
+                {
+                    mainCamera.GetComponent<Camera>().orthographicSize += -Input.mouseScrollDelta.y;
+                    if(mainCamera.GetComponent<Camera>().orthographicSize > 35)
+                    {
+                        mainCamera.GetComponent<Camera>().orthographicSize = 35;
+                    }
+                    if (mainCamera.GetComponent<Camera>().orthographicSize < 10)
+                    {
+                        mainCamera.GetComponent<Camera>().orthographicSize = 10;
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
