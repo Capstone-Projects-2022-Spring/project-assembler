@@ -32,14 +32,25 @@ public class UIManager : MonoBehaviour
     
 
     public bool changeMap = false;
-    GameObject map;
+    public GameObject map;
     GameObject techtree;
+    public Slider DirtFrequency, WaterFrequency, GrassFrequency;
+    public Slider CopperFrequency, CopperRichness;
+    public Slider RockFrequency, RockRichness;
+    public Slider MetalFrequency, MetalRichness;
+    public Slider enemySpeed, enemyHealth, enemySpawnFrequency;
+    public int enemySpeedvalue;
+    public int enemyHealthvalue;
+    public int enemySpawnFrequencyvalue;
 
     [Header("Ores")]
     public GameObject copper;
 
     void Awake()
     {
+        enemySpawnFrequencyvalue = 15;
+        enemySpeedvalue = 400;
+        enemyHealthvalue = 70;
         manager = GameObject.Find("NetworkManager").GetComponent<TheNetworkManager>();
         //usage: ./Assembler.exe -port 8888
 
@@ -201,13 +212,13 @@ public class UIManager : MonoBehaviour
     public void OnOpenTechTreeClick()
     {
         //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(true);
-        ingameCanvas.transform.GetChild(3).gameObject.SetActive(true);
+        ingameCanvas.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     public void OnCloseTechTreeClick()
     {
         //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(false);
-        ingameCanvas.transform.GetChild(3).gameObject.SetActive(false);
+        ingameCanvas.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     public void onInGameExit()
@@ -333,10 +344,10 @@ public class UIManager : MonoBehaviour
         } else
         {
             string[] splitAddress = IPaddressToJoin.text.Split(':');
+            
+            manager.networkAddress = splitAddress[0].Trim();
 
-            manager.networkAddress = splitAddress[0];
-
-            if (splitAddress.Length > 1) //if there's a port
+            if (splitAddress.Length > 1 && !String.IsNullOrEmpty(splitAddress[1])) //if there's a port
             {
                 NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port = ushort.Parse(splitAddress[1]);
             }
@@ -351,20 +362,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void serverGenrateMap(string seed)
+    public void serverGenrateMap(string seed, float DirtFrequencyvalue, float WaterFrequencyvalue, 
+        float GrassFrequencyvalue, float CopperFrequency, float CopperRichness, float RockFrequency, float RockRichness, 
+        float MetalFrequency, float MetalRichness, int enemySpeedvalue, int enemyHealthvalue, int enemySpawnFrequencyvalue)
     {
         unSpawnMap();
         techtree = Instantiate(this.techtreeprefab);
         NetworkServer.Spawn(techtree);
 
-        map = Instantiate(this.mapgenprefab);
-        if(seed != "")
+        this.enemySpeedvalue = enemySpeedvalue;
+        this.enemySpawnFrequencyvalue = enemySpawnFrequencyvalue;
+        this.enemyHealthvalue = enemyHealthvalue;
+
+        map = Instantiate(mapgenprefab);
+        if (seed != "")
         {
             map.GetComponent<PerlinNoiseMap>().map_seed = int.Parse(seed);
             map.GetComponent<CopperGen>().map_seed = int.Parse(seed);
             map.GetComponent<MetalGen>().map_seed = int.Parse(seed);
             map.GetComponent<RockGen>().map_seed = int.Parse(seed);
+
         }
+
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[0] = DirtFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[1] = WaterFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().terrainSliderValues[2] = GrassFrequencyvalue;
+        map.GetComponent<PerlinNoiseMap>().onSave();
+        map.GetComponent<CopperGen>().setValuesFandR(CopperFrequency, CopperRichness);
+        map.GetComponent<MetalGen>().setValuesFandR(MetalFrequency, MetalRichness);
+        map.GetComponent<RockGen>().setValuesFandR(RockFrequency, RockRichness);
 
 
         map.GetComponent<PerlinNoiseMap>().FakeStart();
@@ -399,11 +425,13 @@ public class UIManager : MonoBehaviour
             for (int q = 0; q < temp.transform.childCount; q++)
             {
                 NetworkServer.UnSpawn(temp.transform.GetChild(q).gameObject);
+                Destroy(temp.transform.GetChild(q).gameObject);
             }
         }
         Destroy(map);
         Destroy(techtree);
     }
+
     private static string GetArg(string name)
     {
         var args = Environment.GetCommandLineArgs();

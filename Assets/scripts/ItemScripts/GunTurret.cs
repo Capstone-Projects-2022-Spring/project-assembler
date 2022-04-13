@@ -13,7 +13,7 @@ public class GunTurret : GameItem
         if (isServer && gameObject.activeSelf && Time.timeAsDouble - lastShot > 0.3)
         {
             Collider2D[] collided;
-            collided = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(30f, 30f), 0);
+            collided = Physics2D.OverlapCircleAll(this.transform.position, 40f);
             foreach (Collider2D obj in collided)
             {
                 var selectedObj = obj.gameObject;
@@ -22,6 +22,7 @@ public class GunTurret : GameItem
                     EnemyAI enemy = selectedObj.GetComponent<EnemyAI>();
                     Shoot(this.transform, enemy.transform.position);
                     lastShot = Time.timeAsDouble;
+                    break;
                 }
 
             }
@@ -34,10 +35,10 @@ public class GunTurret : GameItem
         Vector2 directionVector = new Vector2(mousepos.x - shootPosition.position.x, mousepos.y - shootPosition.position.y);
         angle.eulerAngles = new Vector3(0, 0, Vector2.Angle(new Vector3(1, 0, 0), directionVector));
 
-        float offset = 4;
+        float offset = 3;
         Vector3 postionToSpawnOn = new Vector3(shootPosition.position.x + offset * directionVector.normalized.x, shootPosition.position.y + offset * directionVector.normalized.y, 0);
         GameObject generatedBullet = Instantiate(bulletPrefab, postionToSpawnOn, angle);
-        generatedBullet.GetComponent<Rigidbody2D>().velocity = 100f * directionVector.normalized;
+        generatedBullet.GetComponent<Rigidbody2D>().velocity = 200f * directionVector.normalized;
         NetworkServer.Spawn(generatedBullet);
     }
 

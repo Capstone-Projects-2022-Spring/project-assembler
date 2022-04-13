@@ -24,7 +24,7 @@ public class EnemyAI : NetworkBehaviour
     {
         seeker = GetComponent<Seeker>();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        InvokeRepeating(nameof(detectPlayers), 0f, 1f);
+        InvokeRepeating(nameof(detectPlayers), 0f, 0.4f);
         lastRandMovePath = Time.timeAsDouble;
     }
 
@@ -64,7 +64,8 @@ public class EnemyAI : NetworkBehaviour
         }
 
     }
-
+    
+    [ServerCallback]
     void detectPlayers()
     {
         bool pass = false;
@@ -79,6 +80,15 @@ public class EnemyAI : NetworkBehaviour
                 Vector3 velcoity3 = player.transform.position - this.transform.position;
                 seeker.StartPath(this.transform.position, selectedObj.transform.position, OnPathFound);
                 pass = true;
+                if((this.transform.position - selectedObj.transform.position).magnitude < 3f)
+                {
+                    selectedObj.GetComponent<PlayerControl>().currentHealth -= 5;
+                    if(selectedObj.GetComponent<PlayerControl>().currentHealth < 0)
+                    {
+                        respawn(selectedObj.GetComponent<NetworkIdentity>().netId);
+                        selectedObj.GetComponent<PlayerControl>().currentHealth = selectedObj.GetComponent<PlayerControl>().MaxHealth;
+                    }
+                }
                 break;
             }
 
@@ -96,6 +106,16 @@ public class EnemyAI : NetworkBehaviour
         {
             path = p;
             currentWayPoint = 0;
+        }
+    }
+
+
+    [ClientRpc]
+    public void respawn(uint conn)
+    {
+        if (NetworkClient.localPlayer.netId == conn)
+        {
+            NetworkClient.localPlayer.gameObject.transform.position = new Vector3(0, 0, 0);
         }
     }
 

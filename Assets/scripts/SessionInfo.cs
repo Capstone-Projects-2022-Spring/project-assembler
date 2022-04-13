@@ -19,8 +19,8 @@ public class SessionInfo : NetworkBehaviour
     public GameObject attachedToMouseItem;
     public playerInfo localplayerinfo;
     public GameObject playerTag;
-    [SyncVar]
-    public string serverIPaddress;
+
+
 
     void Update()
     {
@@ -194,6 +194,14 @@ public class SessionInfo : NetworkBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if(isLocalPlayer && attachedToMouseItem != null)
+        {
+
+        }
+    }
+
 
     [ClientRpc]
     public void kick(string displayName)
@@ -202,15 +210,6 @@ public class SessionInfo : NetworkBehaviour
         {
             NetworkManager.singleton.StopClient();
         }
-    }
-
-    [Command(requiresAuthority = false)]
-    public void GetLocalIPv4()
-    {
-        serverIPaddress = Dns.GetHostEntry(Dns.GetHostName())
-            .AddressList.First(
-                f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-            .ToString();
     }
 
     [ClientRpc]

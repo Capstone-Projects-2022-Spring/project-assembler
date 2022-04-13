@@ -32,7 +32,6 @@ public class TheNetworkManager : NetworkManager
         uiManager.onJoinOrHost();
     }
 
-
     public override void OnClientDisconnect()
     {
         base.OnClientDisconnect();
