@@ -212,13 +212,13 @@ public class UIManager : MonoBehaviour
     public void OnOpenTechTreeClick()
     {
         //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(true);
-        ingameCanvas.transform.GetChild(3).gameObject.SetActive(true);
+        ingameCanvas.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     public void OnCloseTechTreeClick()
     {
         //GameObject.Find("inGameCanvas/TechTree").gameObject.SetActive(false);
-        ingameCanvas.transform.GetChild(3).gameObject.SetActive(false);
+        ingameCanvas.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     public void onInGameExit()
