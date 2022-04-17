@@ -95,7 +95,7 @@ public class PlayFabLogin : MonoBehaviour
     }
 
     private void OnCreationError(PlayFabError obj)
-    {;
+    {
         var deleterequest = new DeleteMasterPlayerAccountRequest { PlayFabId = newlyCreatedAccountId };
         PlayFabAdminAPI.DeleteMasterPlayerAccount(deleterequest, (DeleteMasterPlayerAccountResult result) =>
         {

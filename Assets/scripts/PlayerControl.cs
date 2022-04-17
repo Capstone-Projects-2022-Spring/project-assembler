@@ -32,13 +32,14 @@ public class PlayerControl : NetworkBehaviour
     Text sessionChatText;
     GameObject mainCamera;
     GameObject chatCanvas;
-    SessionInfo sessionInfoClass;
+    public SessionInfo sessionInfoClass;
     Transform inventoryCanvas;
     public Transform mainInventory;
     bool isPaused;
     public readonly SyncList<string> sessionChat = new SyncList<string>();
     UIManager uimanager;
     public GameObject currentObjectEquipped; // The item that is currently selected by the player
+    int oldEquippedSlot;
     
     double idleTime;
     double lastMovementAI;
@@ -77,6 +78,7 @@ public class PlayerControl : NetworkBehaviour
         idleTime = Time.timeAsDouble;
         lastMovementAI = Time.timeAsDouble;
 
+        oldEquippedSlot = -1;
         this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayName == "" ? "No name" : displayName;
     }
 
@@ -151,44 +153,22 @@ public class PlayerControl : NetworkBehaviour
                     mainInventory.gameObject.SetActive(!mainInventory.gameObject.activeSelf);
                 }
 
-                #region
-                if (Input.GetKeyDown(KeyCode.Alpha1))
+                for(int i = 49; i < 49+9; i++)
                 {
-                    currentObjectEquipped =  inventoryCanvas.GetChild(0).GetComponent<InventorySlotScript>().itemInSlot;
-                } 
-                else if (Input.GetKeyDown(KeyCode.Alpha2))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(1).GetComponent<InventorySlotScript>().itemInSlot;
+                    if (Input.GetKeyDown((KeyCode)i))
+                    {
+                        if (oldEquippedSlot != -1)
+                        {
+                            InventorySlotScript oldslot = inventoryCanvas.GetChild(oldEquippedSlot).GetComponent<InventorySlotScript>();
+                            Color colorOfEquippedOld = oldslot.transform.GetChild(0).GetComponent<Image>().color;
+                            oldslot.transform.GetChild(0).GetComponent<Image>().color = new Color(colorOfEquippedOld.r, colorOfEquippedOld.g, colorOfEquippedOld.b, 0f);
+                        }
+                        currentObjectEquipped = inventoryCanvas.GetChild(i-49).GetComponent<InventorySlotScript>().itemInSlot;
+                        Color colorOfEquipped = inventoryCanvas.GetChild(i - 49).transform.GetChild(0).GetComponent<Image>().color;
+                        inventoryCanvas.GetChild(i - 49).transform.GetChild(0).GetComponent<Image>().color = new Color(colorOfEquipped.r, colorOfEquipped.g, colorOfEquipped.b, 0.5f);
+                        oldEquippedSlot = i - 49;
+                    }
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha3))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(2).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha4))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(3).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha5))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(4).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha6))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(5).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha7))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(6).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha8))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(7).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                else if (Input.GetKeyDown(KeyCode.Alpha9))
-                {
-                    currentObjectEquipped = inventoryCanvas.GetChild(8).GetComponent<InventorySlotScript>().itemInSlot;
-                }
-                #endregion
             }
 
 

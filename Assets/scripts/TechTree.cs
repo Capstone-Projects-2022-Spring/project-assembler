@@ -61,6 +61,21 @@ public class TechTree : NetworkBehaviour
                 }
             }
         }
+
+        if (old < 10)
+        {
+            if (newvalue >= 10)
+            {
+                Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+                for (int i = 0; i < craftinmenu.childCount; i++)
+                {
+                    if (craftinmenu.GetChild(i).name == "GunTurretRecipe")
+                    {
+                        craftinmenu.GetChild(i).gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
     }
 
     public void changeRockMined(int old, int newvalue)

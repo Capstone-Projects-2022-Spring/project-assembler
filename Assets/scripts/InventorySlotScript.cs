@@ -27,6 +27,7 @@ public class InventorySlotScript : MonoBehaviour
         {
             sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = false;
             slot.GetComponent<InventorySlotScript>().itemInSlot = sessionInfo.attachedToMouseItem;
+            slot.GetComponent<InventorySlotScript>().itemInSlot.GetComponent<GameItem>().isOnGround = false;
             updateImage();
             sessionInfo.attachedToMouseItem = null;
         } else if(itemInSlot != null && sessionInfo.attachedToMouseItem == null)
@@ -40,12 +41,14 @@ public class InventorySlotScript : MonoBehaviour
         {
             //StartCoroutine(itemInSlot.itemAttaching());
             sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isAttachedToMouse = false;
+
             itemInSlot.GetComponent<GameItem>().isAttachedToMouse = true;
             itemInSlot.GetComponent<GameItem>().moveToGorund = false;
+            itemInSlot.GetComponent<GameItem>().isOnGround = false;
             GameObject temp = sessionInfo.attachedToMouseItem;
             sessionInfo.attachedToMouseItem = itemInSlot;
             itemInSlot = temp;
-
+            sessionInfo.attachedToMouseItem.GetComponent<GameItem>().isOnGround = false;
             updateImage();
         }
         
