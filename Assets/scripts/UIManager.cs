@@ -338,6 +338,7 @@ public class UIManager : MonoBehaviour
     public void transferMap(bool hostOrNot)
     {
         checkManager();
+        Debug.Log("triggerd host: " + hostOrNot);
         if (IPaddressToJoin.text == "")
         {
             manager.networkAddress = "localhost";
