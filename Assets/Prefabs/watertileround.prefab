@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2859634637064090970}
   - component: {fileID: -2114773941205764466}
   - component: {fileID: 181828761327838281}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: watertileround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3333334, y: 1.3333334}
+    oldSize: {x: 1.2307693, y: 1.2307693}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

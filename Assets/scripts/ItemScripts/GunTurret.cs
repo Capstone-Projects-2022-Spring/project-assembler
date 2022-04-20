@@ -8,6 +8,31 @@ public class GunTurret : GameItem
     public GameObject bulletPrefab;
     double lastShot;
 
+
+    public override void interact(PlayerControl player)
+    {
+        if (isOnGround == true && Input.GetMouseButtonDown(0))
+        {
+            if (player.addToInvenotry(this.gameObject, true))
+            {
+
+
+                //Add to the player inventory
+                if (player.inventory.ContainsKey(this))
+                {
+                    player.inventory[this] += 1;
+                }
+                else
+                {
+                    player.inventory.Add(this, 1);
+                }
+
+            }
+        }
+
+
+    }
+
     private void FixedUpdate()
     {
         if (isServer && gameObject.activeSelf && Time.timeAsDouble - lastShot > 0.3)

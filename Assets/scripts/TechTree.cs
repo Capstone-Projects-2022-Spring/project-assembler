@@ -62,9 +62,9 @@ public class TechTree : NetworkBehaviour
             }
         }
 
-        if (old < 10)
+        if (old < 15)
         {
-            if (newvalue >= 10)
+            if (newvalue >= 15)
             {
                 Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
                 for (int i = 0; i < craftinmenu.childCount; i++)

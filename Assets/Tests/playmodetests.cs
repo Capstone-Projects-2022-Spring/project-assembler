@@ -114,26 +114,24 @@ public class playmodetests : MonoBehaviour
         hostButton.onClick.Invoke();
 
         time = 0;
-        while (time < 40)
+        while (time < 10)
         {
             time += Time.fixedDeltaTime;
-            if(Mirror.NetworkClient.localPlayer != null)
-                Mirror.NetworkClient.localPlayer.gameObject.transform.position = new Vector3(-61.57004f, -47.54498f, 0);
             yield return new WaitForFixedUpdate();
         }
 
 
-        List<List<GameObject>> firstMap = new List<List<GameObject>>();
+        List<List<Sprite>> firstMap = new List<List<Sprite>>();
 
         GameObject map = uimanager.map;
 
         for(int i = 0; i < uimanager.map.transform.childCount; i++)
         {
             Transform child = uimanager.map.transform.GetChild(i);
-            List<GameObject> listToAdd = new List<GameObject>();
+            List<Sprite> listToAdd = new List<Sprite>();
             for (int q = 0; q < child.childCount; q++)
             {
-                listToAdd.Add(child.GetChild(q).gameObject);
+                listToAdd.Add(child.GetChild(q).gameObject.GetComponent<SpriteRenderer>().sprite);
             }
             firstMap.Add(listToAdd);
         }
@@ -147,34 +145,34 @@ public class playmodetests : MonoBehaviour
         GameObject.Find("MapGenUI/Canvas/Panel/Host").GetComponent<Button>().onClick.Invoke();
 
         time = 0;
-        while (time < 5)
+        while (time < 10)
         {
             time += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        List<List<GameObject>> SecondMap = new List<List<GameObject>>();
+        List<List<Sprite>> SecondMap = new List<List<Sprite>>();
         map = uimanager.map;
 
         for (int i = 0; i < uimanager.map.transform.childCount; i++)
         {
             Transform child = uimanager.map.transform.GetChild(i);
-            List<GameObject> listToAdd = new List<GameObject>();
+            List<Sprite> listToAdd = new List<Sprite>();
             for (int q = 0; q < child.childCount; q++)
             {
-                listToAdd.Add(child.GetChild(q).gameObject);
+                listToAdd.Add(child.GetChild(q).gameObject.GetComponent<SpriteRenderer>().sprite);
             }
             SecondMap.Add(listToAdd);
         }
 
-        //for (int i = 0; i < firstMap.Count; i++)
-        //{
-        //    for (int q = 0; q < firstMap[i].Count; q++)
-        //    {
-        //        Assert.IsTrue(SecondMap[i][q] == firstMap[i][q]);
-        //    }
-        //}
-
+        for (int i = 0; i < firstMap.Count; i++)
+        {
+            for (int q = 0; q < firstMap[i].Count; q++)
+            {
+                Assert.IsTrue(SecondMap[i][q] == firstMap[i][q], "Found unsimilar tiles on the map");
+            }
+        }
+        Debug.Log("The map generation gives the same map given the same seed");
 
         yield return null;
     }
