@@ -4604,7 +4604,7 @@ GameObject:
   - component: {fileID: 389376886}
   - component: {fileID: 389376885}
   m_Layer: 5
-  m_Name: Join/host canves
+  m_Name: JoinHost canves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11317,7 +11317,7 @@ GameObject:
   - component: {fileID: 818529269}
   - component: {fileID: 818529268}
   m_Layer: 5
-  m_Name: Join/Host game button
+  m_Name: JoinHost game button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

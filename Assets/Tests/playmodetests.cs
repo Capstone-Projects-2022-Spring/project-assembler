@@ -37,7 +37,8 @@ public class playmodetests : MonoBehaviour
     [UnityTest, Order(1)]
     public IEnumerator testMainSceneOnStartUp()
     {
-        Assert.IsTrue(GameObject.Find("LoginCanvas").activeSelf);
+        Assert.IsTrue(GameObject.Find("LoginCanvas").activeSelf, "The main scene was not loaded.");
+        Debug.Log("The main scene is loaded.");
         yield return null;
     }
 
@@ -55,7 +56,7 @@ public class playmodetests : MonoBehaviour
 
         // Wait for some time
         float time = 0;
-        while (time < 10)
+        while (time < 30)
         {
             time += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
@@ -236,17 +237,65 @@ public class playmodetests : MonoBehaviour
 
         Assert.IsTrue(playerWasKilled, "The player was not killed by the enemy meaning that the enemy was not able to engage/attack or detect the player.");
 
+        Debug.Log("The player was killed by the enemeis and enemy objects were able to detect the player.");
+
         
         // Disconnect and go back to main menu
         Mirror.NetworkManager.singleton.StopClient();
         Mirror.NetworkManager.singleton.StopServer();
+
+        yield return null;
+    }
+
+    [UnityTest, Order(7)]
+    public IEnumerator testOnlineMultiplayerServerConnection()
+    {
+        float time = 0;
+        while (time < 10)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+       
+
+        GameObject.Find("StartGameMenu/JoinHost game button").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForFixedUpdate();
+        GameObject.Find("JoinHost canves/IPaddressInput").GetComponent<InputField>().text = "playassembler.com";
+        GameObject.Find("JoinHost canves/IPaddressInput").GetComponent<InputField>().onEndEdit.Invoke(GameObject.Find("JoinHost canves/IPaddressInput").GetComponent<InputField>().text);
+        time = 0;
+        while (time < 10)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        GameObject.Find("JoinHost canves/Join").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForFixedUpdate();
+
+
+        time = 0;
+        while (time < 20)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        Assert.IsTrue(Mirror.NetworkManager.singleton.isNetworkActive, "An issue was encountred trying to connect to the server or the server is down.");
+
+        Debug.Log("Was able to connect to the server successfully.");
+
+        Mirror.NetworkManager.singleton.StopClient();
+        Mirror.NetworkManager.singleton.StopServer();
+
 
         GameObject.Find("StartGameMenu/BackButton").GetComponent<Button>().onClick.Invoke();
         yield return null;
     }
 
 
-    [UnityTest, Order(7)]
+
+    [UnityTest, Order(8)]
     public IEnumerator testAddFriend()
     {
         //var request = new LoginWithCustomIDRequest { CustomId = "karim.salem1999@hotmail.com", CreateAccount = true };
@@ -261,40 +310,40 @@ public class playmodetests : MonoBehaviour
     }
 
 
-        //private void OnCreationSuccess(LoginResult result)
-        //{
-        //    newlyCreatedAccountId = result.PlayFabId;
-        //    var request = new AddOrUpdateContactEmailRequest { EmailAddress = "karim.salem1999@hotmail.com" };
-        //    PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult inresult) =>
-        //    {
-        //        var passwordrequest = new AddUsernamePasswordRequest { Password = "testing", Email = "karim.salem1999@hotmail.com", Username = "testing123123" };
-        //        PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult inresult2) =>
-        //        {
-        //            Debug.Log($"the user name: {inresult2.Username}");
-        //            var displayrequest = new PlayFab.ClientModels.UpdateUserTitleDisplayNameRequest { DisplayName = "testing123123" };
-        //            PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (PlayFab.ClientModels.UpdateUserTitleDisplayNameResult inresult3) =>
-        //            {
-        //                Debug.Log($"the new display name: {inresult3.DisplayName}");
-        //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Awake();
-        //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Connect(result.PlayFabId);
-        //                GameObject.Find("mainMenu canves/FriendsListButton").GetComponent<Button>().onClick.Invoke();
-        //                GameObject.Find("FriendUI/Panel/InputField").GetComponent<InputField>().text = "test2";
-        //                GameObject.Find("FriendUI/Panel/InputField/RequestButton").GetComponent<Button>().onClick.Invoke();
-        //            }, OnCreationError);
-        //        }, OnCreationError);
-        //    }, OnCreationError);
+    //private void OnCreationSuccess(LoginResult result)
+    //{
+    //    newlyCreatedAccountId = result.PlayFabId;
+    //    var request = new AddOrUpdateContactEmailRequest { EmailAddress = "karim.salem1999@hotmail.com" };
+    //    PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult inresult) =>
+    //    {
+    //        var passwordrequest = new AddUsernamePasswordRequest { Password = "testing", Email = "karim.salem1999@hotmail.com", Username = "testing123123" };
+    //        PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult inresult2) =>
+    //        {
+    //            Debug.Log($"the user name: {inresult2.Username}");
+    //            var displayrequest = new PlayFab.ClientModels.UpdateUserTitleDisplayNameRequest { DisplayName = "testing123123" };
+    //            PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (PlayFab.ClientModels.UpdateUserTitleDisplayNameResult inresult3) =>
+    //            {
+    //                Debug.Log($"the new display name: {inresult3.DisplayName}");
+    //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Awake();
+    //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Connect(result.PlayFabId);
+    //                GameObject.Find("mainMenu canves/FriendsListButton").GetComponent<Button>().onClick.Invoke();
+    //                GameObject.Find("FriendUI/Panel/InputField").GetComponent<InputField>().text = "test2";
+    //                GameObject.Find("FriendUI/Panel/InputField/RequestButton").GetComponent<Button>().onClick.Invoke();
+    //            }, OnCreationError);
+    //        }, OnCreationError);
+    //    }, OnCreationError);
 
-        //    OnCreationError(new PlayFabError());
-        //}
+    //    OnCreationError(new PlayFabError());
+    //}
 
-        //private void OnCreationError(PlayFabError obj)
-        //{
-        //    var deleterequest = new DeleteMasterPlayerAccountRequest { PlayFabId = newlyCreatedAccountId };
-        //    PlayFabAdminAPI.DeleteMasterPlayerAccount(deleterequest, (DeleteMasterPlayerAccountResult result) =>
-        //    {
-        //        Debug.Log($"deleted the user after an error");
-        //        newlyCreatedAccountId = "";
-        //    }, (PlayFabError obj2) => { });
+    //private void OnCreationError(PlayFabError obj)
+    //{
+    //    var deleterequest = new DeleteMasterPlayerAccountRequest { PlayFabId = newlyCreatedAccountId };
+    //    PlayFabAdminAPI.DeleteMasterPlayerAccount(deleterequest, (DeleteMasterPlayerAccountResult result) =>
+    //    {
+    //        Debug.Log($"deleted the user after an error");
+    //        newlyCreatedAccountId = "";
+    //    }, (PlayFabError obj2) => { });
 
-        //}
-    }
+    //}
+}
