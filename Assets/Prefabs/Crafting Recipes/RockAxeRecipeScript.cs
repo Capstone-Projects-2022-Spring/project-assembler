@@ -9,6 +9,7 @@ public class RockAxeRecipeScript : CraftingRecipe
     public int rockOreLeft = 3;
     public override void onCraftClick()
     {
+        int rockOreLeft2 = rockOreLeft;
         List<InventorySlotScript> recipeItems = new List<InventorySlotScript>();
         for (int i = 0; i < paranetCanvas.childCount - 1; i++)
         {
@@ -18,10 +19,10 @@ public class RockAxeRecipeScript : CraftingRecipe
                 if(slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "rock")
                 {
                     recipeItems.Add(slot);
-                    rockOreLeft -= 1;
+                    rockOreLeft2 -= 1;
                 }
 
-                if(rockOreLeft == 0)
+                if(rockOreLeft2 == 0)
                 {
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
@@ -31,7 +32,7 @@ public class RockAxeRecipeScript : CraftingRecipe
 
         for (int i = 0; i < mainInventory.childCount - 1; i++)
         {
-            if(rockOreLeft == 0)
+            if(rockOreLeft2 == 0)
             {
                 break;
             }
@@ -41,16 +42,16 @@ public class RockAxeRecipeScript : CraftingRecipe
                 if (slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "rock")
                 {
                     recipeItems.Add(slot);
-                    rockOreLeft -= 1;
+                    rockOreLeft2 -= 1;
                 }
-                if (rockOreLeft == 0)
+                if (rockOreLeft2 == 0)
                 {
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }
             }
         }
-        if(rockOreLeft == 0)
+        if(rockOreLeft2 == 0)
         {
             foreach (var obj in recipeItems)
             {
@@ -58,6 +59,7 @@ public class RockAxeRecipeScript : CraftingRecipe
                 obj.updateImage();
             }
         }
+        rockOreLeft2 = rockOreLeft;
 
     }
 

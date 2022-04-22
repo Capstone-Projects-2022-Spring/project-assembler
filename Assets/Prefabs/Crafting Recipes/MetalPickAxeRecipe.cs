@@ -9,6 +9,7 @@ public class MetalPickAxeRecipe : CraftingRecipe
     public int metalOreLeft = 3;
     public override void onCraftClick()
     {
+        int metalOreLeft2 = metalOreLeft;
         List<InventorySlotScript> recipeItems = new List<InventorySlotScript>();
         for (int i = 0; i < paranetCanvas.childCount - 1; i++)
         {
@@ -18,10 +19,10 @@ public class MetalPickAxeRecipe : CraftingRecipe
                 if (slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "metal")
                 {
                     recipeItems.Add(slot);
-                    metalOreLeft -= 1;
+                    metalOreLeft2 -= 1;
                 }
 
-                if (metalOreLeft == 0)
+                if (metalOreLeft2 == 0)
                 {
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
@@ -31,7 +32,7 @@ public class MetalPickAxeRecipe : CraftingRecipe
 
         for (int i = 0; i < mainInventory.childCount - 1; i++)
         {
-            if (metalOreLeft == 0)
+            if (metalOreLeft2 == 0)
             {
                 break;
             }
@@ -41,17 +42,16 @@ public class MetalPickAxeRecipe : CraftingRecipe
                 if (slot.itemInSlot.GetComponent<RawMaterialsScript>() != null && slot.itemInSlot.GetComponent<RawMaterialsScript>().oretype == "metal")
                 {
                     recipeItems.Add(slot);
-                    metalOreLeft -= 1;
+                    metalOreLeft2 -= 1;
                 }
-                if (metalOreLeft == 0)
+                if (metalOreLeft2 == 0)
                 {
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }
             }
         }
-
-        if (metalOreLeft == 0)
+        if (metalOreLeft2 == 0)
         {
             foreach (var obj in recipeItems)
             {
@@ -59,5 +59,6 @@ public class MetalPickAxeRecipe : CraftingRecipe
                 obj.updateImage();
             }
         }
+        metalOreLeft2 = metalOreLeft;
     }
 }
