@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4935988bde145d288e712911056246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grass_prefab: {fileID: 6602500133938306631, guid: 8c00e33d4503e49d6b083f3859ef2f99, type: 3}
-  dirt_prefab: {fileID: 7518224010705708754, guid: f3f358638bee947198b06821dba4be33, type: 3}
-  water_prefab: {fileID: 9154322944266436295, guid: f802afc89c8384410b15163cf4ff661e, type: 3}
+  grass_prefab: {fileID: 6842131377887439335, guid: b20fc90dbc46548fb89de819e27a4b46, type: 3}
+  dirt_prefab: {fileID: 2836891480448115044, guid: 55f888c02bf1847299f7369e156bf413, type: 3}
+  water_prefab: {fileID: 5890403638382762626, guid: f4a0e7d9185dc49a9ac8369f45744063, type: 3}
   DirtFrequency: {fileID: 0}
   WaterFrequency: {fileID: 0}
   GrassFrequency: {fileID: 0}
