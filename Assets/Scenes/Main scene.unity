@@ -28718,6 +28718,7 @@ GameObject:
   - component: {fileID: 1886246555}
   - component: {fileID: 1886246552}
   - component: {fileID: 1886246551}
+  - component: {fileID: 1886246553}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -28824,6 +28825,20 @@ MonoBehaviour:
   - {fileID: 2818638225852795468, guid: a156d3051784fe94595cb0ca67863063, type: 3}
   uiManager: {fileID: 1482258206}
   techtree: {fileID: 0}
+--- !u!114 &1886246553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886246549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694be2497f225419b9f92b377df9eab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnableMessageLogging: 1
+  EnableRabbitMQ: 1
 --- !u!114 &1886246555
 MonoBehaviour:
   m_ObjectHideFlags: 0
