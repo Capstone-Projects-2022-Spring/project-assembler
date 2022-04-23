@@ -4141,7 +4141,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1299726014}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10829,12 +10829,12 @@ RectTransform:
   m_Children:
   - {fileID: 44200012}
   m_Father: {fileID: 1299726014}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 829, y: 473.21997}
-  m_SizeDelta: {x: 60.3735, y: 43.352}
+  m_SizeDelta: {x: 61.45, y: 49.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807703396
 MonoBehaviour:
@@ -10881,7 +10881,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1482258206}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: UIManager, GameAssembly
         m_MethodName: OnCloseTechTreeClick
         m_Mode: 1
         m_Arguments:
@@ -18730,9 +18730,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 807703395}
   - {fileID: 1506342475}
   - {fileID: 366553271}
+  - {fileID: 807703395}
   m_Father: {fileID: 348410638}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22525,7 +22525,7 @@ RectTransform:
   - {fileID: 466871263}
   - {fileID: 1585383293}
   m_Father: {fileID: 1299726014}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
