@@ -94,7 +94,6 @@ public class PlayerControl : NetworkBehaviour
     {
         displayName = displayname;
         this.gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = displayname;
-        Debug.Log($"New display name {displayname}");
     }
 
     public void onChangeDisplayName(string oldvalue, string newvalue)
@@ -264,7 +263,6 @@ public class PlayerControl : NetworkBehaviour
         serverIPaddress = externalIp.ToString();
 
         port = NetworkManager.singleton.GetComponent<kcp2k.KcpTransport>().Port;
-        Debug.Log($"Port = {port}, ipaddress = {serverIPaddress}");
     }
 
 

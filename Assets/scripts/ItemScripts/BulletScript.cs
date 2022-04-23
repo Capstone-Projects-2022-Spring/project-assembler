@@ -6,6 +6,8 @@ using Mirror;
 public class BulletScript : NetworkBehaviour
 {
 
+    public int damage = 10;
+
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -19,7 +21,7 @@ public class BulletScript : NetworkBehaviour
         EnemyAI collidedEnemy = col.gameObject.GetComponent<EnemyAI>();
         if (collidedEnemy != null)
         {
-            collidedEnemy.currentHealth -= 10;
+            collidedEnemy.currentHealth -= damage;
         }
         destory();
     }

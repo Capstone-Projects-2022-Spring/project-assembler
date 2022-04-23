@@ -9,27 +9,17 @@ using PlayFab.ClientModels;
 using PlayFab;
 using PlayFab.AdminModels;
 
-
 public class playmodetests : MonoBehaviour
 {
 
     UIManager uimanager;
     string newlyCreatedAccountId;
 
+
     [OneTimeSetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Main scene");
-    }
-
-    IEnumerator waitTime(float timeToWait)
-    {
-        float time = 0;
-        while (time < timeToWait)
-        {
-            time += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
@@ -68,7 +58,7 @@ public class playmodetests : MonoBehaviour
 
 
         time = 0;
-        while (time < 10)
+        while (time < 5)
         {
             time += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
@@ -178,14 +168,171 @@ public class playmodetests : MonoBehaviour
         yield return null;
     }
 
-
-
     [UnityTest, Order(5)]
+    public IEnumerator testMapParamters()
+    {
+        Mirror.NetworkManager.singleton.StopClient();
+        Mirror.NetworkManager.singleton.StopServer();
+        GameObject.Find("StartGameMenu/OpenMapSettings").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find("MapGenUI/Canvas/Panel/SeedInput").GetComponent<InputField>().text = "39875";
+
+        float time = 0;
+        while (time < 10)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        InputField seedInput = GameObject.Find("MapGenUI/Canvas/Panel/SeedInput").GetComponent<InputField>();
+        seedInput.text = "39875";
+
+        yield return new WaitForFixedUpdate();
+        Button hostButton = GameObject.Find("MapGenUI/Canvas/Panel/Host").GetComponent<Button>();
+        hostButton.onClick.Invoke();
+
+        time = 0;
+        while (time < 10)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+
+        List<List<Sprite>> firstMap = new List<List<Sprite>>();
+
+        GameObject map = uimanager.map;
+
+        for (int i = 0; i < uimanager.map.transform.childCount; i++)
+        {
+            Transform child = uimanager.map.transform.GetChild(i);
+            List<Sprite> listToAdd = new List<Sprite>();
+            for (int q = 0; q < child.childCount; q++)
+            {
+                listToAdd.Add(child.GetChild(q).gameObject.GetComponent<SpriteRenderer>().sprite);
+            }
+            firstMap.Add(listToAdd);
+        }
+
+        Mirror.NetworkManager.singleton.StopClient();
+        Mirror.NetworkManager.singleton.StopServer();
+        Button createButton = GameObject.Find("StartGameMenu/OpenMapSettings").GetComponent<Button>();
+        createButton.onClick.Invoke();
+        seedInput.text = "39875";
+
+        GameObject.Find("MapGenUI/Canvas/Panel/TerrainTab").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find("MapGenUI/Canvas/Panel/ScrollView/TerrainLayoutGroup/DirtListing/DirtFrequency").GetComponent<Slider>().value = 4;
+
+        yield return new WaitForFixedUpdate();
+        GameObject.Find("MapGenUI/Canvas/Panel/Host").GetComponent<Button>().onClick.Invoke();
+
+        time = 0;
+        while (time < 10)
+        {
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        List<List<Sprite>> SecondMap = new List<List<Sprite>>();
+        map = uimanager.map;
+
+        for (int i = 0; i < uimanager.map.transform.childCount; i++)
+        {
+            Transform child = uimanager.map.transform.GetChild(i);
+            List<Sprite> listToAdd = new List<Sprite>();
+            for (int q = 0; q < child.childCount; q++)
+            {
+                listToAdd.Add(child.GetChild(q).gameObject.GetComponent<SpriteRenderer>().sprite);
+            }
+            SecondMap.Add(listToAdd);
+        }
+
+        bool foundDiffernce = false;
+        int firstIndex = firstMap.Count < SecondMap.Count ? firstMap.Count  : SecondMap.Count;
+        for (int i = 0; i < firstIndex; i++)
+        {
+            int secondIndex = firstMap[i].Count < SecondMap[i].Count ? firstMap[i].Count : SecondMap[i].Count;
+            for (int q = 0; q < secondIndex; q++)
+            {
+                if(SecondMap[i][q] != firstMap[i][q])
+                {
+                    foundDiffernce = true;
+                }
+            }
+        }
+
+
+        Assert.IsTrue(foundDiffernce, "The maps were the same indicating an error with the map paramters");
+        Debug.ClearDeveloperConsole();
+        Debug.Log("The map generation paramters are working correctly");
+        yield return null;
+    }
+
+
+    [UnityTest, Order(6)]
+    public IEnumerator testInteractLeftMouseClick()
+    {
+        Mirror.NetworkClient.localPlayer.gameObject.transform.position = new Vector3(0, 0, 0);
+        yield return new WaitForFixedUpdate();
+
+        Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(GameObject.Find("pickaxe (1)"), true);
+        GameObject itemInInvetnory = GameObject.Find("inGameCanvas/InventoryCanvas/InventorySlot").GetComponent<InventorySlotScript>().itemInSlot;
+        yield return new WaitForFixedUpdate();
+
+
+        Assert.IsNotNull(itemInInvetnory.GetComponent<AxeScript>());
+        Debug.Log("The axe was picked by a left mouse click action.");
+
+        yield return null;
+    }
+
+    [UnityTest, Order(7)]
+    public IEnumerator testTechTreeAndPickAxe()
+    {
+        RawMaterialsScript theOre;
+        GameObject map = uimanager.map;
+        for(int i = 0; i < map.transform.childCount; i++)
+        {
+            Transform child = map.transform.GetChild(i);
+            for (int q = 0; q < map.transform.childCount; q++)
+            {
+                if(child.GetChild(q).GetComponent<RawMaterialsScript>() != null)
+                {
+                    if(child.GetChild(q).GetComponent<RawMaterialsScript>().oretype == "metal")
+                    {
+                        theOre = child.GetChild(q).GetComponent<RawMaterialsScript>();
+                        for (int c = 0; c < 2000; c++)
+                        {
+                            theOre.interact(Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>());
+                            yield return new WaitForFixedUpdate();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        Assert.IsTrue(GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform.GetChild(3).gameObject.activeSelf);
+        Debug.Log("The pickaxe mined successfully and tech tree worked.");
+        yield return null;
+    }
+
+    [UnityTest, Order(8)]
+    public IEnumerator testCrafting()
+    {
+        GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform.GetChild(3).gameObject.GetComponent<Button>().onClick.Invoke();
+        Debug.Log("An item was crafted on click on recipe");
+        yield return new WaitForFixedUpdate();
+        yield return null;
+    }
+
+
+    [UnityTest, Order(9)]
     public IEnumerator testEnemyPathFinding()
     {
 
         float time = 0;
-        while (time < 40)
+        while (time < 20)
         {
             time += Time.fixedDeltaTime;
             if (Mirror.NetworkClient.localPlayer != null)
@@ -214,13 +361,13 @@ public class playmodetests : MonoBehaviour
     }
 
 
-    [UnityTest, Order(6)]
+    [UnityTest, Order(10)]
     public IEnumerator testEnemyEngagementAndDetection()
     {
 
         bool playerWasKilled = false;
         float time = 0;
-        while (time < 40)
+        while (time < 20)
         {
             time += Time.fixedDeltaTime;
             if (Mirror.NetworkClient.localPlayer != null)
@@ -237,7 +384,7 @@ public class playmodetests : MonoBehaviour
 
         Assert.IsTrue(playerWasKilled, "The player was not killed by the enemy meaning that the enemy was not able to engage/attack or detect the player.");
 
-        Debug.Log("The player was killed by the enemeis and enemy objects were able to detect the player.");
+        Debug.Log("The player was killed by the enemy confirming the ability of the enemy to attack the player.");
 
         
         // Disconnect and go back to main menu
@@ -247,7 +394,7 @@ public class playmodetests : MonoBehaviour
         yield return null;
     }
 
-    [UnityTest, Order(7)]
+    [UnityTest, Order(11)]
     public IEnumerator testOnlineMultiplayerServerConnection()
     {
         float time = 0;
@@ -256,8 +403,6 @@ public class playmodetests : MonoBehaviour
             time += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-
-       
 
         GameObject.Find("StartGameMenu/JoinHost game button").GetComponent<Button>().onClick.Invoke();
         yield return new WaitForFixedUpdate();
@@ -294,12 +439,9 @@ public class playmodetests : MonoBehaviour
     }
 
 
-
-    [UnityTest, Order(8)]
+    [UnityTest, Order(12)]
     public IEnumerator testAddFriend()
     {
-        //var request = new LoginWithCustomIDRequest { CustomId = "karim.salem1999@hotmail.com", CreateAccount = true };
-        //PlayFabClientAPI.LoginWithCustomID(request, OnCreationSuccess, (PlayFabError obj2) => { });
         GameObject.Find("mainMenu canves/FriendsListButton").GetComponent<Button>().onClick.Invoke();
         GameObject.Find("FriendUI/Panel/InputField").GetComponent<InputField>().text = "testAddFriend";
 
@@ -309,41 +451,4 @@ public class playmodetests : MonoBehaviour
         yield return null;
     }
 
-
-    //private void OnCreationSuccess(LoginResult result)
-    //{
-    //    newlyCreatedAccountId = result.PlayFabId;
-    //    var request = new AddOrUpdateContactEmailRequest { EmailAddress = "karim.salem1999@hotmail.com" };
-    //    PlayFabClientAPI.AddOrUpdateContactEmail(request, (AddOrUpdateContactEmailResult inresult) =>
-    //    {
-    //        var passwordrequest = new AddUsernamePasswordRequest { Password = "testing", Email = "karim.salem1999@hotmail.com", Username = "testing123123" };
-    //        PlayFabClientAPI.AddUsernamePassword(passwordrequest, (AddUsernamePasswordResult inresult2) =>
-    //        {
-    //            Debug.Log($"the user name: {inresult2.Username}");
-    //            var displayrequest = new PlayFab.ClientModels.UpdateUserTitleDisplayNameRequest { DisplayName = "testing123123" };
-    //            PlayFabClientAPI.UpdateUserTitleDisplayName(displayrequest, (PlayFab.ClientModels.UpdateUserTitleDisplayNameResult inresult3) =>
-    //            {
-    //                Debug.Log($"the new display name: {inresult3.DisplayName}");
-    //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Awake();
-    //                GameObject.Find("UIscripts").GetComponent<ChatManager>().Connect(result.PlayFabId);
-    //                GameObject.Find("mainMenu canves/FriendsListButton").GetComponent<Button>().onClick.Invoke();
-    //                GameObject.Find("FriendUI/Panel/InputField").GetComponent<InputField>().text = "test2";
-    //                GameObject.Find("FriendUI/Panel/InputField/RequestButton").GetComponent<Button>().onClick.Invoke();
-    //            }, OnCreationError);
-    //        }, OnCreationError);
-    //    }, OnCreationError);
-
-    //    OnCreationError(new PlayFabError());
-    //}
-
-    //private void OnCreationError(PlayFabError obj)
-    //{
-    //    var deleterequest = new DeleteMasterPlayerAccountRequest { PlayFabId = newlyCreatedAccountId };
-    //    PlayFabAdminAPI.DeleteMasterPlayerAccount(deleterequest, (DeleteMasterPlayerAccountResult result) =>
-    //    {
-    //        Debug.Log($"deleted the user after an error");
-    //        newlyCreatedAccountId = "";
-    //    }, (PlayFabError obj2) => { });
-
-    //}
 }
