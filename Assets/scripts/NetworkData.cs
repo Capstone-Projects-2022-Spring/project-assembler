@@ -99,7 +99,13 @@ public class NetworkData : MonoBehaviour
             double sentTime = pingMessage.clientTime;
             double latency = NetworkTime.localTime - sentTime;
 
-            Debug.Log("latency = " + latency);
+            //Debug.Log("latency = " + latency);
+
+            if(EnableRabbitMQ)
+            {
+                byte[] pingMsg = Encoding.UTF8.GetBytes(latency.ToString());
+                channel.BasicPublish(exchange: "data-rtt", routingKey: "testPing", basicProperties: null, body: pingMsg);
+            }
         }
         //InMessageBytes += msg.bytes;
     }
@@ -140,7 +146,6 @@ public class NetworkData : MonoBehaviour
         {
             channel.BasicPublish(exchange: "data-in", routingKey: "testIn", basicProperties: null, body: inMsg);
             channel.BasicPublish(exchange: "data-out", routingKey: "testOut", basicProperties: null, body: outMsg);
-            channel.BasicPublish(exchange: "data-rtt", routingKey: "testPing", basicProperties: null, body: pingMsg);
             channel.BasicPublish(exchange: "data-time", routingKey: "testTime", basicProperties: null, body: timeMsg);
             channel.BasicPublish(exchange: "data-players", routingKey: "testPlayers", basicProperties: null, body: playersMsg);
         }
