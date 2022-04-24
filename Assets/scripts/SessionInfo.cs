@@ -196,10 +196,17 @@ public class SessionInfo : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if(isLocalPlayer && attachedToMouseItem != null)
+        if(attachedToMouseItem != null)
         {
-
+            UnityEngine.UI.Image theImage = GameObject.Find("inGameCanvas").transform.GetChild(5).GetComponent<UnityEngine.UI.Image>();
+            theImage.enabled = true;
+            theImage.sprite = attachedToMouseItem.GetComponent<SpriteRenderer>().sprite;
+            theImage.transform.position = Input.mousePosition;
+        } else
+        {
+            GameObject.Find("inGameCanvas").transform.GetChild(5).GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
+
     }
 
 
