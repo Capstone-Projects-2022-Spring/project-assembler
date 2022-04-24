@@ -451,4 +451,28 @@ public class playmodetests : MonoBehaviour
         yield return null;
     }
 
+    [UnityTest, Order(13)]
+    public IEnumerator testPlayerMovement()
+    {
+        var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        var transform = Mirror.NetworkClient.localPlayer.gameObject.transform;
+
+        transform.position += Vector3.right * Time.deltaTime;
+        yield return new WaitForFixedUpdate();
+        Assert.Equals(transform.position, mainCamera.transform.position);
+
+        transform.position += Vector3.left* Time.deltaTime;
+        yield return new WaitForFixedUpdate();
+        Assert.Equals(transform.position, mainCamera.transform.position);
+
+        transform.position += Vector3.down * Time.deltaTime;
+        yield return new WaitForFixedUpdate();
+        Assert.Equals(transform.position, mainCamera.transform.position);
+
+        transform.position += Vector3.up * Time.deltaTime;
+        yield return new WaitForFixedUpdate();
+        Assert.Equals(transform.position, mainCamera.transform.position);
+
+        yield return null;
+    }
 }
