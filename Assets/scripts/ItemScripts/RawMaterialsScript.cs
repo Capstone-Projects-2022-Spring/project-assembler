@@ -45,7 +45,7 @@ public class RawMaterialsScript : GameItem
             lastTimeClickedon = Time.timeAsDouble;
             countLeftToGather -= subtract;
             updateNums(countLeftToGather, materialCount, materialCount);
-            if (countLeftToGather == 0)
+            if (countLeftToGather <= 0)
             {
                 countLeftToGather = 12;
                 materialCount -= 1;

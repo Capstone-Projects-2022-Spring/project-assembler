@@ -14,8 +14,6 @@ public class AxeScript : GameItem
         {
             if (player.addToInvenotry(this.gameObject, true))
             {
-
-
                 //Add to the player inventory
                 if (player.inventory.ContainsKey(this))
                 {

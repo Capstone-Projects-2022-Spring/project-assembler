@@ -25,22 +25,9 @@ public class CraftingRecipe : NetworkBehaviour
     }
 
 
-    [Command(requiresAuthority = false)]
     public void spawnItem(uint conn)
     {
-        GameObject result = Instantiate(itemToCraft);
-        NetworkServer.Spawn(result);
-        getResultItem(conn, result);
-    }
-
-
-    [ClientRpc]
-    public void getResultItem(uint conn, GameObject item)
-    {
-        if (NetworkClient.localPlayer.netId == conn)
-        {
-            NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, true);
-        }
+        NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().spawnItem(conn, this.gameObject.name);
     }
 
 }

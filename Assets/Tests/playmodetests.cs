@@ -274,7 +274,7 @@ public class playmodetests : MonoBehaviour
         Mirror.NetworkClient.localPlayer.gameObject.transform.position = new Vector3(0, 0, 0);
         yield return new WaitForFixedUpdate();
 
-        Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(GameObject.Find("pickaxe (1)"), true);
+        Mirror.NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(GameObject.Find("MetalPickaxe"), true);
         GameObject itemInInvetnory = GameObject.Find("inGameCanvas/InventoryCanvas/InventorySlot").GetComponent<InventorySlotScript>().itemInSlot;
         yield return new WaitForFixedUpdate();
 

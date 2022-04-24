@@ -24,6 +24,7 @@ public class MetalPickAxeRecipe : CraftingRecipe
 
                 if (metalOreLeft2 == 0)
                 {
+                    //Debug.Log("crafting spawn called for " + itemToCraft);
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }
@@ -46,6 +47,7 @@ public class MetalPickAxeRecipe : CraftingRecipe
                 }
                 if (metalOreLeft2 == 0)
                 {
+                    //Debug.Log("crafting spawn called for " + itemToCraft);
                     spawnItem(NetworkClient.localPlayer.netId);
                     break;
                 }

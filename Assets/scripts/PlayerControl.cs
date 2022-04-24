@@ -89,6 +89,8 @@ public class PlayerControl : NetworkBehaviour
         changeDisplayName(GameObject.Find("UIscripts").GetComponent<ChatManager>().userAccountInfo.AccountInfo.TitleInfo.DisplayName);
     }
 
+    
+
     [Command]
     public void changeDisplayName(string displayname)
     {
@@ -268,7 +270,7 @@ public class PlayerControl : NetworkBehaviour
 
     public bool addToInvenotry(GameObject item, bool transferToOrigin)
     {
-        Transform paranetCanvas = GameObject.Find("inGameCanvas/InventoryCanvas").transform;
+        Transform paranetCanvas = GameObject.Find("inGameCanvas").transform.GetChild(1);
         for (int i = 0; i < paranetCanvas.childCount-1; i++)
         {
             if (paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot == null)
@@ -362,5 +364,35 @@ public class PlayerControl : NetworkBehaviour
         //rt.sizeDelta = new Vector2(rt.sizeDelta.x, sessionChat.Count * 30);
     }
     #endregion
+
+
+    [Command]
+    public void spawnItem(uint conn, string caller)
+    {
+        //Debug.Log("Calling spawnItem");
+        Transform craftingmenu = GameObject.FindGameObjectWithTag("TechTree").GetComponent<TechTree>().craftingmenu;
+        for(int i = 0; i < craftingmenu.childCount; i++)
+        {
+            if(craftingmenu.GetChild(i).name == caller)
+            {
+                GameObject result = Instantiate(craftingmenu.GetChild(i).GetComponent<CraftingRecipe>().itemToCraft);
+                NetworkServer.Spawn(result);
+                result.GetComponent<GameItem>().isOnGround = false;
+                getResultItem(conn, result);
+                //Debug.Log("spawnItem called, the ID is " + conn);
+            }
+        }
+    }
+
+
+    [ClientRpc]
+    public void getResultItem(uint conn, GameObject item)
+    {
+        if (NetworkClient.localPlayer.netId == conn)
+        {
+            //Debug.Log("recived the item, ID = " + conn);
+            NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().addToInvenotry(item, false);
+        }
+    }
 
 }
