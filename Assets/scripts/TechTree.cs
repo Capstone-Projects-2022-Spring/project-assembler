@@ -11,14 +11,13 @@ public class TechTree : NetworkBehaviour
     [SyncVar(hook = nameof(changeIronMined))]
     public int ironMined = 0;
 
-    [Header("RecipesPrefabs")]
-    public GameObject metalPickAxe;
-    public GameObject rockAxe;
+    public Transform craftingmenu;
+
 
     // Start is called before the first frame update
     public void Start()
     {
-
+        craftingmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
         Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
         for (int i = 0; i < craftinmenu.childCount; i++)
         {
@@ -27,6 +26,17 @@ public class TechTree : NetworkBehaviour
         changeIronMined(4, ironMined);
         changeRockMined(4, rockMined);
         //InvokeRepeating(nameof(updateCraftingMenu), 0f, 5f);
+    }
+
+    override public void OnStartServer()
+    {
+        Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+        for (int i = 0; i < craftinmenu.childCount; i++)
+        {
+            craftinmenu.GetChild(i).gameObject.SetActive(false);
+            NetworkServer.Spawn(craftinmenu.GetChild(i).gameObject);
+        }
+        NetworkServer.SpawnObjects();
     }
 
 

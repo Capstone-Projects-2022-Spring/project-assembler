@@ -65,4 +65,11 @@ public class GameItem : NetworkBehaviour
         NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().updateLocation(new Vector3(mousepos.x, mousepos.y, 0), this.gameObject, true);
         isOnGround = true;
     }
+
+    [Command(requiresAuthority = false)]
+    public void destory()
+    {
+        Debug.Log("Called destroy for " + this.gameObject);
+        NetworkServer.Destroy(this.gameObject);
+    }
 }
