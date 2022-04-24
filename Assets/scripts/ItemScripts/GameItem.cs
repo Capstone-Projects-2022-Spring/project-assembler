@@ -64,6 +64,8 @@ public class GameItem : NetworkBehaviour
         Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>().updateLocation(new Vector3(mousepos.x, mousepos.y, 0), this.gameObject, true);
         isOnGround = true;
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        this.gameObject.GetComponent<Collider2D>().enabled = true;
     }
 
     [Command(requiresAuthority = false)]
