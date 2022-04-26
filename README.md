@@ -39,7 +39,7 @@ Please direct any questions to Jason Fleshel (tui82326@temple.edu).
 
 ## GitHub Release
 
-Please download our most recent release of Assembler [here.](https://github.com/Capstone-Projects-2022-Spring/project-assembler/releases/tag/v0.4)
+Please download our most recent release of Assembler [here.](https://github.com/Capstone-Projects-2022-Spring/project-assembler/releases/tag/v1.0)
 
 https://github.com/Capstone-Projects-2022-Spring/project-assembler/releases/tag/v0.4
 
