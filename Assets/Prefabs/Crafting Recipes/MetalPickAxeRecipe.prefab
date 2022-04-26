@@ -69,18 +69,16 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'x3 Metal ore
-
-    x1 wood stick'
+  m_Text: x3 Metal ore
 --- !u!1 &5188076099012687107
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +249,7 @@ MonoBehaviour:
   paranetCanvas: {fileID: 0}
   mainInventory: {fileID: 0}
   itemToCraft: {fileID: 53248301856846360, guid: 51ba059a2e814be46817377adffd04bf, type: 3}
+  metalOreLeft: 3
 --- !u!1 &7479128268584203306
 GameObject:
   m_ObjectHideFlags: 0

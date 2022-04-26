@@ -205,8 +205,10 @@ MonoBehaviour:
   isInInventory: 0
   isOnGround: 1
   isAttachedToMouse: 0
+  moveToGorund: 0
   firePoint: {fileID: 8929949229579871409}
   bulletPrefab: {fileID: 1808575932861734992, guid: 5add931210ea7074fbcf783586130140, type: 3}
+  rateOfFire: 0.25
 --- !u!1 &8929949229579871408
 GameObject:
   m_ObjectHideFlags: 0

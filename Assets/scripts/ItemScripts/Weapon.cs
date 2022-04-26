@@ -8,6 +8,7 @@ public class Weapon : GameItem
     public Transform firePoint;
     public GameObject bulletPrefab;
     double lastShot;
+    public float rateOfFire = 0.3f;
 
     private void Start()
     {
@@ -39,7 +40,7 @@ public class Weapon : GameItem
 
     public override void actionFromInventroy(PlayerControl player)
     {
-        if (Time.timeAsDouble - lastShot > 0.1)
+        if (Time.timeAsDouble - lastShot > rateOfFire)
         {
             Shoot(player.transform, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             lastShot = Time.timeAsDouble;
@@ -54,7 +55,7 @@ public class Weapon : GameItem
         Vector2 directionVector = new Vector2(mousepos.x - shootPosition.position.x, mousepos.y - shootPosition.position.y);
         angle.eulerAngles = new Vector3(0, 0, Vector2.Angle(new Vector3(1, 0, 0), directionVector));
 
-        float offset = 2;
+        float offset = 2.5f;
         Vector3 postionToSpawnOn = new Vector3(shootPosition.position.x + offset * directionVector.normalized.x, shootPosition.position.y + offset * directionVector.normalized.y, 0);
         GameObject generatedBullet = Instantiate(bulletPrefab, postionToSpawnOn, angle);
         generatedBullet.GetComponent<Rigidbody2D>().velocity = 100f * directionVector.normalized;

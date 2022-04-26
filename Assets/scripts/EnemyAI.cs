@@ -12,6 +12,7 @@ public class EnemyAI : NetworkBehaviour
     public float nextWaypointDistance = 3f;
     [SyncVar(hook = nameof(onChangeHealth))]
     public int currentHealth = 100;
+    public Animator animator;
 
     public Transform target;
     Path path;
@@ -36,10 +37,17 @@ public class EnemyAI : NetworkBehaviour
         }
     }
 
-    [ServerCallback]
     private void FixedUpdate()
     {
-        if (path == null)
+        if(rigidbody2d.velocity.magnitude > 5f)
+        {
+            animator.SetFloat("Speed", 0f);
+        } else
+        {
+            animator.SetFloat("Speed", 10f);
+        }
+
+        if (path == null || !isServer)
             return;
 
         if(currentWayPoint >= path.vectorPath.Count)

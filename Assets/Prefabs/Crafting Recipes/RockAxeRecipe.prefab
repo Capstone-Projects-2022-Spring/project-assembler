@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -72.1, y: 0}
+  m_AnchoredPosition: {x: -57.7, y: 0}
   m_SizeDelta: {x: 44.7608, y: 38.091}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5531338788762866976
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bfd296e4f7d86846bcd0cc62ae765af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02c84319e8d9ad34aade2dbad44cf2f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -227,7 +227,8 @@ MonoBehaviour:
   syncInterval: 0.1
   paranetCanvas: {fileID: 0}
   mainInventory: {fileID: 0}
-  itemToCraft: {fileID: 2974414727594119889, guid: 805cd90d7fecc25469637f186715b4e6, type: 3}
+  itemToCraft: {fileID: 8851680870657050520, guid: 2880292ca506c254981b2bd6cce98583, type: 3}
+  rockOreLeft: 3
 --- !u!114 &2329847839899157808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,15 +315,13 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 10
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'x3 rock ore
-
-    x1 wood stick'
+  m_Text: x3 Rock ore

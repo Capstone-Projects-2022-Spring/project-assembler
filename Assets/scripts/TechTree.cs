@@ -11,14 +11,13 @@ public class TechTree : NetworkBehaviour
     [SyncVar(hook = nameof(changeIronMined))]
     public int ironMined = 0;
 
-    [Header("RecipesPrefabs")]
-    public GameObject metalPickAxe;
-    public GameObject rockAxe;
+    public Transform craftingmenu;
+
 
     // Start is called before the first frame update
     public void Start()
     {
-
+        craftingmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
         Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
         for (int i = 0; i < craftinmenu.childCount; i++)
         {
@@ -27,6 +26,17 @@ public class TechTree : NetworkBehaviour
         changeIronMined(4, ironMined);
         changeRockMined(4, rockMined);
         //InvokeRepeating(nameof(updateCraftingMenu), 0f, 5f);
+    }
+
+    override public void OnStartServer()
+    {
+        Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+        for (int i = 0; i < craftinmenu.childCount; i++)
+        {
+            craftinmenu.GetChild(i).gameObject.SetActive(false);
+            NetworkServer.Spawn(craftinmenu.GetChild(i).gameObject);
+        }
+        NetworkServer.SpawnObjects();
     }
 
 
@@ -55,6 +65,40 @@ public class TechTree : NetworkBehaviour
                 for (int i = 0; i < craftinmenu.childCount; i++)
                 {
                     if (craftinmenu.GetChild(i).name == "AkBasicRecipe")
+                    {
+                        craftinmenu.GetChild(i).gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+
+        if (old < 15)
+        {
+            if (newvalue >= 15)
+            {
+                Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+                for (int i = 0; i < craftinmenu.childCount; i++)
+                {
+                    if (craftinmenu.GetChild(i).name == "GunTurretRecipe")
+                    {
+                        craftinmenu.GetChild(i).gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+
+        if (old < 20)
+        {
+            if (newvalue >= 20)
+            {
+                Transform craftinmenu = GameObject.Find("inGameCanvas/InventoryCanvas/MainInventory/ScrollView/Viewport/Panel").transform;
+                for (int i = 0; i < craftinmenu.childCount; i++)
+                {
+                    if (craftinmenu.GetChild(i).name == "LaserGunRecipe")
+                    {
+                        craftinmenu.GetChild(i).gameObject.SetActive(true);
+                    }
+                    if (craftinmenu.GetChild(i).name == "RocketLauncherRecipe")
                     {
                         craftinmenu.GetChild(i).gameObject.SetActive(true);
                     }

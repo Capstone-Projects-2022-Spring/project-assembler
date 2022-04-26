@@ -223,6 +223,32 @@ public class UIManager : MonoBehaviour
 
     public void onInGameExit()
     {
+        PlayerControl thePlayer = NetworkClient.localPlayer.gameObject.GetComponent<PlayerControl>();
+        Transform mainInventory = thePlayer.mainInventory;
+        Transform paranetCanvas = GameObject.Find("inGameCanvas").transform.GetChild(1);
+        for (int i = 0; i < paranetCanvas.childCount - 1; i++)
+        {
+            GameObject temp = paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot;
+            if (temp != null)
+            {
+                //Debug.Log("Destorying " + temp);
+                //temp.GetComponent<GameItem>().destory();
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = null;
+                paranetCanvas.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+            }
+        }
+
+        for (int i = 0; i < mainInventory.childCount - 1; i++)
+        {
+            GameObject temp = mainInventory.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot;
+            if (temp != null)
+            {
+                //Debug.Log("Destorying " + temp);
+                //temp.GetComponent<GameItem>().destory();
+                mainInventory.GetChild(i).GetComponent<InventorySlotScript>().itemInSlot = null;
+                mainInventory.GetChild(i).GetComponent<InventorySlotScript>().updateImage();
+            }
+        }
         sessionInfoClass.OnExitClick();
         manager.StopClient();
         manager.StopServer();
